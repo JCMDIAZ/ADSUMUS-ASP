@@ -30,7 +30,7 @@ class Ctr_Login extends CI_Controller {
             if($validarUsuario){
                 foreach($validarUsuario as $validarUsuario){
                     $data['usuario'] = $validarUsuario->Usuario;
-                    $data['contraseña']= $validarUsuario->Contrasena;
+                    $data['contraseña']= $validarUsuario->Contraseña;
                     $data['perfil']= $validarUsuario->Perfil;
                 }
                 header('Cache-Control: no cache'); //no cache
