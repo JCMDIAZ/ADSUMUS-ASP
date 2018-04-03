@@ -16,6 +16,7 @@
                     <option value="Prueba2"></option>
                 </datalist>
             </div>
+            <?php echo base_url(); ?>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="elaboracion">Fecha de Elaboración</label>
                 <input type="date" class="form-control" id="elaboracion" name="elaboracion">
