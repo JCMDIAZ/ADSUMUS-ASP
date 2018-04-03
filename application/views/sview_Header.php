@@ -32,7 +32,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <li class="nav-item">
             <a class="nav-link" href="Levantamiento_servicio">Servicios</a>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="Logout">Cerrar Sesión</a>
+          </li>
         </ul>
       </div>
     </nav>
