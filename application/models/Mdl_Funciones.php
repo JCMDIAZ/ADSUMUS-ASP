@@ -29,8 +29,21 @@
             }
         }
 
-  
+				public function insertPrueba(){
 
+     //Aquí capturas los datos recibidos
+        $data = array(
+        'Usuario'=>$this->input->post('Usuario'),
+        'Contraseña'=>$this->input->post('Contraseña'),
+        'Perfil'=>$this->input->post('Perfil'),
+				'Correo'=>$this->input->post('Correo'),
+				'Fecha_alta'=>$this->input->post('Fecha_alta'),
+				'Estatus'=>$this->input->post('Estatus'),
+         );
 
+        $this->db->insert("t_dat_usuarios",$data);
+				echo "<script>alert('¡Se Agrego Correctamente!');</script>";
+				redirect('Inicio', 'refresh');
+        }
 }
 ?>

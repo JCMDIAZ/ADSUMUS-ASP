@@ -19,21 +19,23 @@ class Ctr_Principal extends CI_Controller {
 
 	//Modulo Usuarios
 	public function ModuloU(){
-		$this->form_validation->set_rules('nombre','Nombre','required');
-		$this->form_validation->set_rules('contraseñaU','Contraseña','required');
-		$this->form_validation->set_rules('contraseñaC','Contraseña','required');
-		$this->form_validation->set_rules('perfil_usuario','Perfil de Usuario','required');
-
 		$datos['Tipos'] = $this->Mdl_funciones->Tipos();
 		$this->load->view('sview_Header');
-		$this->load->view('sview_ModuloU',$datos);
+		$this->load->view('sview_ModuloU',$datos,$data);
 		$this->load->view('sview_Footer');
 	}
 
+		public function add(){
+		$this->load->model('Mdl_funciones');
+		$this->Mdl_funciones->insertPrueba();
+	}
+
+
+
 	public function Levantamiento(){
-        $data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
-        $data['ejecutivo'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Perfil_Usuario');
-        $this->load->view('sview_Header');
+    $data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
+    $data['ejecutivo'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Perfil_Usuario');
+    $this->load->view('sview_Header');
 		$this->load->view('mview_LevServicio',$data);
 		$this->load->view('sview_Footer');
     }
