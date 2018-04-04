@@ -11,6 +11,20 @@ function Select($campo){
     }
 }
 
+function Select2($campo,$selected){
+    foreach($campo as $tipo){
+        if($tipo->Descripcion == $selected->Tipo_servicio){ ?>
+        <option value="<?php echo $tipo->Valor ?>" selected><?php echo $tipo->Descripcion ?></option>
+            <?php
+        }elseif($tipo->Campo == 'Blanco' and $tipo->Descripcion != $selected->Tipo_servicio){?>
+        <option value="<?php echo $tipo->Valor ?>" disabled selected><?php echo $tipo->Descripcion ?></option>
+<?php  }else{ ?>
+        <option value="<?php echo $tipo->Valor ?>"><?php echo $tipo->Descripcion ?></option>
+<?php
+        }
+    }
+}
+
 //Crea las opciones del select de los perfiles ejecutivo
 function SelectUsuarios($campo){
 ?>
@@ -22,7 +36,7 @@ function SelectUsuarios($campo){
         }
 }
 
-function Select2($nombre,$select,$selected,$campo){
+function Select10($nombre,$select,$selected,$campo){
     foreach ($select as $tipo) {
         if($tipo->Campo == $nombre and $tipo->Descripcion == $selected->$campo){
              echo '<option value="'.$tipo->Descripcion.'" selected ="selected">'.$tipo->Descripcion.'</option>';
