@@ -32,13 +32,11 @@ class Ctr_Principal extends CI_Controller {
 		$this->Mdl_funciones->insertPrueba();
 	}
 
-
-
 	public function Levantamiento(){
         $this->form_validation->set_rules('nombre_solicitante','Nombre del Solicitante', 'required');
         $this->form_validation->set_rules('ejecutivo_asignado','Ejecutivo', 'required');
         $this->form_validation->set_rules('correo_solicitante','Correo', 'required');
-        
+
         if($this->form_validation->run() == false){
             $data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
             $data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
@@ -99,9 +97,6 @@ class Ctr_Principal extends CI_Controller {
                 echo '<script>alert("Ocurrio un error al levantar el servicio");</script>';
             }
         }
-     
-        
-
     }
      public function AtencionServicio(){
         $this->form_validation->set_rules('activacion', 'Activacion', 'required');

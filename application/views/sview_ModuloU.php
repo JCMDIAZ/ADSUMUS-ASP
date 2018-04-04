@@ -6,6 +6,8 @@
   <button type="button" class="btn btn-warning" >Editar</button>
 </main>
 
+
+
 <div class="modal fade" id="modal1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -16,8 +18,6 @@
         </button>
       </div>
       <div class="modal-body">
-
-
         <?php echo form_open("Ctr_Principal/add");?>
 
             <div class="col-12 bg-white">
@@ -53,7 +53,7 @@
 
                     <div class="form-group col-sm-12">
                            <label for="Fecha_Alta">Fecha de Alta:</label>
-                           <input class="form-control" type="date" name="Fecha_alta" min="1950-01-01" max="2100-01-01">
+                           <input class="form-control" type="date" name="Fecha_alta" min="1950-01-01" max="2100-01-01" disabled>
                     </div>
 
                     <div class="form-group col-sm-12">
