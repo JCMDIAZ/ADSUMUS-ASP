@@ -74,9 +74,29 @@
             $this->db->where($condicion);
             $this->db->select('Descripcion');
             $query = $this->db->get('t_cat_catalogos')->row()->Descripcion;
-            
             if($query != null){
                 return $query;
+            }else{
+                return false;
+            }
+        }
+        
+        // Verifica el codigo de activacion, inserta la fecha de inicio del servicio
+        // , cambia el estatus a iniciado y retorna los datos
+        function InicioServicio($codigo){
+            $condicion = "Codigo_activacion = ".$codigo;
+            // Actualizamos el estatus del servicio
+            $this->db->set('Estatus_servicio', 'Iniciado');
+            $this->db->where($condicion);
+            $this->db->update('t_dat_servicios');
+            
+            // Obtenemos los datos del registro del codigo activacion proporcionado
+            $this->db->where($condicion);
+            $query = $this->db->get('t_dat_servicios');
+            
+            
+            if($query->num_rows() == 1){
+                return $query->result();
             }else{
                 return false;
             }
