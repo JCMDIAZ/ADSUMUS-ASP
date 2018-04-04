@@ -12,8 +12,9 @@ class Ctr_Principal extends CI_Controller {
 	}
 
 	public function Index(){
+		$datos['Tipos'] = $this->Mdl_funciones->Tipos();
 		$this->load->view('sview_Header');
-		$this->load->view('sview_ModuloU');
+		$this->load->view('sview_ModuloU',$datos);
 		$this->load->view('sview_Footer');
 	}
 
@@ -21,7 +22,7 @@ class Ctr_Principal extends CI_Controller {
 	public function ModuloU(){
 		$datos['Tipos'] = $this->Mdl_funciones->Tipos();
 		$this->load->view('sview_Header');
-		$this->load->view('sview_ModuloU',$datos,$data);
+		$this->load->view('sview_ModuloU',$datos);
 		$this->load->view('sview_Footer');
 	}
 
@@ -30,13 +31,11 @@ class Ctr_Principal extends CI_Controller {
 		$this->Mdl_funciones->insertPrueba();
 	}
 
-
-
 	public function Levantamiento(){
         $this->form_validation->set_rules('nombre_solicitante','Nombre del Solicitante', 'required');
         $this->form_validation->set_rules('ejecutivo_asignado','Ejecutivo', 'required');
         $this->form_validation->set_rules('correo_solicitante','Correo', 'required');
-        
+
         if($this->form_validation->run() == false){
             $data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
             $data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
@@ -73,9 +72,6 @@ class Ctr_Principal extends CI_Controller {
                 echo '<script>alert("Ocurrio un error al levantar el servicio");</script>';
             }
         }
-     
-        
-
     }
 }
 ?>

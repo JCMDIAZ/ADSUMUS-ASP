@@ -3,6 +3,7 @@
 	class Mdl_funciones extends CI_Model{
 		function __construct(){
 			parent::__construct();
+			$this->load->database();
 		}
 
     function Tipos(){
@@ -30,14 +31,12 @@
         }
 
 				public function insertPrueba(){
-
      //Aquí capturas los datos recibidos
         $data = array(
         'Usuario'=>$this->input->post('Usuario'),
         'Contraseña'=>$this->input->post('Contraseña'),
         'Perfil'=>$this->input->post('Perfil'),
 				'Correo'=>$this->input->post('Correo'),
-				'Fecha_alta'=>$this->input->post('Fecha_alta'),
 				'Estatus'=>$this->input->post('Estatus'),
          );
 
@@ -45,5 +44,9 @@
 				echo "<script>alert('¡Se Agrego Correctamente!');</script>";
 				redirect('Inicio', 'refresh');
         }
+
+
+
+
 }
 ?>
