@@ -33,8 +33,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a class="nav-link" href="Levantamiento_servicio">Servicios</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="Logout">Cerrar Sesión</a>
           </li>
         </ul>
       </div>
     </nav>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Código de Activación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Atencion_servicio" method="POST">
+          <div class="modal-body">
+              <input type="text" class="form-control" placeholder="Introduce el código de activación" name="activacion" required>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
