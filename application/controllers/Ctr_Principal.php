@@ -62,23 +62,23 @@ class Ctr_Principal extends CI_Controller {
             $data['Codigo_terminacion'] = NumeroAleatorio();
             $insertar = $this->Mdl_Consultas->InsertarDatos('t_dat_servicios',$data);
             if($insertar == true){
-                /*$headers =  'MIME-Version: 1.0' . "\r\n"; 
+                /*$headers =  'MIME-Version: 1.0' . "\r\n";
                 $headers .= 'From: Aldo Martinez <aldo.mireles.97@gmail.com>' . "\r\n";
                 $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";*/
-                
+
                 $para = $data['Correo_solicitante'];
                 $asunto = "Datos sobre el servicio - Adsumus";
                 $body = "Código de Activación: ".$data['Codigo_activacion']."\n Código de Terminacion: ".$data['Codigo_terminacion']."\n Ejecutivo asignado: ".$data['Ejecutivo_asignado'];
-                
+
                 //mail($para,$asunto,$body,$headers);
-                
+
                 $config['mailtype'] = 'html';
                 $this->email->initialize($config);
                 $this->email->from('aldo@vision.com','Aldo Martinez');
                 $this->email->to($para);
                 $this->email->subject($asunto);
                 $this->email->message($body);
-                
+
                 if($this->email->send()){
                     echo '<script> aux = confirm("Se levanto correctamente el servicio \n Desea agregar uno nuevo?");
                     if(aux== true){
@@ -91,8 +91,8 @@ class Ctr_Principal extends CI_Controller {
                     echo $this->email->print_debugger();
                     echo $para;
                 }
-                    
-                
+
+
             }else{
                 echo '<script>alert("Ocurrio un error al levantar el servicio");</script>';
             }
@@ -118,5 +118,5 @@ class Ctr_Principal extends CI_Controller {
          }
     }
 }
-   
+
 ?>

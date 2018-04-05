@@ -58,7 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <form action="Atencion_servicio" method="POST">
           <div class="modal-body">
-              <input type="text" class="form-control" placeholder="Introduce el código de activación" name="activacion" required>
+              <input type="text" class="form-control codigo" placeholder="Introduce el código de activación" name="activacion" required>
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
