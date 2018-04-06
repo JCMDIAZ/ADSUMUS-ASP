@@ -2,10 +2,10 @@
    <div class="py-4 text-center">
        <h3>Atención del servicio</h3>
    </div>
-   <?php 
-    foreach($servicio as $columna){ 
+   <?php
+    foreach($servicio as $columna){
     ?>
-    <form action="Levantamiento_servicio" method="POST">
+    <form action="" method="POST" id="atservicio">
         <div class="row">
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="folio">Folio del Servicio</label>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="elaboracion">Fecha de Elaboración</label>
-                <input type="datetime" class="form-control" id="elaboracion" name="elaboracion" value="<?php echo $columna->Fecha_elaboracion; ?>" disabled>
+                <input type="date" class="form-control" id="elaboracion" name="elaboracion" value="<?php echo $columna->Fecha_elaboracion; ?>" disabled>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="nombre_solicitante">Nombre del Solicitante</label>
@@ -42,17 +42,17 @@
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="tipo_servicio">Tipo de Servicio</label>
                 <select class="form-control" id="tipo_servicio" name="tipo_servicio" disabled>
-                    <?php Select2($tipo_servicio, $servicio); ?>
+                    <?php Select2($tipo_servicio, $columna->Tipo_servicio); ?>
                 </select>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="descripcion_servicio">Descripción del Servicio</label>
-                <textarea class="form-control" id="descripcion_servicio" name="descripcion_servicio" disabled><?php echo $columna->Descripcion_servicio; ?> </textarea>
+                <textarea class="form-control" id="descripcion_servicio" name="descripcion_servicio" disabled><?php echo $columna->Descripcion_servicio; ?></textarea>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="ejecutivo_asignado">Ejecutivo Asignado</label>
                 <select class="form-control" id="ejecutivo_asignado" name="ejecutivo_asignado" disabled>
-                    <?php SelectUsuarios($ejecutivos); ?>
+                    <?php SelectUsuarios($ejecutivos,$columna->Ejecutivo_asignado); ?>
                 </select>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
@@ -61,13 +61,11 @@
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="observaciones">Observaciones</label>
-                <textarea class="form-control" id="observaciones" name="observaciones" value="<?php echo $columna->Observaciones; ?>">
-                </textarea>
+                <textarea class="form-control" id="observaciones" name="observaciones" ><?php echo $columna->Observaciones; ?></textarea>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="material_utilizado">Material Utilizado</label>
-                <textarea class="form-control" id="material_utilizado" name="material_utilizado"><?php echo $columna->Material_utilizado; ?> 
-                </textarea>
+                <textarea class="form-control" id="material_utilizado" name="material_utilizado"><?php echo $columna->Material_utilizado; ?></textarea>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="fecha_cita_posterior">Fecha cita posterior</label>
@@ -83,15 +81,43 @@
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="estatus">Estatus del Servicio</label>
-                <select class="form-control" id="estatus" name="estatus" disabled>
-                <?php Select($estatus); ?>
-                </select>
+                <input type="text" name="estatus" id="estatus" value="<?php echo $columna->Estatus_servicio ?>" class="form-control" disabled>
             </div>
-            <div class="col-md-6 col-sm-6 mb-3 mx-auto">
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Aceptar</button>
+            <div class="col-md-4 col-sm-6 mb-3">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar cambios</button>
+            </div>
+            <div class="col-md-4 offset-md-4 col-sm-6 mb-3">
+                <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#Terminacion">Finalizar servicio</button>
+            </div>
+            <div class="col-md-12 col-sm-12 alert alert-success " role="alert" id="success" >
+              El servicio se actualizo correctamente.
+            </div>
+            <div class="col-md-12 col-sm-12 alert alert-warning" role="alert" id="warning">
+              No modificaste ningún campo.
             </div>
         </div>
     </form>
     <?php } ?>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="Terminacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Código de Terminación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="Atencion_servicio" method="POST">
+          <div class="modal-body">
+              <input type="text" class="form-control codigo" placeholder="Introduce el código de terminación" name="activacion" required>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

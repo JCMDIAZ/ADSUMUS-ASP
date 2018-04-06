@@ -14,3 +14,4 @@ $route['Logout'] = 'Ctr_Login/Logout';
 $route['Inicio']= 'Ctr_Principal/ModuloU';
 $route['Levantamiento_servicio']= 'Ctr_Principal/Levantamiento';
 $route['Atencion_servicio']= 'Ctr_Principal/AtencionServicio';
+$route['ActualizarServicio/(:num)']= 'Ctr_Principal/ActualizarServicio/$1';
