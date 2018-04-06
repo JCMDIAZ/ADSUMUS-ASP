@@ -104,6 +104,7 @@ class Ctr_Principal extends CI_Controller {
              redirect('Inicio');
          }else{
              $activacion = $this->input->post('activacion');
+<<<<<<< HEAD
              $data['servicio'] = $this->Mdl_Consultas->InicioServicio($activacion);
              if($data['servicio'] != false){
                  $data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
@@ -163,4 +164,80 @@ class Ctr_Principal extends CI_Controller {
     }
 
 	}
+=======
+						 // valida que exista un servicio con el codigo de activacion proporcionado
+             $servicioValido = $this->Mdl_Consultas->Servicio($activacion);
+
+						 if($servicioValido != false){
+							 foreach ($servicioValido as $value) {
+								 $estatus_servicio = $value->Estatus_servicio;
+								 switch ($estatus_servicio) {
+								 	case 'Terminado':
+										echo '<script>alert("El servicio ha sido completado")</script>';
+								  	echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
+								 		break;
+								 	case 'Iniciado':
+										$data['servicio'] = $servicioValido;
+										$data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
+										$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+										$data['estatus'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Estatus_servicio');
+										$this->load->view('sview_Header');
+										$this->load->view('mview_AtencionServicio',$data);
+										$this->load->view('sview_Footer');
+										break;
+									case 'Pendiente':
+										$data['servicio'] = $servicioValido;
+										$data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
+										$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+										$data['estatus'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Estatus_servicio');
+										$this->load->view('sview_Header');
+										$this->load->view('mview_AtencionServicio',$data);
+										$this->load->view('sview_Footer');
+										break;
+									case 'Solicitado':
+										$data['servicio'] = $this->Mdl_Consultas->InicioServicio($activacion);
+										$data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
+										$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+										$data['estatus'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Estatus_servicio');
+										$this->load->view('sview_Header');
+										$this->load->view('mview_AtencionServicio',$data);
+										$this->load->view('sview_Footer');
+										break;
+								 	default:
+								 		echo "<script>alert('Ocurrio un error con el servicio solicitado');</script>";
+								 		break;
+								 }
+							 }
+         }else{
+					 echo '<script>alert("No existe un servicio con el código de acivación proporcionado")</script>';
+					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
+				 }
+    	}
+		}
+		public function ActualizarServicio($folio){
+			$data['Observaciones'] = $this->input->post('observaciones');
+			$data['Material_utilizado'] = $this->input->post('material_utilizado');
+
+			// validamos si se introdujo la fecha de cita posterior y de ser asi,
+			// el estatus del servicio se cambia a "Pendiente"
+			if ($this->input->post('fecha_cita_posterior') != null) {
+				$data['Fecha_cita_posterior'] = $this->input->post('fecha_cita_posterior');
+				$data['Estatus_servicio'] = 'Pendiente';
+				$actualizacion = $this->Mdl_Consultas->ActualizarServicio($data,$folio);
+				if ($actualizacion == true) {
+					echo 'pendiente';
+				}else{
+					echo 'error';
+				}
+			}else{
+				$actualizacion = $this->Mdl_Consultas->ActualizarServicio($data,$folio);
+				if ($actualizacion == true) {
+					echo 'ok';
+				}else{
+					echo 'error';
+				}
+			}
+		}
+}
+>>>>>>> master
 ?>

@@ -33,9 +33,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <li class="nav-item active">
             <a class="nav-link" href="Inicio">Inicio</a>
           </li>
+          <?php if($this->session->userdata('perfil')=='Administrador') { ?>
           <li class="nav-item">
             <a class="nav-link" href="Levantamiento_servicio">Servicios</a>
           </li>
+        <?php } ?>
           <li class="nav-item">
             <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
           </li>

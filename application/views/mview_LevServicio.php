@@ -53,7 +53,7 @@
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="ejecutivo_asignado">Ejecutivo Asignado</label>
                 <select class="form-control" id="ejecutivo_asignado" name="ejecutivo_asignado" required>
-                    <?php SelectUsuarios($ejecutivos); ?>
+                    <?php SelectUsuarios($ejecutivos,""); ?>
                 </select>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
@@ -84,9 +84,7 @@
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="estatus">Estatus del Servicio</label>
-                <select class="form-control" id="estatus" name="estatus" disabled>
-                <?php Select($estatus); ?>
-                </select>
+                <input type="text" id="estatus" name="estatus" value="" class="form-control" disabled>
             </div>
             <div class="col-md-6 col-sm-6 mb-3 mx-auto">
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Aceptar</button>
