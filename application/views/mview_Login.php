@@ -32,8 +32,8 @@
     <form class="form-signin" action="Login" method="POST" autocomplete="off">
       <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
-      <label for="Usuario" class="sr-only">Usuario</label>
-      <input type="text" id="Usuario" class="form-control" placeholder="Usuario" name="usuario" required autofocus>
+      <label for="Correo" class="sr-only">Correo</label>
+      <input type="email" id="Correo" class="form-control" placeholder="Correo" name="correo" required autofocus>
       <label for="Contraseña" class="sr-only">Contraseña</label>
       <input type="password" id="Contraseña" class="form-control" placeholder="Contraseña" name="contraseña" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
