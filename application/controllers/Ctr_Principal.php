@@ -98,73 +98,14 @@ class Ctr_Principal extends CI_Controller {
             }
         }
     }
+
+
      public function AtencionServicio(){
         $this->form_validation->set_rules('activacion', 'Activacion', 'required');
          if($this->form_validation->run() == false){
              redirect('Inicio');
          }else{
              $activacion = $this->input->post('activacion');
-<<<<<<< HEAD
-             $data['servicio'] = $this->Mdl_Consultas->InicioServicio($activacion);
-             if($data['servicio'] != false){
-                 $data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
-                $data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
-                $data['estatus'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Estatus_servicio');
-                $this->load->view('sview_Header');
-                $this->load->view('mview_AtencionServicio',$data);
-                $this->load->view('sview_Footer');
-             }else{
-                 echo '<script>alert("Ocurrio un error al validar el código de activación")</script>';
-             }
-         }
-    }
-		//PRUEBA DATATABLE
-		public function ajax_list(){
-		 $list = $this->Mdl_funciones->get_datatables();
-		 $data = array();
-		 $no = $_POST['start'];
-		 foreach ($list as $usuario) {
-				 $no++;
-				 $row = array();
-				 $row[] = $usuario->Usuario;
-				 $row[] = $usuario->Perfil;
-				 $row[] = $usuario->Estatus;
-
-
-				 //add html for action
-				 $row[] = '<a class="btn btn-sm btn-warning" href="javascript:void()" title="Edit" onclick="editEstudiante('."'".$usuario->id_usuario."'".')"> Editar</a>';
-				 $data[] = $row;
-		 }
-		 $output = array(
-										 "draw" => $_POST['draw'],
-										 "recordsTotal" => $this->Mdl_funciones->count_all(),
-										 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
-										 "data" => $data,
-						 );
-		 //output to json format
-		 echo json_encode($output);
- }
-
- public function ajax_edit($id){
-       $data = $this->Mdl_funciones->get_by_id($id);
-       echo json_encode($data);
-   }
-
-   public function ajax_delete($id){
-       $this->Mdl_funciones->delete_by_id($id);
-       echo json_encode(array("status" => TRUE));
-   }
-
-   public function ajax_list_delete(){
-        $list_id = $this->input->post('id');
-        foreach ($list_id as $id) {
-            $this->Mdl_funciones->delete_by_id($id);
-        }
-        echo json_encode(array("status" => TRUE));
-    }
-
-	}
-=======
 						 // valida que exista un servicio con el codigo de activacion proporcionado
              $servicioValido = $this->Mdl_Consultas->Servicio($activacion);
 
@@ -213,7 +154,8 @@ class Ctr_Principal extends CI_Controller {
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
 				 }
     	}
-		}
+	}
+
 		public function ActualizarServicio($folio){
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
@@ -238,6 +180,53 @@ class Ctr_Principal extends CI_Controller {
 				}
 			}
 		}
-}
->>>>>>> master
+
+
+//PRUEBA DATATABLE
+		public function ajax_list(){
+		 $list = $this->Mdl_funciones->get_datatables();
+		 $data = array();
+		 $no = $_POST['start'];
+		 foreach ($list as $usuario) {
+				 $no++;
+				 $row = array();
+				 $row[] = $usuario->Usuario;
+				 $row[] = $usuario->Perfil;
+				 $row[] = $usuario->Estatus;
+
+
+				 //add html for action
+				 $row[] = '<a class="btn btn-sm btn-warning" href="javascript:void()" title="Edit" onclick="editEstudiante('."'".$usuario->id_usuario."'".')"> Editar</a>';
+				 $data[] = $row;
+		 }
+		 $output = array(
+										 "draw" => $_POST['draw'],
+										 "recordsTotal" => $this->Mdl_funciones->count_all(),
+										 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
+										 "data" => $data,
+						 );
+		 //output to json format
+		 echo json_encode($output);
+ }
+
+ public function ajax_edit($id){
+       $data = $this->Mdl_funciones->get_by_id($id);
+       echo json_encode($data);
+   }
+
+   public function ajax_delete($id){
+       $this->Mdl_funciones->delete_by_id($id);
+       echo json_encode(array("status" => TRUE));
+   }
+
+   public function ajax_list_delete(){
+        $list_id = $this->input->post('id');
+        foreach ($list_id as $id) {
+            $this->Mdl_funciones->delete_by_id($id);
+        }
+        echo json_encode(array("status" => TRUE));
+    }
+
+
+	}
 ?>
