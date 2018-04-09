@@ -25,177 +25,40 @@
 <script src="<?php echo base_url()?>javascript/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url()?>js/jquery-mask.js"></script>
 
-<script type="text/javascript">
-  var save_method; //for save method string
-  var table;
-
-// Initialise a datepicker
-
-   $(function() {
-     $("#datepicker").datepicker();
-   });
-
-$(document).ready(function() {
-    //datatables
-    table = $('#table').DataTable({
-
-        "processing": true, //Feature control the processing indicator.
-        "serverSide": true, //Feature control DataTables' server-side processing mode.
-        "order": [], //Initial no order.
-
-        // Load data for the table's content from an Ajax source
-        "ajax": {
-            "url": "Ctr_Principal/ajax_list",
-            "type": "POST"
-        },
-
-        //Set column definition initialisation properties.
-        "columnDefs": [
-            {
-                "targets": [ 0 ], //first column
-                "orderable": false, //set not orderable
-            },
-            {
-                "targets": [ -1 ], //last column
-                "orderable": false, //set not orderable
-            },
-
-        ],
+<script src="http://localhost/crud-demo/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://localhost/crud-demo/assets/datatables/js/dataTables.bootstrap.js"></script>
 
 
-    });
-    //set input/textarea/select event when change value, remove class error and remove text help block
-    $("input").change(function(){
-        $(this).parent().parent().removeClass('has-error');
-        $(this).next().empty();
-    });
-    $("textarea").change(function(){
-        $(this).parent().parent().removeClass('has-error');
-        $(this).next().empty();
-    });
-    $("select").change(function(){
-        $(this).parent().parent().removeClass('has-error');
-        $(this).next().empty();
-    });
-
-    //check all
-    $("#check-all").click(function () {
-        $(".data-check").prop('checked', $(this).prop('checked'));
-        showBottomDelete();
-    });
-});
-
-function showBottomDelete()
-{
-  var total = 0;
-
-  $('.data-check').each(function()
-  {
-     total+= $(this).prop('checked');
-  });
-
-  if (total > 0)
-      $('#deleteList').show();
-  else
-      $('#deleteList').hide();
-}
-
-function eliminarUsuario(id)
-{
-    if(confirm('¿Esta Seguro de Eliminar al Usuario?'))
-    {
-        // ajax delete data to database
-        $.ajax({
-            url : "Ctr_Principal/ajax_delete/"+id,
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                reloadTable();
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error deleting data');
-            }
-        });
-
-    }
-}
-
-function deleteList()
-{
-    var list_id = [];
-    $(".data-check:checked").each(function() {
-            list_id.push(this.value);
-    });
-    if(list_id.length > 0)
-    {
-        if(confirm('¿Esta Seguro de Eliminar la Lista con '+list_id.length+' Datos?'))
-        {
-            $.ajax({
-                type: "POST",
-                data: {id:list_id},
-                url: "Ctr_Principal/ajax_list_delete",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    if(data.status)
-                    {
-                        reloadTable();
-                    }
-                    else
-                    {
-                        alert('Failed.');
-                    }
-
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error deleting data');
-                }
-            });
-        }
-    }
-    else
-    {
-        alert('no data selected');
-    }
-}
-</script>
-
-
-
-
-
+<!-- Modal Agregar Usuario  -->
 <div class="modal fade" id="modal1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
           <h5 class="modal-title">Alta de Usuarios</h5>
-        <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+          <button type="button" class="close" data-dismiss="modal" arial-label="Close">
           &times;
-        </button>
+          </button>
       </div>
       <div class="modal-body">
-        <?php echo form_open("Ctr_Principal/add");?>
+        <?php $prm=array('onsubmit'=>'return Validar()') ?>
+        <?php echo form_open("Ctr_Principal/add", $prm);?>
 
             <div class="col-12 bg-white">
                 <div class="row">
 
                     <div class="form-group col-sm-12">
                         <label for="Nombre">Nombre:</label>
-                        <input class=" form-control" type = "text"  name = "Usuario" required>
+                        <input class=" form-control" type = "text"  name = "Usuario1"  id="Nombre"required>
                     </div>
+
                     <div class="form-group col-sm-12">
                             <label for="Correo">Correo Electrónico:</label>
-                            <input  class="form-control" type="email" name="Correo">
+                            <input  class="form-control" type="email" name="Correo1" id="Correo">
                     </div>
 
                     <div class="form-group col-sm-12">
                             <label for="Perfil">Perfil del Usuario:</label>
-                            <select name="Perfil" class="form-control"  required>
+                            <select name="Perfil1" class="form-control" id="Perfil"  required>
                               <?php
                                 $this->Mdl_funciones->Select("Perfil_Usuario",$Tipos);
                                ?>
@@ -204,22 +67,22 @@ function deleteList()
 
                     <div class="form-group col-sm-12">
                     <label for="ContraseñaU" >Contraseña del Usuario:</label>
-        				 	  <input class="form-control" type="password" name="Contraseña"  required>
+        				 	  <input class="form-control" type="password" name="Contraseña1"  id="ContraseñaU"  required>
                     </div>
 
                     <div class="form-group col-sm-12">
                     <label for="ContraseñaC">Confirmar Contraseña:</label>
-        				 	  <input class="form-control" type="password" name="contraseñaC" required>
+        				 	  <input class="form-control" type="password" name="ContraseñaC" id="ContraseñaC" required>
                     </div>
 
                     <div class="form-group col-sm-12">
                            <label for="Fecha_Alta">Fecha de Alta:</label>
-                           <input class="form-control" type="date" name="Fecha_alta" min="1950-01-01" max="2100-01-01" disabled>
+                           <input class="form-control" type="date" name="Fecha_alta" min="1950-01-01" max="2100-01-01" id="Fecha_Alta" disabled>
                     </div>
 
                     <div class="form-group col-sm-12">
                       <label for="Estatus">Estatus:</label>
-                      <select name="Estatus" class="form-control" placeholder="Selecciona una Opción" required>
+                      <select name="Estatus1" class="form-control" placeholder="Selecciona una Opción"  id="Estatus" required>
                         <?php
                           $this->Mdl_funciones->Select("Estatus_usuario",$Tipos);
                          ?>
@@ -238,3 +101,79 @@ function deleteList()
     </div>
   </div>
 </div>
+
+<!--  Modal Editar Usuarios -->
+<div class="modal " id="modal_form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" arial-label="Close">
+                  &times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="form">
+                    <input type="hidden" value="" name="id"/>
+
+                      <div class="col-12 bg-white">
+                          <div class="row">
+
+                      <div class="form-group col-sm-12">
+                              <input name="id_usuario" class="form-control" type="hidden">
+                      </div>
+
+                        <div class="form-group col-sm-12">
+                            <label for="NombreE">Nombre:</label>
+                          <input class=" form-control" type = "text"  name = "Usuario" id="NombreE" required>
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                                <label for="CorreoE">Correo Electrónico:</label>
+                                <input  class="form-control" type="email" name="Correo" id="CorreoE">
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                                <label for="PerfilE">Perfil del Usuario:</label>
+                                <select name="Perfil" class="form-control" id="PerfilE"  required>
+                                  <?php
+                                    $this->Mdl_funciones->Select("Perfil_Usuario",$Tipos);
+                                   ?>
+                                </select>
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                        <label for="ContraseñaUE" >Contraseña del Usuario:</label>
+            				 	  <input class="form-control" type="password" name="Contraseña" id="ContraseñaUE" required>
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                          <label for="ContraseñaCE">Confirmar Contraseña:</label>
+                          <input class="form-control" type="password" name="Contraseña" id="ContraseñaCE" required>
+                        </div>
+
+
+                        <div class="form-group col-sm-12">
+                               <label for="Fecha_AltaE">Fecha de Alta:</label>
+                               <input class="form-control" type="text" name="Fecha_alta" min="1950-01-01" max="2100-01-01"  id="Fecha_AltaE" disabled>
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                          <label for="EstatusE">Estatus:</label>
+                          <select name="Estatus" class="form-control" placeholder="Selecciona una Opción" id="EstatusE" required>
+                            <?php
+                              $this->Mdl_funciones->Select("Estatus_usuario",$Tipos);
+                             ?>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+              </div>
+
+            <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="save()" class="btn btn-primary form-control">Guardar</button>
+                <button  type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

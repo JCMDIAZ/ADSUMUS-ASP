@@ -9,7 +9,7 @@ class Ctr_Principal extends CI_Controller {
 		$this->load->model('Mdl_funciones');
 		$this->load->model('Mdl_Consultas');
 		$this->load->database();
-        $this->load->library('email');
+    $this->load->library('email');
 	}
 
 	public function Index(){
@@ -28,8 +28,14 @@ class Ctr_Principal extends CI_Controller {
 	}
 
 		public function add(){
+		$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]');
+		if ($this->form_validation->run() == true) {
 		$this->load->model('Mdl_funciones');
 		$this->Mdl_funciones->insertPrueba();
+	}
+		else {
+		echo "<script>alert('¡Correo Existente!');window.location.href='javascript:history.back(-1);'</script>";
+		}
 	}
 
 	public function Levantamiento(){
@@ -193,17 +199,15 @@ class Ctr_Principal extends CI_Controller {
 				 $row[] = $usuario->Usuario;
 				 $row[] = $usuario->Perfil;
 				 $row[] = $usuario->Estatus;
-
-
 				 //add html for action
-				 $row[] = '<a class="btn btn-sm btn-warning" href="javascript:void()" title="Edit" onclick="editEstudiante('."'".$usuario->id_usuario."'".')"> Editar</a>';
+				 $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
 				 $data[] = $row;
 		 }
 		 $output = array(
 										 "draw" => $_POST['draw'],
 										 "recordsTotal" => $this->Mdl_funciones->count_all(),
 										 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
-										 "data" => $data,
+										 "data" => $data
 						 );
 		 //output to json format
 		 echo json_encode($output);
@@ -214,18 +218,20 @@ class Ctr_Principal extends CI_Controller {
        echo json_encode($data);
    }
 
-   public function ajax_delete($id){
-       $this->Mdl_funciones->delete_by_id($id);
-       echo json_encode(array("status" => TRUE));
-   }
+	 public function ajax_update()
+  {
 
-   public function ajax_list_delete(){
-        $list_id = $this->input->post('id');
-        foreach ($list_id as $id) {
-            $this->Mdl_funciones->delete_by_id($id);
-        }
-        echo json_encode(array("status" => TRUE));
-    }
+      $data = array(
+              'Usuario' => $this->input->post('Usuario'),
+              'Correo' => $this->input->post('Correo'),
+              'Perfil' => $this->input->post('Perfil'),
+              'Contraseña' => $this->input->post('Contraseña'),
+              'Contraseña' => $this->input->post('Contraseña'),
+              'Estatus' => $this->input->post('Estatus')
+          );
+      $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);
+      echo json_encode(array("status" => TRUE));
+  }
 
 
 	}
