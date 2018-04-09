@@ -15,3 +15,5 @@ $route['Inicio']= 'Ctr_Principal/ModuloU';
 $route['Levantamiento_servicio']= 'Ctr_Principal/Levantamiento';
 $route['Atencion_servicio']= 'Ctr_Principal/AtencionServicio';
 $route['ActualizarServicio/(:num)']= 'Ctr_Principal/ActualizarServicio/$1';
+$route['Terminado']= 'Ctr_Principal/TerminarServicio';
+$route['Evaluacion_servicio/(:num)']= 'Ctr_Principal/Evaluacion_servicio/$1';

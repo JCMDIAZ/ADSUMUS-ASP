@@ -7,8 +7,8 @@
 		}
 				// Obtener datos del servicio proporcionando codigo
 				// de Activacion
-				function Servicio($codigo){
-					$condicion = "Codigo_activacion = '".$codigo."'";
+				function Servicio($codigo,$tipo){
+					$condicion = "Codigo_".$tipo." = '".$codigo."'";
 					$this->db->where($condicion);
 					$query = $this->db->get('t_dat_servicios');
 					if ($query->num_rows() == 1) {
@@ -106,11 +106,11 @@
         }
 
         // Verifica el codigo de activacion, inserta la fecha de inicio del servicio
-        // , cambia el estatus a iniciado y retorna los datos
-        function InicioServicio($codigo){
-            $condicion = "Codigo_activacion = ".$codigo;
+        // , cambia el estatus a iniciado o terminado y retorna los datos
+        function InicioServicio($codigo,$tipo,$estatus){
+            $condicion = "Codigo_".$tipo." = ".$codigo;
             // Actualizamos el estatus del servicio
-            $this->db->set('Estatus_servicio', 'Iniciado');
+            $this->db->set('Estatus_servicio', $estatus);
             $this->db->where($condicion);
             $this->db->update('t_dat_servicios');
 
