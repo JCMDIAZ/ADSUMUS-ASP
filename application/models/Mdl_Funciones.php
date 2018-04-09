@@ -30,20 +30,22 @@
             }
         }
 
-				public function insertPrueba(){
-     //Aquí capturas los datos recibidos
-        $data = array(
-        'Usuario'=>$this->input->post('Usuario'),
-        'Contraseña'=>$this->input->post('Contraseña'),
-        'Perfil'=>$this->input->post('Perfil'),
-				'Correo'=>$this->input->post('Correo'),
-				'Estatus'=>$this->input->post('Estatus'),
-         );
 
+
+				public function insertPrueba(){
+        $data = array(
+        'Usuario'=>$this->input->post('Usuario1'),
+        'Contraseña'=>$this->input->post('Contraseña1'),
+        'Perfil'=>$this->input->post('Perfil1'),
+				'Correo'=>$this->input->post('Correo1'),
+				'Estatus'=>$this->input->post('Estatus1')
+         );
         $this->db->insert("t_dat_usuarios",$data);
 				echo "<script>alert('¡Se Agrego Correctamente!');</script>";
-				redirect('Inicio', 'refresh');
-        }
+				}
+
+
+
 
 
 				//Funciones del DATA-TABLE
@@ -115,5 +117,13 @@
 
         return $query->row();
     }
+
+		public function update($where, $data)
+	{
+			$this->db->update($this->table, $data, $where);
+			return $this->db->affected_rows();
+	}
+
+
 }
 ?>
