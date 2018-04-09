@@ -71,7 +71,7 @@
                 </textarea>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
-                <label for="fecha_cita_posterior">Fecha cita posterior</label>
+                <label for="fecha_cita_posterior">Fecha Cita Posterior</label>
                 <input type="date" class="form-control" id="fecha_cita_posterior" name="fecha_cita_posterior" disabled>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
