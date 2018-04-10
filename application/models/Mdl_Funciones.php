@@ -15,22 +15,29 @@
 				return 0;
 			}
         }
-        function Select($nombre,$select,$def ="123qwe"){
-          echo '<option  value="" disabled selected>Selecciona una Opción</option>';
-            foreach ($select->result() as $tipo) {
 
-                if($tipo->Campo == $nombre){
-                    if($tipo->Descripcion == $def){
-                        echo '<option value="'.$tipo->Descripcion.'" selected >'.$tipo->Descripcion.'</option>';
-                    }else{
-                        echo '<option value="'.$tipo->Descripcion.'" >'.$tipo->Descripcion.'</option>';
-                    }
+    function Select($nombre,$select,$def ="123qwe"){
+      echo '<option  value="" disabled selected>Selecciona una Opción</option>';
+        foreach ($select->result() as $tipo) {
+            if($tipo->Campo == $nombre){
+                if($tipo->Descripcion == $def){
+                    echo '<option value="'.$tipo->Descripcion.'" selected >'.$tipo->Descripcion.'</option>';
+                }else{
+                    echo '<option value="'.$tipo->Descripcion.'" >'.$tipo->Descripcion.'</option>';
+                }
 
+            }
+        }
+    }
+
+		function Select2($nombre,$select){
+      echo '<option  value="" disabled selected>Selecciona una Opción</option>';
+        foreach ($select as $tipo) {
+            if($tipo->Perfil == $nombre){
+                    echo '<option value="'.$tipo->id_usuario.'" >'.$tipo->Usuario.'</option>';
                 }
             }
         }
-
-
 
 				public function insertPrueba(){
         $data = array(
@@ -43,10 +50,6 @@
         $this->db->insert("t_dat_usuarios",$data);
 				echo "<script>alert('¡Se Agrego Correctamente!');</script>";
 				}
-
-
-
-
 
 				//Funciones del DATA-TABLE
 				var $table = 't_dat_usuarios';
