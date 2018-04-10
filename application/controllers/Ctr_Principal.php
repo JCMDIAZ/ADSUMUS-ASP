@@ -263,8 +263,10 @@ class Ctr_Principal extends CI_Controller {
    }
 
 
+
 	 public function ajax_update()
   {
+
 
       $data = array(
               'Usuario' => $this->input->post('Usuario'),
@@ -277,5 +279,15 @@ class Ctr_Principal extends CI_Controller {
       $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);
       echo json_encode(array("status" => TRUE));
   }
+  
+
+	//Inicio de Funciones de Listado del Servicios
+		public function ListadoServicios(){
+			$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
+			$this->load->view('sview_Header');
+			$this->load->view('sview_ListadoServicios',$datos);
+			$this->load->view('sview_Footer');
+		}
 	}
 ?>

@@ -7,9 +7,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="utf-8">
     <title>Adsumus</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
+
     <link rel="stylesheet" href="<?php echo base_url()?>css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
     <link rel="stylesheet" href="<?php echo base_url()?>css/estilos.css">
 
     <script src="<?php echo base_url()?>js/JQuery.js"></script>
@@ -40,6 +41,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php } ?>
           <li class="nav-item">
             <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Listado_Servicios">Listado de Servicios</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="Logout">Cerrar Sesión</a>
