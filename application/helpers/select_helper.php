@@ -73,5 +73,4 @@ function NumeroAleatorio(){
     }
     return end($valoresRandom);
 }
-
 ?>

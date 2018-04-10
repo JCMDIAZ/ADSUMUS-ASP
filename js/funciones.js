@@ -35,15 +35,15 @@ function ActualizarDatos(url, datos) {
 	});
 }
 
-function Validar(){
+function Validar() {
 	var pass1 = document.getElementById("ContraseñaU").value;
-	 var pass2 = document.getElementById("ContraseñaC").value;
-	 var ok = true;
-	 if (pass1 != pass2) {
-			 alert("Las Contraseñas no Coiciden");
-			 document.getElementById("ContraseñaU").style.borderColor = "#E34234";
-			 document.getElementById("ContraseñaC").style.borderColor = "#E34234";
-			 ok = false;
-	 }
-	 return ok;
+	var pass2 = document.getElementById("ContraseñaC").value;
+	var ok = true;
+	if (pass1 != pass2) {
+		alert("Las Contraseñas no Coiciden");
+		document.getElementById("ContraseñaU").style.borderColor = "#E34234";
+		document.getElementById("ContraseñaC").style.borderColor = "#E34234";
+		ok = false;
+	}
+	return ok;
 }

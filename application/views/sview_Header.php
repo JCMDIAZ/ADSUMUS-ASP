@@ -29,18 +29,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-         <?php ?>
+         <?php $this->ci =& get_instance();
+         if ($this->ci->uri->segment(1)== 'Inicio') {?>
           <li class="nav-item active">
-            <a class="nav-link" href="Inicio">Inicio</a>
+            <a class="nav-link" href="Inicio" >Inicio</a>
           </li>
-          <?php if($this->session->userdata('perfil')=='Administrador') { ?>
+        <?php }else{ ?>
+          <li class="nav-item">
+            <a class="nav-link" href="Inicio" >Inicio</a>
+          </li>
+        <?php }
+        if($this->session->userdata('perfil')=='Administrador' and $this->ci->uri->segment(1)== 'Levantamiento_servicio') { ?>
+          <li class="nav-item active">
+            <a class="nav-link" href="Levantamiento_servicio">Servicios</a>
+          </li>
+        <?php }elseif($this->session->userdata('perfil')=='Administrador'){ ?>
           <li class="nav-item">
             <a class="nav-link" href="Levantamiento_servicio">Servicios</a>
           </li>
-        <?php } ?>
-          <li class="nav-item">
+        <?php }
+        if ($this->ci->uri->segment(1)=='Atencion_servicio') { ?>
+          <li class="nav-item active">
             <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
           </li>
+        <?php } else{  ?>
+          <li class="nav-item ">
+            <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
+          </li>
+        <?php } ?>
           <li class="nav-item">
             <a class="nav-link" href="Logout">Cerrar Sesión</a>
           </li>
