@@ -13,6 +13,9 @@ footer{
   left: 0;
   z-index: 1030;
 }
+footer.bg-dark{
+  background-color: #2B2B28 !important;
+}
 
 
 .form-signin {
@@ -95,4 +98,7 @@ a:focus, a:hover {
 
 a:active, a:hover {
     outline: 0;
+}
+nav.bg-dark{
+  background-color: #2B2B28 !important;
 }

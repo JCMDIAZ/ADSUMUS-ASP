@@ -229,7 +229,26 @@ class Ctr_Principal extends CI_Controller {
 				}
 		}
 		public function Evaluacion_servicio($folio){
-			$this->load->view('mview_EvaluacionServicio');
+			$this->form_validation->set_rules("evaluacion","Evaluacion","required");
+			$this->form_validation->set_rules("evaluacion2","Evaluacion","required");
+			$this->form_validation->set_rules("evaluacion3","Evaluacion","required");
+			$this->form_validation->set_rules("evaluacion4","Evaluacion","required");
+			if ($this->form_validation->run()==false) {
+				$data['folio'] = $folio;
+				$this->load->view('mview_EvaluacionServicio',$data);
+			}else{
+				$data['f_id_servicio'] = $folio;
+				$data['Pregunta_1'] = $this->input->post('evaluacion');
+				$data['Pregunta_2'] = $this->input->post('evaluacion2');
+				$data['Pregunta_3'] = $this->input->post('evaluacion3');
+				$data['Pregunta_4'] = $this->input->post('evaluacion4');
+				$resultado = $this->Mdl_Consultas->InsertarDatos('t_dat_evaluacion',$data);
+				if ($resultado==true) {
+					$this->load->view('mview_SuccessEval');
+				}else{
+					echo "error";
+				}
+			}
 		}
 
 //PRUEBA DATATABLE
