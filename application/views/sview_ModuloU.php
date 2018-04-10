@@ -25,8 +25,8 @@
 <script src="<?php echo base_url()?>javascript/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url()?>js/jquery-mask.js"></script>
 
-<script src="http://localhost/crud-demo/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="http://localhost/crud-demo/assets/datatables/js/dataTables.bootstrap.js"></script>
+<script src="<?php echo base_url()?>assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url()?>assets/datatables/js/dataTables.bootstrap.js"></script>
 
 
 <!-- Modal Agregar Usuario  -->
