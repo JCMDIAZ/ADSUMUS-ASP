@@ -52,10 +52,6 @@ $csrf = array(
                 </select>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
-                <label for="descripcion_servicio">Descripción del Servicio</label>
-                <textarea class="form-control" id="descripcion_servicio" name="descripcion_servicio" disabled><?php echo $columna->Descripcion_servicio; ?></textarea>
-            </div>
-            <div class="col-md-4 col-sm-6 mb-3">
                 <label for="ejecutivo_asignado">Ejecutivo Asignado</label>
                 <select class="form-control" id="ejecutivo_asignado" name="ejecutivo_asignado" disabled>
                     <?php SelectUsuarios($ejecutivos,$columna->Ejecutivo_asignado); ?>
@@ -66,16 +62,20 @@ $csrf = array(
                 <input type="date" class="form-control" id="fecha_cita_programada" name="fecha_cita_programada" value="<?php echo $columna->Fecha_cita_programada; ?>" disabled>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
+                <label for="fecha_cita_posterior">Fecha cita posterior</label>
+                <input type="date" class="form-control" id="fecha_cita_posterior" name="fecha_cita_posterior" value="<?php echo $columna->Fecha_cita_posterior; ?>" >
+            </div>
+            <div class="col-md-12 col-sm-12 mb-3">
+                <label for="descripcion_servicio">Descripción del Servicio</label>
+                <textarea class="form-control" id="descripcion_servicio" name="descripcion_servicio" disabled><?php echo $columna->Descripcion_servicio; ?></textarea>
+            </div>
+            <div class="col-md-12 col-sm-12 mb-3">
                 <label for="observaciones">Observaciones</label>
                 <textarea class="form-control" id="observaciones" name="observaciones" ><?php echo $columna->Observaciones; ?></textarea>
             </div>
-            <div class="col-md-4 col-sm-6 mb-3">
+            <div class="col-md-12 col-sm-12 mb-3">
                 <label for="material_utilizado">Material Utilizado</label>
                 <textarea class="form-control" id="material_utilizado" name="material_utilizado"><?php echo $columna->Material_utilizado; ?></textarea>
-            </div>
-            <div class="col-md-4 col-sm-6 mb-3">
-                <label for="fecha_cita_posterior">Fecha cita posterior</label>
-                <input type="date" class="form-control" id="fecha_cita_posterior" name="fecha_cita_posterior" value="<?php echo $columna->Fecha_cita_posterior; ?>" >
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="fecha_hora_inicio">Fecha y Hora de Inicio</label>
