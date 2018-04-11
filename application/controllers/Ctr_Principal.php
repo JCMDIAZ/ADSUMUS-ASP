@@ -155,7 +155,9 @@ class Ctr_Principal extends CI_Controller {
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
 				 }
     	}
-		}
+
+	}
+
 		public function ActualizarServicio($folio){
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
@@ -299,6 +301,8 @@ class Ctr_Principal extends CI_Controller {
 		}
 }
 //PRUEBA DATATABLE
+
+//DATATABLE
 		public function ajax_list(){
 		 $list = $this->Mdl_funciones->get_datatables();
 		 $data = array();
@@ -351,6 +355,7 @@ class Ctr_Principal extends CI_Controller {
 		public function ListadoServicios(){
 			$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
 			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
+			$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
 			$this->load->view('sview_Header');
 			$this->load->view('sview_ListadoServicios',$datos);
 			$this->load->view('sview_Footer');
