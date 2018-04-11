@@ -11,7 +11,7 @@ $route['Nuevo']= 'Ctr_Principal/ModuloU';
 $route['Login']= 'Ctr_Login/Login';
 $route['Logout'] = 'Ctr_Login/Logout';
 
-$route['Inicio']= 'Ctr_Principal/ModuloU';
+$route['Inicio']= 'Ctr_Principal/ListadoServicios';
 $route['Levantamiento_servicio']= 'Ctr_Principal/Levantamiento';
 $route['Atencion_servicio']= 'Ctr_Principal/AtencionServicio';
 $route['ActualizarServicio/(:num)']= 'Ctr_Principal/ActualizarServicio/$1';
@@ -21,4 +21,3 @@ $route['Listado_Servicios']= 'Ctr_Principal/ListadoServicios';
 
 $route['Terminado']= 'Ctr_Principal/TerminarServicio';
 $route['Evaluacion_servicio/(:num)']= 'Ctr_Principal/Evaluacion_servicio/$1';
-

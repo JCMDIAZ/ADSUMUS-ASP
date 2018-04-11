@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <link rel="stylesheet" href="<?php echo base_url()?>css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
+    <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
     <link rel="stylesheet" href="<?php echo base_url()?>css/estilos.css">
 
     <script src="<?php echo base_url()?>js/JQuery.js"></script>
@@ -33,20 +33,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <?php $this->ci =& get_instance();
          if ($this->ci->uri->segment(1)== 'Inicio') {?>
           <li class="nav-item active">
-            <a class="nav-link" href="Inicio" >Inicio</a>
+            <a class="nav-link" href="Inicio" >Servicios</a>
           </li>
         <?php }else{ ?>
           <li class="nav-item">
-            <a class="nav-link" href="Inicio" >Inicio</a>
+            <a class="nav-link" href="Inicio" >Servicios</a>
           </li>
         <?php }
-        if($this->session->userdata('perfil')=='Administrador' and $this->ci->uri->segment(1)== 'Levantamiento_servicio') { ?>
+        if($this->ci->uri->segment(1)== 'ModuloU') {
+        ?>
+        <li class="nav-item active">
+          <a class="nav-link" href="ModuloU">Usuarios</a>
+        </li>
+        <?php
+      }else {
+        ?><li class="nav-item">
+          <a class="nav-link" href="ModuloU">Usuarios</a>
+        </li>
+        <?php
+      }
+      if ($this->session->userdata('perfil')=='Administrador' and $this->ci->uri->segment(1)== 'Levantamiento_servicio') {
+
+         ?>
           <li class="nav-item active">
-            <a class="nav-link" href="Levantamiento_servicio">Servicios</a>
+            <a class="nav-link" href="Levantamiento_servicio">Levantar Servicio</a>
           </li>
         <?php }elseif($this->session->userdata('perfil')=='Administrador'){ ?>
           <li class="nav-item">
-            <a class="nav-link" href="Levantamiento_servicio">Servicios</a>
+            <a class="nav-link" href="Levantamiento_servicio">Levantar Servicio</a>
           </li>
         <?php }
         if ($this->ci->uri->segment(1)=='Atencion_servicio') { ?>
@@ -58,9 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
           </li>
         <?php } ?>
-          <li class="nav-item">
-            <a class="nav-link" href="Listado_Servicios">Listado de Servicios</a>
-          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="Logout">Cerrar Sesión</a>
           </li>

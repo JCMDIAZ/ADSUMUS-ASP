@@ -13,9 +13,11 @@ class Ctr_Principal extends CI_Controller {
 	}
 
 	public function Index(){
+		$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
 		$datos['Tipos'] = $this->Mdl_funciones->Tipos();
+		$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
 		$this->load->view('sview_Header');
-		$this->load->view('sview_ModuloU',$datos);
+		$this->load->view('sview_ListadoServicios',$datos);
 		$this->load->view('sview_Footer');
 	}
 
@@ -153,14 +155,12 @@ class Ctr_Principal extends CI_Controller {
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
 				 }
     	}
-<<<<<<< HEAD
+
 	}
 
-	public function ActualizarServicio($folio){
-=======
-		}
+
 		public function ActualizarServicio($folio){
->>>>>>> 767a0bb664229b9e72c5d4cc47f27d84868f0155
+
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
 			$servicio = $this->Mdl_Consultas->ServicioFolio($folio);
@@ -269,7 +269,7 @@ class Ctr_Principal extends CI_Controller {
 				 $row[] = $usuario->Perfil;
 				 $row[] = $usuario->Estatus;
 				 //add html for action
-				 $row[] = '<a class="btn btn-sm btn-warning"  title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
+				 $row[] = '<a class="btn btn-sm btn-warning" title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
 				 $data[] = $row;
 		 }
 		 $output = array(
@@ -304,7 +304,7 @@ class Ctr_Principal extends CI_Controller {
       $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);
       echo json_encode(array("status" => TRUE));
   }
-  
+
 
 	//Inicio de Funciones de Listado del Servicios
 		public function ListadoServicios(){
