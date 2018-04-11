@@ -16,12 +16,7 @@ body {
 }
 
 #regForm {
-  background-color: #ffffff;
-  margin: 100px auto;
-  font-family: Raleway;
-  padding: 40px;
-  width: 70%;
-  min-width: 300px;
+  padding: 0px 80px 20px 80px;
 }
 
 h1 {
@@ -90,13 +85,57 @@ h4{
 p{
   text-align: center;
 }
+div.wizard{
+  background-color: #ffffff;
+  margin: 100px auto;
+  font-family: Raleway;
+  width: 70%;
+  min-width: 300px;
+}
+div.titulo{
+  padding-top: 10px;
+  background-color: #2B2B28;
+  color: #ffffff;
+}
+.logo{
+  float: left;
+  background-image: url("../img/adsumus-logo.png");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 55px;
+  padding-left: 30px;
+}
+
+.clearfix{
+  content: '';
+  clear: both;
+  display: block;
+}
+div.custom-control{
+  margin-bottom: 5px;
+}
+div.custom-control:last-child{
+  margin-bottom: 0px;
+}
+@media only screen and (max-width:600px){
+  .logo{
+    background-position: center;
+  }
+  h4{
+    font-size: 1em;
+  }
+}
 </style>
 <body>
 <input type="hidden" name="folio" value="<?php echo $folio; ?>" id="folio">
-<form id="regForm" action="" method="post">
-  <h1 class="display-5">ADSUMUS</h1>
-  <h4>Evaluación del servicio prestado</h4>
-  <hr>
+  <div class="wizard">
+    <div class="titulo clearfix">
+      <div class="logo">
+      </div>
+      <h4 class="">Evaluación del servicio prestado</h4>
+      <hr>
+    </div>
+  <form id="regForm" action="" method="post">
   <!-- One "tab" for each step in the form: -->
   <div class="tab">
     <h5>Como calificas el servicio prestado?</h5>
@@ -121,7 +160,7 @@ p{
         <label class="custom-control-label" for="deficiente">Deficiente</label>
       </div>
     </div>
-    <div class="tab">
+  <div class="tab">
       <h5>Como calificas el servicio prestado por el ejecutivo?</h5>
     <div class="custom-control custom-radio">
       <input type="radio" name="evaluacion2" value="5" class="custom-control-input" id="excelente2" onchange="this.className='custom-control-input '" required>
@@ -167,34 +206,34 @@ p{
         <label class="custom-control-label" for="deficiente3">Deficiente</label>
       </div>
     </div>
-    <div class="tab">
-    <h5>Como calificas el tiempo que se realizo el servicio?</h5>
-    <div class="custom-control custom-radio">
-      <input type="radio" name="evaluacion4" value="5" class="custom-control-input" onchange="this.className='custom-control-input '" id="excelente4" required>
-      <label class="custom-control-label" for="excelente4">Excelente</label>
+  <div class="tab">
+      <h5>Como calificas el tiempo que se realizo el servicio?</h5>
+      <div class="custom-control custom-radio">
+        <input type="radio" name="evaluacion4" value="5" class="custom-control-input" onchange="this.className='custom-control-input '" id="excelente4" required>
+        <label class="custom-control-label" for="excelente4">Excelente</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" name="evaluacion4" value="4" class="custom-control-input" onchange="this.className='custom-control-input '" id="muybueno4" required>
+        <label class="custom-control-label" for="muybueno4">Muy Bueno</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" name="evaluacion4" value="3" class="custom-control-input" onchange="this.className='custom-control-input '" id="bueno4" required>
+        <label class="custom-control-label" for="bueno4">Bueno</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" name="evaluacion4" value="2" class="custom-control-input" onchange="this.className='custom-control-input '" id="regular4" required>
+        <label class="custom-control-label" for="regular4">Regular</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" name="evaluacion4" value="1" class="custom-control-input" onchange="this.className='custom-control-input '" id="deficiente4" required>
+        <label class="custom-control-label" for="deficiente4">Deficiente</label>
+      </div>
     </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" name="evaluacion4" value="4" class="custom-control-input" onchange="this.className='custom-control-input '" id="muybueno4" required>
-      <label class="custom-control-label" for="muybueno4">Muy Bueno</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" name="evaluacion4" value="3" class="custom-control-input" onchange="this.className='custom-control-input '" id="bueno4" required>
-      <label class="custom-control-label" for="bueno4">Bueno</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" name="evaluacion4" value="2" class="custom-control-input" onchange="this.className='custom-control-input '" id="regular4" required>
-      <label class="custom-control-label" for="regular4">Regular</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input type="radio" name="evaluacion4" value="1" class="custom-control-input" onchange="this.className='custom-control-input '" id="deficiente4" required>
-      <label class="custom-control-label" for="deficiente4">Deficiente</label>
-    </div>
-  </div>
-  <div style="overflow:auto;">
-    <div style="float:right;">
-      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-    </div>
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+      </div>
   </div>
   <!-- Circles which indicates the steps of the form: -->
   <div style="text-align:center;margin-top:40px;">
@@ -204,7 +243,7 @@ p{
     <span class="step"></span>
   </div>
 </form>
-
+</div>
 <script>
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the crurrent tab

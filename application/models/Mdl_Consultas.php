@@ -31,6 +31,21 @@
 					}
 				}
 
+				// Duplicar servicio
+				function Duplicar($tabla,$id){
+					$query = "INSERT INTO ".$tabla."(f_id_usuario,Razon_social_cliente,Nombre_solicitante,Correo_solicitante,
+Direccion_cliente,Ubicacion_servicio,Telefono_solicitante,Tipo_servicio,Descripcion_servicio,
+Ejecutivo_asignado,Observaciones,Material_utilizado) SELECT f_id_usuario,Razon_social_cliente,Nombre_solicitante,Correo_solicitante,
+Direccion_cliente,Ubicacion_servicio,Telefono_solicitante,Tipo_servicio,Descripcion_servicio,
+Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_servicio=".$id;
+					$resultado = $this->db->query($query);
+					if ($resultado == true) {
+						return true;
+					}else{
+						return false;
+					}
+				}
+
         function Login($datos){
             $condicion = "Correo = '".$datos['correo']."' AND Contraseña = '".$datos['contraseña']."'";
             $this->db->where($condicion);
@@ -131,6 +146,28 @@
 					$query = $this->db->update('t_dat_servicios',$data);
 
 					return ($this->db->affected_rows() == 1);
+				}
+
+				// Obtiene el id_servicio del ultimo registro agregado
+				function LastRow(){
+					$this->db->select('id_servicio');
+					$this->db->order_by('id_servicio','DESC');
+					$this->db->limit(1);
+					$query = $this->db->get('t_dat_servicios')->row()->id_servicio;
+
+					if ($query != null) {
+						return $query;
+					}else{
+						return false;
+					}
+				}
+				function Datos($tabla){
+					$query = $this->db->get($tabla);
+					if ($query->num_rows()>0) {
+						return $query->result();
+					}else{
+						return false;
+					}
 				}
     }
 ?>

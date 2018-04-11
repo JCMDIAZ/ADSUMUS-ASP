@@ -32,11 +32,10 @@ class Ctr_Principal extends CI_Controller {
 		if ($this->form_validation->run() == true) {
 		$this->load->model('Mdl_funciones');
 		$this->Mdl_funciones->insertPrueba();
-	}
-		else {
-		echo "<script>alert('¡Correo Existente!');window.location.href='javascript:history.back(-1);'</script>";
+		}else{
+			echo "<script>alert('¡Correo Existente!');window.location.href='javascript:history.back(-1);'</script>";
+			}
 		}
-	}
 
 		public function Levantamiento(){
         $this->form_validation->set_rules('nombre_solicitante','Nombre del Solicitante', 'required');
@@ -69,17 +68,20 @@ class Ctr_Principal extends CI_Controller {
             $insertar = $this->Mdl_Consultas->InsertarDatos('t_dat_servicios',$data);
             if($insertar == true){
 							// Manda correo con los codigos de activacion y terminacion, asi como el ejecutivo asignado
-                $para = $data['Correo_solicitante'];
-                $asunto = "Datos sobre el servicio - Adsumus";
-                $body = "<p>Código de Activación: ".$data['Codigo_activacion']."<br><br>Código de Terminacion: ".$data['Codigo_terminacion']."<br><br>Ejecutivo asignado: ".$data['Ejecutivo_asignado']."</p>";
+							$Idservicio = $this->Mdl_Consultas->LastRow();
+							$servicio = $this->Mdl_Consultas->ServicioFolio($Idservicio);
+							foreach ($servicio as $valor) {
+	                $para = $data['Correo_solicitante'];
+	                $asunto = "Datos sobre el servicio - Adsumus";
+	                $body = "<p>Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$data['Codigo_activacion']."<br><br>Código de Terminación: ".$data['Codigo_terminacion']."<br><br>Ejecutivo asignado: ".$data['Ejecutivo_asignado']."</p>";
 
-                $config['mailtype'] = 'html';
-                $this->email->initialize($config);
-                $this->email->from('aldo@vision.com','Aldo Martinez');
-                $this->email->to($para);
-                $this->email->subject($asunto);
-                $this->email->message($body);
-
+	                $config['mailtype'] = 'html';
+	                $this->email->initialize($config);
+	                $this->email->from('aldo@vision.com','Aldo Martinez');
+	                $this->email->to($para);
+	                $this->email->subject($asunto);
+	                $this->email->message($body);
+								}
                 if($this->email->send()){
                     echo '<script> aux = confirm("Se levanto correctamente el servicio \n Desea agregar uno nuevo?");
                     if(aux== true){
@@ -153,14 +155,10 @@ class Ctr_Principal extends CI_Controller {
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
 				 }
     	}
-<<<<<<< HEAD
+
 	}
 
-	public function ActualizarServicio($folio){
-=======
-		}
 		public function ActualizarServicio($folio){
->>>>>>> 767a0bb664229b9e72c5d4cc47f27d84868f0155
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
 			$servicio = $this->Mdl_Consultas->ServicioFolio($folio);
@@ -204,7 +202,7 @@ class Ctr_Principal extends CI_Controller {
 								$servicio = $this->Mdl_Consultas->InicioServicio($terminacion,'terminacion','Terminado');
 								$para = $valor->Correo_solicitante;
 								$asunto = "Finalizacion del servicio - Adsumus";
-								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Evaluacion_servicio/".$valor->id_servicio."'>".base_url()."Evaluacion_servicio</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."Rechazo_servicio'>".base_url()."Rechazo_servicio</a></p>";
+								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Evaluacion_servicio/".$valor->id_servicio."'>".base_url()."Evaluacion_servicio</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."No_satisfaccion_servicio/".$valor->id_servicio."'>".base_url()."No_satisfaccion_servicio/".$valor->id_servicio."</a></p>";
 
 								$this->email->set_mailtype('html');
 								$this->email->from('aldo.martinez@niurons.com.mx', 'Aldo Martinez');
@@ -221,7 +219,7 @@ class Ctr_Principal extends CI_Controller {
 									echo $para;
 								}
 							}else{
-								echo '<script>alert("Código de activación erroneo");
+								echo '<script>alert("Código de activación erróneo");
 										</script>';
 										$data['servicio'] = $resultado;
 										$data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
@@ -256,6 +254,53 @@ class Ctr_Principal extends CI_Controller {
 				}
 			}
 		}
+
+		public function No_satisfaccion($folio){
+			$this->form_validation->set_rules('detalle','Detalle','required|max_length[500]');
+			$this->form_validation->set_rules('fecha','Fecha de cita posterior','required|max_length[500]');
+			if ($this->form_validation->run()==false) {
+				/*$registro = $this->Mdl_Consultas->ServicioFolio($folio);
+				foreach ($registro as $valor) {
+					// Valida si el registro ya ha sido reabierto
+					if ($valor->id_servicio_anterior == 0) {
+						echo "<script>alert('Este servicio con folio ".$valor->id_servicio." ya ha sido reabierto')</script>";
+					}
+				}*/
+				$data['folio'] = $folio;
+				$this->load->view('mview_NoSatisfaccion',$data);
+			}else{
+				$duplicar = $this->Mdl_Consultas->Duplicar('t_dat_servicios',$folio);
+				if ($duplicar==true) {
+					$data['Detalle_reabierto'] = $this->input->post('detalle');
+					$data['Fecha_cita_programada'] = $this->input->post('fecha');
+					$data['Codigo_activacion'] = NumeroAleatorio();
+					$data['Codigo_terminacion'] = NumeroAleatorio();
+					$data['id_servicio_anterior'] = $folio;
+					$IdregistroActualizado = $this->Mdl_Consultas->LastRow();
+					$registroActualizado = $this->Mdl_Consultas->ActualizarServicio($data,$IdregistroActualizado);
+					if ($registroActualizado) {
+						echo $IdregistroActualizado;
+						$reabierto = $this->Mdl_Consultas->ServicioFolio($IdregistroActualizado);
+						foreach ($reabierto as $valor) {
+							$para = $valor->Correo_solicitante;
+							$asunto = "Datos sobre el servicio - Adsumus";
+							$body = "<p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ejecutivo asignado: ".$valor->Ejecutivo_asignado."</p>";
+
+							$config['mailtype'] = 'html';
+							$this->email->initialize($config);
+							$this->email->from('aldo@vision.com','Aldo Martinez');
+							$this->email->to($para);
+							$this->email->subject($asunto);
+							$this->email->message($body);
+						}
+						$this->email->send();
+				}else{
+					echo 'No existe registro con ese folio';
+				}
+			}
+		}
+}
+//PRUEBA DATATABLE
 
 //DATATABLE
 		public function ajax_list(){
@@ -304,7 +349,7 @@ class Ctr_Principal extends CI_Controller {
       $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);
       echo json_encode(array("status" => TRUE));
   }
-  
+
 
 	//Inicio de Funciones de Listado del Servicios
 		public function ListadoServicios(){
