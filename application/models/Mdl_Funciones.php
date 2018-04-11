@@ -6,9 +6,9 @@
 			$this->load->database();
 		}
 
-    function Tipos(){
-            $query= "SELECT * FROM t_cat_catalogos";
-            $query= $this->db->query($query);
+  	function Tipos(){
+      $query= "SELECT * FROM t_cat_catalogos";
+      $query= $this->db->query($query);
 			if ($query->num_rows()>0) {
 				return $query;
 			}else{
@@ -49,6 +49,7 @@
          );
         $this->db->insert("t_dat_usuarios",$data);
 				echo "<script>alert('¡Se Agrego Correctamente!');</script>";
+				redirect('Inicio','refresh');
 				}
 
 				//Funciones del DATA-TABLE
@@ -126,6 +127,17 @@
 			$this->db->update($this->table, $data, $where);
 			return $this->db->affected_rows();
 	}
+
+	function Mostrar($tabla)
+	{
+		$query=$this->db->get($tabla);
+		if ($query->num_rows()>0) {
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
 
 
 }

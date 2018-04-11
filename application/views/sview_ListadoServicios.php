@@ -41,8 +41,32 @@
       </select>
     </div>
     <?php } ?>
+</form>
 
+
+<table id="table2" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr class="table-warning">
+            <th>Folio</th>
+            <th>Fecha de Solicitud</th>
+            <th>Razón Social</th>
+            <th>Ejecutivo Asignado</th>
+            <th>Estatus</th>
+        </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($mostrar as $row): ?>
+    <tr>
+      <td><?php echo $row->id_servicio ?></td>
+      <td><?php echo $row->Fecha_elaboracion ?></td>
+      <td><?php echo $row->Razon_social_cliente ?></td>
+      <td><?php echo $row->Ejecutivo_asignado ?></td>
+      <td><?php echo $row->Estatus_servicio ?></td>
+    </tr>
+      <?php endforeach; ?>
+    </tbody>
+    </tbody>
+</table>
 
 </div>
-</form>
 </div>
