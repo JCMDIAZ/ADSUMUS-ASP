@@ -1,3 +1,9 @@
+<?php
+$csrf = array(
+        'name' => $this->security->get_csrf_token_name(),
+        'hash' => $this->security->get_csrf_hash()
+);
+ ?>
 <div class="container">
    <div class="py-4 text-center">
        <h3>Atención del servicio</h3>
@@ -97,7 +103,6 @@
             </div>
         </div>
     </form>
-    <?php } ?>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="Terminacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
@@ -109,9 +114,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="Atencion_servicio" method="POST">
+      <form action="Terminado" method="POST" id="terminacionForm">
+         <!-- Input oculto que contiene el token que se crea al hacer submit del formulario -->
+          <input type="hidden" name="<?php $csrf['name']; ?>" value="<?php $csrf['hash'];?>" />
           <div class="modal-body">
-              <input type="text" class="form-control codigo" placeholder="Introduce el código de terminación" name="activacion" required>
+              <input type="text" name="servicio_id" value="<?php echo $columna->id_servicio; ?>" hidden>
+              <input type="text" class="form-control codigo" placeholder="Introduce el código de terminación" name="terminacion" required>
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -121,3 +129,4 @@
     </div>
   </div>
 </div>
+<?php } ?>

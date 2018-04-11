@@ -38,7 +38,7 @@ class Ctr_Principal extends CI_Controller {
 		}
 	}
 
-	public function Levantamiento(){
+		public function Levantamiento(){
         $this->form_validation->set_rules('nombre_solicitante','Nombre del Solicitante', 'required');
         $this->form_validation->set_rules('ejecutivo_asignado','Ejecutivo', 'required');
         $this->form_validation->set_rules('correo_solicitante','Correo', 'required');
@@ -68,15 +68,10 @@ class Ctr_Principal extends CI_Controller {
             $data['Codigo_terminacion'] = NumeroAleatorio();
             $insertar = $this->Mdl_Consultas->InsertarDatos('t_dat_servicios',$data);
             if($insertar == true){
-                /*$headers =  'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'From: Aldo Martinez <aldo.mireles.97@gmail.com>' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";*/
-
+							// Manda correo con los codigos de activacion y terminacion, asi como el ejecutivo asignado
                 $para = $data['Correo_solicitante'];
                 $asunto = "Datos sobre el servicio - Adsumus";
-                $body = "Código de Activación: ".$data['Codigo_activacion']."\n Código de Terminacion: ".$data['Codigo_terminacion']."\n Ejecutivo asignado: ".$data['Ejecutivo_asignado'];
-
-                //mail($para,$asunto,$body,$headers);
+                $body = "<p>Código de Activación: ".$data['Codigo_activacion']."<br><br>Código de Terminacion: ".$data['Codigo_terminacion']."<br><br>Ejecutivo asignado: ".$data['Ejecutivo_asignado']."</p>";
 
                 $config['mailtype'] = 'html';
                 $this->email->initialize($config);
@@ -104,16 +99,14 @@ class Ctr_Principal extends CI_Controller {
             }
         }
     }
-
-
-     public function AtencionServicio(){
+    public function AtencionServicio(){
         $this->form_validation->set_rules('activacion', 'Activacion', 'required');
          if($this->form_validation->run() == false){
              redirect('Inicio');
          }else{
              $activacion = $this->input->post('activacion');
 						 // valida que exista un servicio con el codigo de activacion proporcionado
-             $servicioValido = $this->Mdl_Consultas->Servicio($activacion);
+             $servicioValido = $this->Mdl_Consultas->Servicio($activacion,'activacion');
 
 						 if($servicioValido != false){
 							 foreach ($servicioValido as $value) {
@@ -142,7 +135,7 @@ class Ctr_Principal extends CI_Controller {
 										$this->load->view('sview_Footer');
 										break;
 									case 'Solicitado':
-										$data['servicio'] = $this->Mdl_Consultas->InicioServicio($activacion);
+										$data['servicio'] = $this->Mdl_Consultas->InicioServicio($activacion,'activacion','Iniciado');
 										$data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
 										$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
 										$data['estatus'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Estatus_servicio');
@@ -156,37 +149,94 @@ class Ctr_Principal extends CI_Controller {
 								 }
 							 }
          }else{
-					 echo '<script>alert("No existe un servicio con el código de acivación proporcionado")</script>';
+					 echo '<script>alert("No existe un servicio con el código de activación proporcionado")</script>';
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
 				 }
     	}
+<<<<<<< HEAD
 	}
 
 	public function ActualizarServicio($folio){
+=======
+		}
+		public function ActualizarServicio($folio){
+>>>>>>> 767a0bb664229b9e72c5d4cc47f27d84868f0155
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
-
-			// validamos si se introdujo la fecha de cita posterior y de ser asi,
-			// el estatus del servicio se cambia a "Pendiente"
-			if ($this->input->post('fecha_cita_posterior') != null) {
-				$data['Fecha_cita_posterior'] = $this->input->post('fecha_cita_posterior');
-				$data['Estatus_servicio'] = 'Pendiente';
-				$actualizacion = $this->Mdl_Consultas->ActualizarServicio($data,$folio);
-				if ($actualizacion == true) {
-					echo 'pendiente';
-				}else{
-					echo 'error';
-				}
-			}else{
-				$actualizacion = $this->Mdl_Consultas->ActualizarServicio($data,$folio);
-				if ($actualizacion == true) {
-					echo 'ok';
+			$servicio = $this->Mdl_Consultas->ServicioFolio($folio);
+			foreach ($servicio as $columna) {
+				// Valida que por lo menos un campo ha sido modificado
+				if ($columna->Observaciones != $data['Observaciones'] OR $columna->Material_utilizado != $data['Material_utilizado'] OR $columna->Fecha_cita_posterior != $this->input->post('fecha_cita_posterior')) {
+					// validamos si se introdujo la fecha de cita posterior y de ser asi,
+					// el estatus del servicio se cambia a "Pendiente"
+					if ($this->input->post('fecha_cita_posterior') != null) {
+						$data['Fecha_cita_posterior'] = $this->input->post('fecha_cita_posterior');
+						$data['Estatus_servicio'] = 'Pendiente';
+						$actualizacion = $this->Mdl_Consultas->ActualizarServicio($data,$folio);
+						if ($actualizacion == true) {
+							echo 'pendiente';
+						}else{
+							echo 'error';
+						}
+					}else{
+						$actualizacion = $this->Mdl_Consultas->ActualizarServicio($data,$folio);
+						if ($actualizacion == true) {
+							echo 'ok';
+						}else{
+							echo 'error';
+						}
+					}
 				}else{
 					echo 'error';
 				}
 			}
 		}
+		public function TerminarServicio(){
+			$this->form_validation->set_rules("terminacion","Código de terminación","required|max_length[4]");
+			if ($this->form_validation->run() == false) {
 
+			}else{
+					$terminacion = $this->input->post('terminacion');
+					$id = $this->input->post('servicio_id');
+					$resultado = $this->Mdl_Consultas->ServicioFolio($id);
+						foreach ($resultado as  $valor) {
+							if ($valor->Codigo_terminacion === $terminacion) {
+								$servicio = $this->Mdl_Consultas->InicioServicio($terminacion,'terminacion','Terminado');
+								$para = $valor->Correo_solicitante;
+								$asunto = "Finalizacion del servicio - Adsumus";
+								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Evaluacion_servicio/".$valor->id_servicio."'>".base_url()."Evaluacion_servicio</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."Rechazo_servicio'>".base_url()."Rechazo_servicio</a></p>";
+
+								$this->email->set_mailtype('html');
+								$this->email->from('aldo.martinez@niurons.com.mx', 'Aldo Martinez');
+								$this->email->to($para);
+								$this->email->subject($asunto);
+								$this->email->message($body);
+
+								if ($this->email->send()) {
+									echo '<script> aux = alert("Se finalizo correctamente el servicio");
+											window.location.href = "'.base_url().'Inicio";
+											</script>';
+								}else{
+									echo $this->email->print_debugger();
+									echo $para;
+								}
+							}else{
+								echo '<script>alert("Código de activación erroneo");
+										</script>';
+										$data['servicio'] = $resultado;
+										$data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
+										$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+										$data['estatus'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Estatus_servicio');
+										$this->load->view('sview_Header');
+										$this->load->view('mview_AtencionServicio',$data);
+										$this->load->view('sview_Footer');
+							}
+						}
+				}
+		}
+		public function Evaluacion_servicio($folio){
+			$this->load->view('mview_EvaluacionServicio');
+		}
 
 //DATATABLE
 		public function ajax_list(){
@@ -218,7 +268,12 @@ class Ctr_Principal extends CI_Controller {
        echo json_encode($data);
    }
 
-	 public function ajax_update(){
+
+
+	 public function ajax_update()
+  {
+
+
       $data = array(
               'Usuario' => $this->input->post('Usuario'),
               'Correo' => $this->input->post('Correo'),
@@ -230,6 +285,7 @@ class Ctr_Principal extends CI_Controller {
       $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);
       echo json_encode(array("status" => TRUE));
   }
+  
 
 	//Inicio de Funciones de Listado del Servicios
 		public function ListadoServicios(){
@@ -240,9 +296,5 @@ class Ctr_Principal extends CI_Controller {
 			$this->load->view('sview_ListadoServicios',$datos);
 			$this->load->view('sview_Footer');
 		}
-
-
-
-
 	}
 ?>
