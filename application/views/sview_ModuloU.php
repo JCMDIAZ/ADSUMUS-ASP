@@ -5,7 +5,7 @@
         <!-- <button id="deleteList" class="btn btn-danger" style="display: none;" onclick="deleteList()">Eliminar Lista</button> -->
         <br />
         <br />
-        <table id="table" class="table table-striped table-bordered" style="width:100%">
+        <table id="table" class="table table-striped" style="width:100%">
             <thead>
                 <tr class="table-active">
                     <th>Usuarios</th>

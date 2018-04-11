@@ -107,3 +107,14 @@ a:active, a:hover {
 nav.bg-dark{
   background-color: #2B2B28 !important;
 }
+
+button#tamañoA.btn{
+  width: 30%;
+}
+button#tamañoB.btn{
+  width: 30%;
+}
+button#tamañoB.btn-warning{
+  background-color: #f15a22 !important;
+  border-color: #f15a22 !important;
+}
