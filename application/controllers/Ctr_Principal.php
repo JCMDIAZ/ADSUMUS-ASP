@@ -27,7 +27,7 @@ class Ctr_Principal extends CI_Controller {
 		$this->load->view('sview_Footer');
 	}
 
-		public function add(){
+	public function add(){
 		$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]');
 		if ($this->form_validation->run() == true) {
 		$this->load->model('Mdl_funciones');
@@ -153,8 +153,14 @@ class Ctr_Principal extends CI_Controller {
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
 				 }
     	}
+<<<<<<< HEAD
+	}
+
+	public function ActualizarServicio($folio){
+=======
 		}
 		public function ActualizarServicio($folio){
+>>>>>>> 767a0bb664229b9e72c5d4cc47f27d84868f0155
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
 			$servicio = $this->Mdl_Consultas->ServicioFolio($folio);
@@ -251,7 +257,7 @@ class Ctr_Principal extends CI_Controller {
 			}
 		}
 
-//PRUEBA DATATABLE
+//DATATABLE
 		public function ajax_list(){
 		 $list = $this->Mdl_funciones->get_datatables();
 		 $data = array();
@@ -304,6 +310,7 @@ class Ctr_Principal extends CI_Controller {
 		public function ListadoServicios(){
 			$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
 			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
+			$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
 			$this->load->view('sview_Header');
 			$this->load->view('sview_ListadoServicios',$datos);
 			$this->load->view('sview_Footer');
