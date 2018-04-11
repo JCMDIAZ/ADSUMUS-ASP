@@ -1,11 +1,11 @@
 <div class="container" style="margin-top:30px">
-  <h3>Busqueda</h3>
+  <h3>Buscador de Servicios</h3>
     <hr>
 <form>
   <div class="row">
     <div class="form-group col-md-3 col-sm-6 mb-3">
       <label for="FolioS">Folio del Servicio:</label>
-      <input type="text" class="form-control" id="FolioS" placeholder="">
+      <input type="text" class="form-control" id="BuscarF" name="BuscarF" placeholder="">
     </div>
 
     <div class="form-group col-md-3 col-sm-6 mb-3">
@@ -42,23 +42,21 @@
     </div>
     <?php } ?>
     <?php if($this->session->userdata('perfil')=='Administrador') { ?>
-    <div class="form-group col-md-6 col-sm-6 mb-3">
-    <button type="button" class="btn btn-success" id="tamañoA">Buscar</button>
-    </div>
-    <div class="form-group col-md-6 col-sm-6 mb-3">
-    <button type="button" class="btn btn-warning" id="tamañoB">Editar</button>
-    </div>
+
+      <div class="col-md-6 col-sm-6 mb-3 mx-auto">
+          <button type="button" class="btn btn-success btn-sm btn-block">Buscar</button>
+      </div>
+      <div class="col-md-6 col-sm-6 mb-3 mx-auto">
+          <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Editar</button>
+      </div>
     <?php } ?>
     <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
-    <div class="form-group col-md-12 col-sm-6 mb-3">
-    <button type="button" class="btn btn-success" id="tamañoA">Buscar</button>
-    </div>
-    <div class="form-group col-md-12 col-sm-6 mb-3">
-    <button type="button" class="btn btn-warning" id="tamañoB">Editar</button>
-  </div>
-    <div class="form-group col-md-12 col-sm-6 mb-3">
-    <button type="button" class="btn btn-primary" id="tamañoB">Atender</button>
-    </div>
+      <div class="col-md-6 col-sm-6 mb-3 mx-auto">
+          <button type="button" class="btn btn-success btn-sm btn-block">Buscar</button>
+      </div>
+      <div class="col-md-6 col-sm-6 mb-3 mx-auto">
+          <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Atender</button>
+      </div>
     <?php } ?>
 
 </form>
