@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <title>Adsumus</title>
+<link rel="icon" href="/img/logo.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -91,11 +92,13 @@ div.wizard{
   font-family: Raleway;
   width: 70%;
   min-width: 300px;
+  border-radius: 25px;
 }
 div.titulo{
   padding-top: 10px;
   background-color: #2B2B28;
   color: #ffffff;
+  border-radius: 25px 25px 0 0;
 }
 .logo{
   float: left;

@@ -141,9 +141,17 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
             }
         }
 
+				// Actualiza el servicio con el folio(id) proporcionado
 				function ActualizarServicio($data,$folio){
 					$this->db->where('id_servicio',$folio);
 					$query = $this->db->update('t_dat_servicios',$data);
+
+					return ($this->db->affected_rows() == 1);
+				}
+
+				// Inserta el token con el folio(id) proporcionado
+				function InsertarToken($data){
+					$this->db->insert('t_dat_token',$data);
 
 					return ($this->db->affected_rows() == 1);
 				}

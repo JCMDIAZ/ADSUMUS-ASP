@@ -29,7 +29,7 @@
     </style>
   </head>
   <body class="text-center">
-    <form class="form-signin" action="Login" method="POST" autocomplete="off">
+    <form class="form-signin" action="Login" method="POST">
       <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
       <label for="Correo" class="sr-only">Correo</label>

@@ -157,8 +157,7 @@ class Ctr_Principal extends CI_Controller {
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
 				 }
     	}
-
-	}
+		}
 		public function ActualizarServicio($folio){
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
@@ -200,10 +199,21 @@ class Ctr_Principal extends CI_Controller {
 					$resultado = $this->Mdl_Consultas->ServicioFolio($id);
 						foreach ($resultado as  $valor) {
 							if ($valor->Codigo_terminacion === $terminacion) {
+								// Valores que se insertan en la tabla de token's
+								$data['f_id_servicio'] = $id;
+								$data['token'] = CrearToken();
+								$today = date('y:m:d');
+								// Agrega 5 dias a la fecha actual
+								$data['fecha_limite'] = date('y:m:d',strtotime("+5 days"));
+								$tokenResult = $this->Mdl_Consultas->InsertarToken($data);
+
+								// Cambia el estatus a terminado
 								$servicio = $this->Mdl_Consultas->InicioServicio($terminacion,'terminacion','Terminado');
+
+								// Se envia el email al solicitante
 								$para = $valor->Correo_solicitante;
 								$asunto = "Finalizacion del servicio - Adsumus";
-								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Evaluacion_servicio/".$valor->id_servicio."'>".base_url()."Evaluacion_servicio</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."No_satisfaccion_servicio/".$valor->id_servicio."'>".base_url()."No_satisfaccion_servicio/".$valor->id_servicio."</a></p>";
+								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Evaluacion_servicio/".$data['token']."'>".base_url()."Evaluacion_servicio/".$data['token']."</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."No_satisfaccion_servicio/".$data['token']."'>".base_url()."No_satisfaccion_servicio/".$data['token']."</a></p>";
 
 								$this->email->set_mailtype('html');
 								$this->email->from('aldo.martinez@niurons.com.mx', 'Aldo Martinez');
@@ -260,18 +270,30 @@ class Ctr_Principal extends CI_Controller {
 			$this->form_validation->set_rules('detalle','Detalle','required|max_length[500]');
 			$this->form_validation->set_rules('fecha','Fecha de cita posterior','required|max_length[500]');
 			if ($this->form_validation->run()==false) {
-				/*$registro = $this->Mdl_Consultas->ServicioFolio($folio);
-				foreach ($registro as $valor) {
-					// Valida si el registro ya ha sido reabierto
-					if ($valor->id_servicio_anterior == 0) {
-						echo "<script>alert('Este servicio con folio ".$valor->id_servicio." ya ha sido reabierto')</script>";
+				$registro = $this->Mdl_Consultas->ServicioFolio($folio);
+				if ($registro == false) {
+					$this->load->view('mview_NoExiste');
+				}else{
+					foreach ($registro as $valor) {
+						// Valida si el registro ya ha sido reabierto
+						if ($valor->id_servicio_anterior === '0') {
+							$data['mensaje'] = 'Favor de verificar su nuevo numero de folio del servicio';
+							$data['titulo'] = 'No satisfacción del servicio';
+							echo "<script>alert('El servicio con folio ".$valor->id_servicio." ya ha sido reabierto')</script>";
+							$this->load->view('mview_SuccessEval',$data);
+						}else{
+							$data['folio'] = $folio;
+							$this->load->view('mview_NoSatisfaccion',$data);
+							$token = CrearToken();
+							echo $token;
+						}
 					}
-				}*/
-				$data['folio'] = $folio;
-				$this->load->view('mview_NoSatisfaccion',$data);
+				}
 			}else{
 				$duplicar = $this->Mdl_Consultas->Duplicar('t_dat_servicios',$folio);
 				if ($duplicar==true) {
+					$datos['id_servicio_anterior'] = 0;
+					$this->Mdl_Consultas->ActualizarServicio($datos,$folio);
 					$data['Detalle_reabierto'] = $this->input->post('detalle');
 					$data['Fecha_cita_programada'] = $this->input->post('fecha');
 					$data['Codigo_activacion'] = NumeroAleatorio();

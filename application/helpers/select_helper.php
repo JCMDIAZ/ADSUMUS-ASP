@@ -73,4 +73,11 @@ function NumeroAleatorio(){
     }
     return end($valoresRandom);
 }
+
+// Generador de tokens
+function CrearToken(){
+  $token = openssl_random_pseudo_bytes(30);
+  $token = bin2hex($token);
+  return $token;
+}
 ?>
