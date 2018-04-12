@@ -86,7 +86,7 @@
                 <label for="estatus">Estatus del Servicio</label>
                 <input type="text" id="estatus" name="estatus" value="" class="form-control" disabled>
             </div>
-            <div class="col-md-6 col-sm-6 mb-3 mx-auto">
+            <div class="col-md-6 col-sm-12 mb-3 mx-auto">
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Aceptar</button>
             </div>
         </div>

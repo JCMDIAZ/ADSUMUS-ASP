@@ -42,14 +42,14 @@ input.invalid {
   display: none;
 }
 
-button {
+button.btn {
   background-color: #F15A22;
   color: #ffffff;
   border: none;
-  padding: 10px 20px;
   font-size: 17px;
   font-family: Raleway;
   cursor: pointer;
+  width: 100%;
 }
 
 button:hover {
@@ -71,7 +71,6 @@ button:hover {
   display: inline-block;
   opacity: 0.5;
 }
-
 .step.active {
   opacity: 1;
 }
@@ -82,6 +81,7 @@ button:hover {
 }
 h4{
   text-align: center;
+  padding-bottom: 10px;
 }
 p{
   text-align: center;
@@ -108,6 +108,9 @@ div.titulo{
   height: 55px;
   padding-left: 30px;
 }
+.container{
+  padding-bottom: 15px;
+}
 
 .clearfix{
   content: '';
@@ -120,9 +123,6 @@ div.custom-control{
 div.custom-control:last-child{
   margin-bottom: 0px;
 }
-div.contenedor{
-  padding: 30px;
-}
 @media only screen and (max-width:600px){
   .logo{
     background-position: center;
@@ -131,28 +131,21 @@ div.contenedor{
     font-size: 1em;
   }
 }
+div.contenedor{
+  padding: 30px;
+}
 </style>
 <body>
   <div class="wizard">
     <div class="titulo clearfix">
       <div class="logo">
       </div>
-      <?php if(isset($titulo)){ ?>
-        <h4><?php echo $titulo; ?></h4>
-      <?php }else{ ?>
-        <h4>Evaluación del servicio prestado</h4>
-      <?php } ?>
-      <hr>
+      <h4 class="modulo">No satisfacción del servicio</h4>
     </div>
     <div class="contenedor">
-      <?php if(isset($mensaje)){ ?>
-        <p><i class="fas fa-exclamation-triangle fa-9x"></i></p>
-        <p><?php echo $mensaje; ?></p>
-      <?php }else{ ?>
-        <p><i class="far fa-check-circle fa-9x"></i></p>
-        <p>Felicidades, has terminado la evaluación</p>
-      <?php } ?>
+      <p><i class="fas fa-exclamation-triangle fa-9x"></i></p>
+      <p>No existe un servicio con el folio proporcionado</p>
     </div>
-</div>
+  </div>
 </body>
 </html>
