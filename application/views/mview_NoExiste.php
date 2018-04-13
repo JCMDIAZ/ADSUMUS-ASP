@@ -140,11 +140,11 @@ div.contenedor{
     <div class="titulo clearfix">
       <div class="logo">
       </div>
-      <h4 class="modulo">No satisfacción del servicio</h4>
+      <h4 class="modulo"><?php echo $titulo; ?></h4>
     </div>
     <div class="contenedor">
       <p><i class="fas fa-exclamation-triangle fa-9x"></i></p>
-      <p>No existe un servicio con el folio proporcionado</p>
+      <p><?php echo $mensaje; ?></p>
     </div>
   </div>
 </body>

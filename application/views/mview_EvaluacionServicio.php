@@ -130,7 +130,7 @@ div.custom-control:last-child{
 }
 </style>
 <body>
-<input type="hidden" name="folio" value="<?php echo $folio; ?>" id="folio">
+<input type="hidden" name="token" value="<?php echo $token; ?>" id="token">
   <div class="wizard">
     <div class="titulo clearfix">
       <div class="logo">
