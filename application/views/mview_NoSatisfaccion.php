@@ -89,12 +89,17 @@
   }
   div.wizard{
     background-color: #ffffff;
-    margin: 100px auto;
+    margin: 2.5em auto;
     font-family: Raleway;
     width: 70%;
     min-width: 300px;
     border-radius: 25px;
   }
+@media only screen and (max-height:400px){
+  div.wizard{
+    margin: 1em auto;
+  }
+}
   div.titulo{
     padding-top: 10px;
     background-color: #2B2B28;
@@ -135,7 +140,7 @@
 </style>
 </head>
 <body>
-<input type="hidden" name="folio" value="<?php echo $folio; ?>" id="folio">
+<input type="hidden" name="token" value="<?php echo $token; ?>" id="token">
   <div class="wizard">
     <div class="titulo clearfix">
       <div class="logo">
@@ -188,7 +193,7 @@
     })
   });
   function MandarDatos(url,datos){
-    var id = $("#folio").val();
+    var id = $("#token").val();
     $.ajax({
       url: url+id,
       type: 'post',
