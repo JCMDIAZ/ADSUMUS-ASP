@@ -396,39 +396,6 @@ class Ctr_Principal extends CI_Controller {
        echo json_encode($data);
    }
 
-
-
-
-	//DATATABLE
-	public function ajax_list(){
-	 $list = $this->Mdl_funciones->get_datatables();
-	 $data = array();
-	 $no = $_POST['start'];
-	 foreach ($list as $usuario) {
-			 $no++;
-			 $row = array();
-			 $row[] = $usuario->Usuario;
-			 $row[] = $usuario->Perfil;
-			 $row[] = $usuario->Estatus;
-			 //add html for action
-			 $row[] = '<a class="btn btn-sm btn-warning" title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
-			 $data[] = $row;
-	 }
-	 $output = array(
-									 "draw" => $_POST['draw'],
-									 "recordsTotal" => $this->Mdl_funciones->count_all(),
-									 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
-									 "data" => $data
-					 );
-	 //output to json format
-	 echo json_encode($output);
-	}
-
-	public function ajax_edit($id){
-   $data = $this->Mdl_funciones->get_by_id($id);
-   echo json_encode($data);
-  }
-
 	public function ajax_update(){
       $data = array(
               'Usuario' => $this->input->post('Usuario'),
