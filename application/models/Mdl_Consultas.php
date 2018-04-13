@@ -1,7 +1,7 @@
 <?php
 	if ( ! defined('BASEPATH')) exit('no se permite acceso directo al script');
 
-	class Mdl_Consultas extends CI_Model{
+	class Mdl_Consultas extends CI_Model {
 		function __construct(){
 			parent::__construct();
 		}
@@ -175,6 +175,49 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 					}else{
 						return false;
 					}
+				}
+
+				// Obtiene todos los datos de un registro
+				function DatosRow($tabla,$columna,$valor){
+					$this->db->where($columna,$valor);
+					$query = $this->db->get($tabla);
+
+					if ($query->num_rows() > 0) {
+						return $query->result();
+					}else{
+						return false;
+					}
+				}
+
+				// Funcion obtiene los datos del servicio respecto a su token asignado
+				function ServicioToken($token){
+					$this->db->select('*');
+					$this->db->from('t_dat_servicios');
+					$this->db->join('t_dat_token', 't_dat_servicios.id_servicio = t_dat_token.f_id_servicio', 'inner');
+					$this->db->where('token', $token);
+					$query = $this->db->get();
+
+					if ($query->num_rows() == 1) {
+						return $query->result();
+					}else{
+						return false;
+					}
+				}
+
+				// Funcion que valida si una evaluacion ya existe
+				function ExisteEvaluacion($id_servicio){
+					$this->db->where('f_id_servicio', $id_servicio);
+					$query = $this->db->get('t_dat_evaluacion');
+
+					return ($query->num_rows() == 1);
+				}
+
+				// Elimina el token al efectuar la evaluacion o la no satisfacción del servicio
+				function EliminarToken($tabla,$id_servicio){
+					$this->db->where('f_id_servicio',$id_servicio);
+					$this->db->delete($tabla);
+
+					return($this->db->affected_rows() == 1);
 				}
     }
 ?>

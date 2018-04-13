@@ -247,36 +247,64 @@ class Ctr_Principal extends CI_Controller {
 				}
 		}
 
-		public function Evaluacion_servicio($folio){
+		public function Evaluacion_servicio($token){
 			$this->form_validation->set_rules("evaluacion","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion2","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion3","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion4","Evaluacion","required");
 			if ($this->form_validation->run()==false) {
-				$data['folio'] = $folio;
-				$this->load->view('mview_EvaluacionServicio',$data);
-			}else{
-				$data['f_id_servicio'] = $folio;
-				$data['Pregunta_1'] = $this->input->post('evaluacion');
-				$data['Pregunta_2'] = $this->input->post('evaluacion2');
-				$data['Pregunta_3'] = $this->input->post('evaluacion3');
-				$data['Pregunta_4'] = $this->input->post('evaluacion4');
-				$resultado = $this->Mdl_Consultas->InsertarDatos('t_dat_evaluacion',$data);
-				if ($resultado==true) {
-					$this->load->view('mview_SuccessEval');
+				$validarToken = $this->Mdl_Consultas->ServicioToken($token);
+				// Validamos si existe el token proporcionado
+				if ($validarToken != false) {
+					foreach ($validarToken as $valor) {
+						$id_servicio = $this->Mdl_Consultas->ExisteEvaluacion($valor->id_servicio);
+					}
+					// Validamos si no se ha evaluado anteriormente el servicio
+					if ($id_servicio == false) {
+						$data['token'] = $token;
+						$this->load->view('mview_EvaluacionServicio',$data);
+					}else{
+						$data['titulo'] = 'Evaluación del servicio prestado';
+						$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado';
+						$this->load->view('mview_NoExiste',$data);
+					}
 				}else{
-					echo "error";
+					$data['titulo'] = 'Evaluación del servicio prestado';
+					$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado o el link ha caducado';
+					$this->load->view('mview_NoExiste',$data);
+				}
+			}else{
+				$datosToken = $this->Mdl_Consultas->DatosRow('t_dat_token','token',$token);
+				if ($datosToken != false) {
+					foreach ($datosToken as $valor) {
+						$data['f_id_servicio'] = $valor->f_id_servicio;
+						$data['Pregunta_1'] = $this->input->post('evaluacion');
+						$data['Pregunta_2'] = $this->input->post('evaluacion2');
+						$data['Pregunta_3'] = $this->input->post('evaluacion3');
+						$data['Pregunta_4'] = $this->input->post('evaluacion4');
+						$resultado = $this->Mdl_Consultas->InsertarDatos('t_dat_evaluacion',$data);
+						$this->Mdl_Consultas->EliminarToken('t_dat_token',$valor->f_id_servicio);
+						if ($resultado==true) {
+							$this->load->view('mview_SuccessEval');
+						}else{
+							echo "error";
+						}
+					}
+				}else{
+					$this->load->view('mview_NoExiste');
 				}
 			}
-		}
+	}
 
-		public function No_satisfaccion($folio){
+		public function No_satisfaccion($token){
+			$registro = $this->Mdl_Consultas->ServicioToken($token);
 			$this->form_validation->set_rules('detalle','Detalle','required|max_length[500]');
 			$this->form_validation->set_rules('fecha','Fecha de cita posterior','required|max_length[500]');
 			if ($this->form_validation->run()==false) {
-				$registro = $this->Mdl_Consultas->ServicioFolio($folio);
 				if ($registro == false) {
-					$this->load->view('mview_NoExiste');
+					$data['titulo'] = 'No satisfacción del servicio';
+					$data['mensaje'] = 'WARNING: El link ha caducado';
+					$this->load->view('mview_NoExiste',$data);
 				}else{
 					foreach ($registro as $valor) {
 						// Valida si el registro ya ha sido reabierto
@@ -284,16 +312,18 @@ class Ctr_Principal extends CI_Controller {
 							$data['mensaje'] = 'Favor de verificar su nuevo numero de folio del servicio';
 							$data['titulo'] = 'No satisfacción del servicio';
 							echo "<script>alert('El servicio con folio ".$valor->id_servicio." ya ha sido reabierto')</script>";
-							$this->load->view('mview_SuccessEval',$data);
+							$this->load->view('mview_NoExiste',$data);
 						}else{
-							$data['folio'] = $folio;
+							$data['folio'] = $valor->id_servicio;
+							$data['token'] = $token;
 							$this->load->view('mview_NoSatisfaccion',$data);
-							$token = CrearToken();
-							echo $token;
 						}
 					}
 				}
-			}else{
+		}else{
+				foreach ($registro as $valor) {
+					$folio = $valor->id_servicio;
+				}
 				$duplicar = $this->Mdl_Consultas->Duplicar('t_dat_servicios',$folio);
 				if ($duplicar==true) {
 					$datos['id_servicio_anterior'] = 0;
@@ -307,10 +337,11 @@ class Ctr_Principal extends CI_Controller {
 					$registroActualizado = $this->Mdl_Consultas->ActualizarServicio($data,$IdregistroActualizado);
 					if ($registroActualizado) {
 						echo $IdregistroActualizado;
+						$this->Mdl_Consultas->EliminarToken('t_dat_token',$folio);
 						$reabierto = $this->Mdl_Consultas->ServicioFolio($IdregistroActualizado);
 						foreach ($reabierto as $valor) {
 							$para = $valor->Correo_solicitante;
-							$asunto = "Datos sobre el servicio - Adsumus";
+							$asunto = "Datos sobre el servicio(Reabierto) - Adsumus";
 							$body = "<p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ejecutivo asignado: ".$valor->Ejecutivo_asignado."</p>";
 
 							$config['mailtype'] = 'html';
@@ -326,7 +357,47 @@ class Ctr_Principal extends CI_Controller {
 				}
 			}
 		}
-	}
+
+}
+
+		public function Chart($servicio){
+			$evaluacion = $this->Mdl_Consultas->DatosRow('t_dat_evaluacion','f_id_servicio',$servicio);
+			$this->load->view('sview_chart');
+		}
+//PRUEBA DATATABLE
+
+//DATATABLE
+		public function ajax_list(){
+		 $list = $this->Mdl_funciones->get_datatables();
+		 $data = array();
+		 $no = $_POST['start'];
+		 foreach ($list as $usuario) {
+				 $no++;
+				 $row = array();
+				 $row[] = $usuario->Usuario;
+				 $row[] = $usuario->Perfil;
+				 $row[] = $usuario->Estatus;
+				 //add html for action
+				 $row[] = '<a class="btn btn-sm btn-warning" title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
+				 $data[] = $row;
+		 }
+		 $output = array(
+										 "draw" => $_POST['draw'],
+										 "recordsTotal" => $this->Mdl_funciones->count_all(),
+										 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
+										 "data" => $data
+						 );
+		 //output to json format
+		 echo json_encode($output);
+ }
+
+ public function ajax_edit($id){
+       $data = $this->Mdl_funciones->get_by_id($id);
+       echo json_encode($data);
+   }
+
+
+
 
 	//DATATABLE
 	public function ajax_list(){

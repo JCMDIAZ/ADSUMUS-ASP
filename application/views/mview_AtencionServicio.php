@@ -1,9 +1,3 @@
-<?php
-$csrf = array(
-        'name' => $this->security->get_csrf_token_name(),
-        'hash' => $this->security->get_csrf_hash()
-);
- ?>
 <div class="container">
    <div class="py-4 text-center">
        <h3>Atención del servicio</h3>
