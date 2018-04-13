@@ -139,6 +139,44 @@
 	}
 
 
+function Busqueda($data){
+	if($this->session->userdata('perfil')=='Administrador'){
+	$Folio = $data["search"];
+	$Razon = $data["razon"];
+	$Estatus = $data["estatus"];
+	$Ejecutivo = $data["ejecutivo"];
+	if ($Folio=='' && $Razon=='' && $Estatus=='' && $Ejecutivo=='') {
+		$query= "SELECT * FROM t_dat_servicios";
+	}else {
+		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
+		AND Razon_social_cliente LIKE '%".$Razon."%'
+		AND Estatus_servicio LIKE '%".$Estatus."%'
+		AND f_id_usuario LIKE '%".$Ejecutivo."%'
+		ORDER BY id_servicio ASC";
+	}
+	$query= $this->db->query($query);
+	return $query;
+}else {
+	if($this->session->userdata('perfil')=='Ejecutivo'){
+	$Folio = $data["search"];
+	$Razon = $data["razon"];
+	$Estatus = $data["estatus"];
+	// $Ejecutivo = $data["ejecutivo"];
+	if ($Folio=='' && $Razon=='' && $Estatus=='') {
+		$query= "SELECT * FROM t_dat_servicios WHERE Ejecutivo_asignado = '".$this->session->userdata('Nombre')."'";
+	}else {
+		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
+		AND Razon_social_cliente LIKE '%".$Razon."%'
+		AND Estatus_servicio LIKE '%".$Estatus."%'
+		ORDER BY id_servicio ASC";
+	}
+	$query= $this->db->query($query);
+	return $query;
+}
+}
+}
+
+
 
 }
 ?>

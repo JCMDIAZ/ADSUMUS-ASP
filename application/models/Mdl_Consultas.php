@@ -50,7 +50,6 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
             $condicion = "Correo = '".$datos['correo']."' AND Contraseña = '".$datos['contraseña']."'";
             $this->db->where($condicion);
             $query = $this->db->get('t_dat_usuarios');
-
             if($query->num_rows()==1){
                 return $query->result();
             }else{

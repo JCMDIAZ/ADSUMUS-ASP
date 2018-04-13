@@ -32,6 +32,8 @@ class Ctr_Login extends CI_Controller {
                     $data['correo'] = $validarUsuario->Correo;
                     $data['contraseña']= $validarUsuario->Contraseña;
                     $data['perfil']= $validarUsuario->Perfil;
+										$data['ID']=$validarUsuario->id_usuario;
+										$data['Nombre']=$validarUsuario->Usuario;
                 }
                 header('Cache-Control: no cache'); //no cache
 								session_cache_limiter('private_no_expire'); // works

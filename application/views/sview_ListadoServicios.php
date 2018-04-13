@@ -2,28 +2,28 @@
   <h3>Buscador de Servicios</h3>
     <hr>
 <form>
-  <div class="row">
+  <div class="row" style="justify-content:center;">
     <div class="form-group col-md-3 col-sm-6 mb-3">
       <label for="FolioS">Folio del Servicio:</label>
-      <input type="text" class="form-control" id="BuscarF" name="BuscarF" placeholder="">
+      <input type="number" min="0" class="form-control" id="FolioS" onkeyup="search()" >
     </div>
 
     <div class="form-group col-md-3 col-sm-6 mb-3">
       <label for="RazonLS">Razón Social:</label>
-      <input type="text" class="form-control" id="RazonLS" placeholder="">
+      <input type="text" class="form-control" id="RazonLS" onkeyup="search()" >
     </div>
 
     <div class="form-group col-md-3 col-sm-6 mb-3">
       <label for="EstatusLS">Estatus:</label>
       <?php if($this->session->userdata('perfil')=='Administrador') { ?>
-      <select class="form-control" name="EstatusLS" id="EstatusLS" placeholder="Selecciona una Opción">
+      <select class="form-control" name="EstatusLS" id="EstatusLS" onchange="search()">
         <?php
           $this->Mdl_funciones->Select("Estatus_servicio",$Tipos);
          ?>
       </select>
       <?php } ?>
       <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
-      <select class="form-control" name="EstatusLS" id="EstatusLS" placeholder="Selecciona una Opción">
+      <select class="form-control" name="EstatusLS" id="EstatusLS" onchange="search()">
         <?php
           $this->Mdl_funciones->Select("Estatus_servicioE",$Tipos);
          ?>
@@ -34,7 +34,7 @@
     <?php if($this->session->userdata('perfil')=='Administrador') { ?>
     <div class="form-group col-md-3 col-sm-6 mb-3">
       <label for="EjecutivoLS">Ejecutivo:</label>
-      <select class="form-control" name="EjecutivoLS" id="EjecutivoLS" placeholder="Selecciona una Opción">
+      <select class="form-control" name="EjecutivoLS" id="EjecutivoLS" onchange="search()">
         <?php
           $this->Mdl_funciones->Select2("Ejecutivo",$ejecutivos);
          ?>
@@ -42,51 +42,47 @@
     </div>
     <?php } ?>
     <?php if($this->session->userdata('perfil')=='Administrador') { ?>
-
-      <div class="col-md-6 col-sm-6 mb-3 mx-auto">
-          <button type="button" class="btn btn-success btn-sm btn-block">Buscar</button>
-      </div>
-      <div class="col-md-6 col-sm-6 mb-3 mx-auto">
+      <div class="col-md-4 col-sm-4 mb-3 mx-auto">
           <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Editar</button>
       </div>
     <?php } ?>
     <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
       <div class="col-md-6 col-sm-6 mb-3 mx-auto">
-          <button type="button" class="btn btn-success btn-sm btn-block">Buscar</button>
-      </div>
-      <div class="col-md-6 col-sm-6 mb-3 mx-auto">
           <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Atender</button>
       </div>
     <?php } ?>
-
 </form>
 
-
-<table id="table2" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-        <tr class="table-active">
-            <th></th>
-            <th>Folio</th>
-            <th>Fecha de Solicitud</th>
-            <th>Razón Social</th>
-            <th>Ejecutivo Asignado</th>
-            <th>Estatus</th>
-        </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($mostrar as $row): ?>
-    <tr>
-      <td><input type="radio" id="check" name="check" value="<?php echo $row->id_servicio  ?>"></td>
-      <td><?php echo $row->id_servicio ?></td>
-      <td><?php echo $row->Fecha_elaboracion ?></td>
-      <td><?php echo $row->Razon_social_cliente ?></td>
-      <td><?php echo $row->Ejecutivo_asignado ?></td>
-      <td><?php echo $row->Estatus_servicio ?></td>
-    </tr>
-      <?php endforeach; ?>
-    </tbody>
-    </tbody>
-</table>
-
 </div>
 </div>
+
+<!-- PRUEBAS DEL BUSCADOR -->
+<div id="resultados">
+</div>
+
+<script>
+$(document).ready(function(){
+  search();
+});
+
+
+function search() {
+  var search = $('#FolioS').val();
+  var razon = $('#RazonLS').val();
+  var estatus = $('#EstatusLS').val();
+  var ejecutivo = $('#EjecutivoLS').val();
+
+  $.ajax({
+    url:"<?php echo base_url(); ?>Ctr_Principal/fetch",
+    method:"POST",
+    data:{search:search,razon:razon,estatus:estatus,ejecutivo:ejecutivo},
+    success:function(data){
+      $('#resultados').html(data);
+    }
+  })
+
+}
+</script>
+
+<script src="<?php echo base_url()?>jquery/jquery.min.js"></script>
+<script src="<?php echo base_url()?>js/jquery-mask.js"></script>

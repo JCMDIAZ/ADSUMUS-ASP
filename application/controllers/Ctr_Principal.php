@@ -103,6 +103,7 @@ class Ctr_Principal extends CI_Controller {
             }
         }
     }
+
     public function AtencionServicio(){
         $this->form_validation->set_rules('activacion', 'Activacion', 'required');
          if($this->form_validation->run() == false){
@@ -158,6 +159,7 @@ class Ctr_Principal extends CI_Controller {
 				 }
     	}
 		}
+
 		public function ActualizarServicio($folio){
 			$data['Observaciones'] = $this->input->post('observaciones');
 			$data['Material_utilizado'] = $this->input->post('material_utilizado');
@@ -189,6 +191,7 @@ class Ctr_Principal extends CI_Controller {
 				}
 			}
 		}
+
 		public function TerminarServicio(){
 			$this->form_validation->set_rules("terminacion","Código de terminación","required|max_length[4]");
 			if ($this->form_validation->run() == false) {
@@ -243,6 +246,7 @@ class Ctr_Principal extends CI_Controller {
 						}
 				}
 		}
+
 		public function Evaluacion_servicio($folio){
 			$this->form_validation->set_rules("evaluacion","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion2","Evaluacion","required");
@@ -322,45 +326,39 @@ class Ctr_Principal extends CI_Controller {
 				}
 			}
 		}
-}
-//PRUEBA DATATABLE
+	}
 
-//DATATABLE
-		public function ajax_list(){
-		 $list = $this->Mdl_funciones->get_datatables();
-		 $data = array();
-		 $no = $_POST['start'];
-		 foreach ($list as $usuario) {
-				 $no++;
-				 $row = array();
-				 $row[] = $usuario->Usuario;
-				 $row[] = $usuario->Perfil;
-				 $row[] = $usuario->Estatus;
-				 //add html for action
-				 $row[] = '<a class="btn btn-sm btn-warning" title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
-				 $data[] = $row;
-		 }
-		 $output = array(
-										 "draw" => $_POST['draw'],
-										 "recordsTotal" => $this->Mdl_funciones->count_all(),
-										 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
-										 "data" => $data
-						 );
-		 //output to json format
-		 echo json_encode($output);
- }
+	//DATATABLE
+	public function ajax_list(){
+	 $list = $this->Mdl_funciones->get_datatables();
+	 $data = array();
+	 $no = $_POST['start'];
+	 foreach ($list as $usuario) {
+			 $no++;
+			 $row = array();
+			 $row[] = $usuario->Usuario;
+			 $row[] = $usuario->Perfil;
+			 $row[] = $usuario->Estatus;
+			 //add html for action
+			 $row[] = '<a class="btn btn-sm btn-warning" title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
+			 $data[] = $row;
+	 }
+	 $output = array(
+									 "draw" => $_POST['draw'],
+									 "recordsTotal" => $this->Mdl_funciones->count_all(),
+									 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
+									 "data" => $data
+					 );
+	 //output to json format
+	 echo json_encode($output);
+	}
 
- public function ajax_edit($id){
-       $data = $this->Mdl_funciones->get_by_id($id);
-       echo json_encode($data);
-   }
+	public function ajax_edit($id){
+   $data = $this->Mdl_funciones->get_by_id($id);
+   echo json_encode($data);
+  }
 
-
-
-	 public function ajax_update()
-  {
-
-
+	public function ajax_update(){
       $data = array(
               'Usuario' => $this->input->post('Usuario'),
               'Correo' => $this->input->post('Correo'),
@@ -373,9 +371,8 @@ class Ctr_Principal extends CI_Controller {
       echo json_encode(array("status" => TRUE));
   }
 
-
 	//Inicio de Funciones de Listado del Servicios
-		public function ListadoServicios(){
+	public function ListadoServicios(){
 			$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
 			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
 			$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
@@ -383,5 +380,52 @@ class Ctr_Principal extends CI_Controller {
 			$this->load->view('sview_ListadoServicios',$datos);
 			$this->load->view('sview_Footer');
 		}
-	}
+
+		function fetch(){
+			$output = '';
+			$query = '';
+			$this->load->model('Mdl_funciones');
+			if($this->input->post('query'))
+			{
+				$query = $this->input->post('query');
+			}
+			$data = $this->Mdl_funciones->Busqueda($_POST);
+			$output .= '
+			<div class="container">
+						<table class="table table-bordered table-striped">
+							<tr class="table-active">
+							<th></th>
+							<th>Folio</th>
+							<th>Fecha de Solicitud</th>
+							<th>Razón Social</th>
+							<th>Estatus</th>
+							<th>Ejecutivo Asignado</th>
+							</tr>
+			';
+			if($data->num_rows() > 0){
+				foreach($data->result() as $row){
+					$output .= '
+					<tr>
+						<td><input type="radio" id="check" name="check" value='.$row->id_servicio.'"></td>
+						<td>'.$row->id_servicio.'</td>
+						<td>'.$row->Fecha_elaboracion.'</td>
+						<td>'.$row->Razon_social_cliente.'</td>
+						<td>'.$row->Estatus_servicio.'</td>
+						<td>'.$row->Ejecutivo_asignado.'</td>
+					</tr>
+					';
+				}
+			}
+			else
+			{
+				$output .= '<tr>
+											<td colspan="5">Sin Datos Encontrados</td>
+										</tr>';
+			}
+			$output .= '</table></div>';
+			echo $output;
+		}
+
+
+}
 ?>
