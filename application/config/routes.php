@@ -23,3 +23,6 @@ $route['Terminado']= 'Ctr_Principal/TerminarServicio';
 $route['Evaluacion_servicio/(:any)']= 'Ctr_Principal/Evaluacion_servicio/$1';
 
 $route['No_satisfaccion_servicio/(:any)']= 'Ctr_Principal/No_satisfaccion/$1';
+
+
+$route['Informacion/(:num)']= 'Ctr_Principal/InformacionServicio/$1';

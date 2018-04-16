@@ -1,7 +1,6 @@
-<div class="container">
-   <div class="py-4 text-center">
+<div class="container" style="margin-top:30px">
        <h3>Atención del servicio</h3>
-   </div>
+   <hr>
    <?php
     foreach($servicio as $columna){
     ?>
