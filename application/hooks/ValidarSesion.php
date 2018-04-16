@@ -19,12 +19,16 @@ class ValidarSesion{
 
 		switch ($perfil) {
 			case 'Ejecutivo':
-				if ($this->ci->uri->segment(1) == 'Levantamiento_servicio'){
+				if ($this->ci->uri->segment(1) == 'Levantamiento_servicio' OR $this->ci->uri->segment(1) == 'Evaluacion'){
 					echo "<script>alert('No tienes permiso para acceder a esta pagina!');
 					window.location.href = '".base_url()."Inicio';</script>";
 				}
 				break;
 			case 'Administrador':
+			if ($this->ci->uri->segment(1) == 'Atencion_servicio'){
+				echo "<script>alert('No tienes permiso para acceder a esta pagina!');
+				window.location.href = '".base_url()."Inicio';</script>";
+			}
 				break;
 			default:
 				# code...

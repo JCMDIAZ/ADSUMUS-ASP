@@ -69,16 +69,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a class="nav-link" href="Levantamiento_servicio">Levantar Servicio</a>
           </li>
         <?php }
-        if ($this->ci->uri->segment(1)=='Atencion_servicio') { ?>
+        if ($this->ci->uri->segment(1)=='Atencion_servicio' and $this->session->userdata('perfil')=='Ejecutivo') { ?>
           <li class="nav-item active">
             <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
           </li>
-        <?php } else{  ?>
+        <?php } elseif($this->session->userdata('perfil')=='Ejecutivo'){  ?>
           <li class="nav-item ">
             <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
           </li>
+        <?php }
+        if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
+          <li class="nav-item active">
+            <a class="nav-link" href="Evaluacion/Servicio" >Estadísticas</a>
+          </li>
+        <?php } elseif($this->session->userdata('perfil')=='Administrador'){  ?>
+          <li class="nav-item ">
+            <a class="nav-link" href="Evaluacion/Servicio">Estadísticas</a>
+          </li>
         <?php } ?>
-
           <li class="nav-item">
             <a class="nav-link" href="Logout">Cerrar Sesión</a>
           </li>

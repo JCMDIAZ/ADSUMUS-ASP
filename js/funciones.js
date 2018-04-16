@@ -7,6 +7,13 @@ $(document).ready(function() {
 	})
 	$("#success").hide();
 	$("#warning").hide();
+
+	$("#tabla_Servicios tr").click(function() {
+		var href = $(this).find("a").attr("href");
+		if (href) {
+			window.location = href;
+		}
+	})
 });
 
 function ActualizarDatos(url, datos) {
@@ -46,4 +53,11 @@ function Validar() {
 		ok = false;
 	}
 	return ok;
+}
+
+function Display(Seccion, button) {
+	$(".block").css("display", "none");
+	$("a").removeClass("active");
+	$("#" + Seccion + "").css("display", "block");
+	$(button).addClass("active");
 }

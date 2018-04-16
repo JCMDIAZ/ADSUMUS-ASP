@@ -69,6 +69,18 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
             }
         }
 
+				function TiposCatalogos($campo){
+					$condicion = "Campo = '".$campo."'";
+					$this->db->where($condicion);
+					$query = $this->db->get('t_cat_catalogos');
+
+					if($query->num_rows() > 0){
+							return $query->result();
+					}else{
+							return false;
+					}
+				}
+
         function Ejecutivos(){
             $condicion = "Perfil = 'Ejecutivo'";
             $this->db->where($condicion);
@@ -168,7 +180,10 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 						return false;
 					}
 				}
-				function Datos($tabla){
+
+				// Traer todos los datos de una tabla o vista
+				function Datos($tabla,$order){
+					$this->db->order_by($order,'ASC');
 					$query = $this->db->get($tabla);
 					if ($query->num_rows()>0) {
 						return $query->result();
@@ -218,6 +233,27 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 					$this->db->delete($tabla);
 
 					return($this->db->affected_rows() == 1);
+				}
+
+				// Obtiene el promedio de la evaluacion por servicio
+				function EvaluacionServicio($tipo){
+					$consulta = "SELECT AVG(Pregunta_1) as Pregunta_1,AVG(Pregunta_2) as Pregunta_2,AVG(Pregunta_3) as Pregunta_3,AVG(Pregunta_4) as Pregunta_4 FROM v_EvaluacionServicios WHERE Tipo_servicio = '$tipo';";
+					$query = $this->db->query($consulta);
+					if ($query->num_rows() == 1) {
+						return $query->result();
+					}else{
+						return false;
+					}
+				}
+
+				// Valida si el servicio le pertenece al ejecutivos
+				function ValidarServicioEjecutivo($id_servicio,$id_ejecutivo,$codigo){
+					$this->db->where("id_servicio",$id_servicio);
+					$this->db->where("f_id_usuario",$id_ejecutivo);
+					$this->db->where("Codigo_activacion",$codigo);
+					$query = $this->db->get('t_dat_servicios');
+
+					return($query->num_rows()==1);
 				}
     }
 ?>
