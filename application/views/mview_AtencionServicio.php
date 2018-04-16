@@ -108,8 +108,6 @@
         </button>
       </div>
       <form action="Terminado" method="POST" id="terminacionForm">
-         <!-- Input oculto que contiene el token que se crea al hacer submit del formulario -->
-          <input type="hidden" name="<?php $csrf['name']; ?>" value="<?php $csrf['hash'];?>" />
           <div class="modal-body">
               <input type="text" name="servicio_id" value="<?php echo $columna->id_servicio; ?>" hidden>
               <input type="text" class="form-control codigo" placeholder="Introduce el código de terminación" name="terminacion" required>

@@ -112,9 +112,15 @@ class Ctr_Principal extends CI_Controller {
              $activacion = $this->input->post('activacion');
 						 // valida que exista un servicio con el codigo de activacion proporcionado
              $servicioValido = $this->Mdl_Consultas->Servicio($activacion,'activacion');
-
+						 $ejecutivo = $this->session->userdata('ID');
 						 if($servicioValido != false){
 							 foreach ($servicioValido as $value) {
+								 // Valida que el servicio sea el correspondiente con el ejecutivo actual
+								 $servicioEjecutivo = $this->Mdl_Consultas->ValidarServicioEjecutivo($value->id_servicio,$ejecutivo,$activacion);
+								 if ($servicioEjecutivo == false) {
+									 echo '<script>alert("Este servicio no se te ha asignado")</script>';
+ 			 					 	 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
+								 }else{
 								 $estatus_servicio = $value->Estatus_servicio;
 								 switch ($estatus_servicio) {
 								 	case 'Terminado':
@@ -153,6 +159,7 @@ class Ctr_Principal extends CI_Controller {
 								 		break;
 								 }
 							 }
+						 }
          }else{
 					 echo '<script>alert("No existe un servicio con el código de activación proporcionado")</script>';
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
@@ -357,12 +364,33 @@ class Ctr_Principal extends CI_Controller {
 				}
 			}
 		}
-
 }
 
-		public function Chart($servicio){
-			$evaluacion = $this->Mdl_Consultas->DatosRow('t_dat_evaluacion','f_id_servicio',$servicio);
-			$this->load->view('sview_chart');
+		public function Chart($eval){
+			$data['servicios'] = $this->Mdl_Consultas->TiposCatalogos('Tipo_servicio');
+			$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+			$this->load->view('sview_HeaderEstadisticas');
+			$this->load->view('mview_Eval'.$eval,$data);
+			$this->load->view('sview_Footer');
+		}
+
+		public function ChartServicio($tipo){
+			if ($tipo == 'An%C3%A1lisis%20de%20campo') {
+				$tipo = 'Análisis de campo';
+			}elseif ($tipo == 'Reparaci%C3%B3n') {
+				$tipo = 'Reparación';
+			}
+			$data['evaluacion'] = $this->Mdl_Consultas->EvaluacionServicio($tipo);
+			$data['tipo'] = $tipo;
+			if ($data['evaluacion'] != false) {
+				$this->load->view('sview_HeaderEstadisticas');
+				$this->load->view('sview_GraficaServicios',$data);
+				$this->load->view('sview_Footer');
+			}
+		}
+
+		public function ChartEjecutivo($id){
+
 		}
 
 //DATATABLE

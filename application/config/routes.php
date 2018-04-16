@@ -18,7 +18,8 @@ $route['ActualizarServicio/(:num)']= 'Ctr_Principal/ActualizarServicio/$1';
 
 
 $route['Listado_Servicios']= 'Ctr_Principal/ListadoServicios';
-$route['grafica/(:num)']= 'Ctr_Principal/Chart/$1';
+$route['Evaluacion/(:any)']= 'Ctr_Principal/Chart/$1';
+$route['Evaluacion/Servicio/(:any)'] = 'Ctr_Principal/ChartServicio/$1';
 $route['Terminado']= 'Ctr_Principal/TerminarServicio';
 $route['Evaluacion_servicio/(:any)']= 'Ctr_Principal/Evaluacion_servicio/$1';
 

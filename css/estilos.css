@@ -189,6 +189,7 @@ button#tamañoB.btn-warning{
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 
+
 a.ninguna{
   text-decoration: none!important;
   color: #fff;
@@ -201,4 +202,15 @@ a.ninguna>button{
 .btn-warning{
   background-color: #f15a22 !important;
   border-color: #f15a22 !important;
+
+table#tabla_Servicios{
+  border-spacing: 2em;
+}
+table#tabla_Servicios tr{
+  cursor: pointer;
+}
+table#tabla_Servicios a{
+  text-decoration: none;
+  color : inherit;
+
 }
