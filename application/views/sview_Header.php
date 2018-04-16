@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="Inicio">
+      <a class="navbar-brand" href="<?php echo base_url()?>Inicio">
       <div class="logo">
 
       </div></a>
@@ -39,22 +39,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <?php $this->ci =& get_instance();
          if ($this->ci->uri->segment(1)== 'Inicio') {?>
           <li class="nav-item active">
-            <a class="nav-link" href="Inicio" >Servicios</a>
+            <a class="nav-link" href="<?php echo base_url()?>Inicio" >Servicios</a>
           </li>
         <?php }else{ ?>
           <li class="nav-item">
-            <a class="nav-link" href="Inicio" >Servicios</a>
+            <a class="nav-link" href="<?php echo base_url()?>Inicio" >Servicios</a>
           </li>
         <?php }
-        if($this->ci->uri->segment(1)== 'ModuloU') {
+        if($this->ci->uri->segment(1)== 'ModuloU' AND $this->session->userdata('perfil')=='Administrador') {
         ?>
         <li class="nav-item active">
-          <a class="nav-link" href="ModuloU">Usuarios</a>
+          <a class="nav-link" href="<?php echo base_url()?>ModuloU">Usuarios</a>
         </li>
         <?php
-      }else {
+      }elseif($this->session->userdata('perfil')=='Administrador') {
         ?><li class="nav-item">
-          <a class="nav-link" href="ModuloU">Usuarios</a>
+          <a class="nav-link" href="<?php echo base_url()?>ModuloU">Usuarios</a>
         </li>
         <?php
       }
@@ -62,20 +62,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
          ?>
           <li class="nav-item active">
-            <a class="nav-link" href="Levantamiento_servicio">Levantar Servicio</a>
+            <a class="nav-link" href="<?php echo base_url()?>Levantamiento_servicio">Levantar Servicio</a>
           </li>
         <?php }elseif($this->session->userdata('perfil')=='Administrador'){ ?>
           <li class="nav-item">
-            <a class="nav-link" href="Levantamiento_servicio">Levantar Servicio</a>
+            <a class="nav-link" href="<?php echo base_url()?>Levantamiento_servicio">Levantar Servicio</a>
           </li>
         <?php }
         if ($this->ci->uri->segment(1)=='Atencion_servicio' and $this->session->userdata('perfil')=='Ejecutivo') { ?>
           <li class="nav-item active">
-            <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
+            <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
           </li>
         <?php } elseif($this->session->userdata('perfil')=='Ejecutivo'){  ?>
           <li class="nav-item ">
-            <a class="nav-link" href="Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
+            <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
           </li>
         <?php }
         if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
@@ -88,7 +88,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </li>
         <?php } ?>
           <li class="nav-item">
-            <a class="nav-link" href="Logout">Cerrar Sesión</a>
+            <a class="nav-link" href="<?php echo base_url()?>Logout">Cerrar Sesión</a>
           </li>
         </ul>
       </div>

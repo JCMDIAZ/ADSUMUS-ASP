@@ -17,7 +17,7 @@
         }
 
     function Select($nombre,$select,$def ="123qwe"){
-      echo '<option  value="" disabled selected>Selecciona una Opción</option>';
+      echo '<option  value="" selected>Todos los Estatus</option>';
         foreach ($select->result() as $tipo) {
             if($tipo->Campo == $nombre){
                 if($tipo->Descripcion == $def){
@@ -31,7 +31,7 @@
     }
 
 		function Select2($nombre,$select){
-      echo '<option  value="" disabled selected>Selecciona una Opción</option>';
+      echo '<option  value="" selected>Todos los Ejecutivos</option>';
         foreach ($select as $tipo) {
             if($tipo->Perfil == $nombre){
                     echo '<option value="'.$tipo->id_usuario.'" >'.$tipo->Usuario.'</option>';
@@ -161,19 +161,25 @@ function Busqueda($data){
 	$Folio = $data["search"];
 	$Razon = $data["razon"];
 	$Estatus = $data["estatus"];
-	// $Ejecutivo = $data["ejecutivo"];
 	if ($Folio=='' && $Razon=='' && $Estatus=='') {
-		$query= "SELECT * FROM t_dat_servicios WHERE Ejecutivo_asignado = '".$this->session->userdata('Nombre')."'";
+		$query= "SELECT * FROM t_dat_servicios WHERE
+		Ejecutivo_asignado = '".$this->session->userdata('Nombre')."' AND Estatus_servicio != 'Terminado' AND f_id_usuario = '".$this->session->userdata('ID')."' ";
 	}else {
 		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
 		AND Razon_social_cliente LIKE '%".$Razon."%'
 		AND Estatus_servicio LIKE '%".$Estatus."%'
+		AND Ejecutivo_asignado = '".$this->session->userdata('Nombre')."'
+		AND f_id_usuario = '".$this->session->userdata('ID')."'
 		ORDER BY id_servicio ASC";
 	}
 	$query= $this->db->query($query);
 	return $query;
 }
 }
+}
+
+function Editar($id){
+
 }
 
 

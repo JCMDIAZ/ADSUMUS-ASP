@@ -43,26 +43,40 @@
     <?php } ?>
     <?php if($this->session->userdata('perfil')=='Administrador') { ?>
       <div class="col-md-4 col-sm-4 mb-3 mx-auto">
-          <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Editar</button>
+        <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Editar</button>
       </div>
     <?php } ?>
     <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
       <div class="col-md-6 col-sm-6 mb-3 mx-auto">
-          <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Atender</button>
-      </div>
+        <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter"><button type="button" class="btn btn-warning btn-sm btn-block">Atender</button></a>
     <?php } ?>
 </form>
 
 </div>
 </div>
 
-<!-- PRUEBAS DEL BUSCADOR -->
+<!-- BUSCADOR -->
 <div id="resultados">
 </div>
 
 <script>
 $(document).ready(function(){
   search();
+
+
+  $('#tamañoB').on('click',function() {
+    var valor=$('input[name="check"]:checked').val();
+    if (valor == true) {
+      window.location = "Informacion/"+valor;
+    }else {
+      alert('Ningún Servicio Seleccionado');
+    }
+
+
+  })
+
+
+
 });
 
 
@@ -82,6 +96,7 @@ function search() {
   })
 
 }
+
 </script>
 
 <script src="<?php echo base_url()?>jquery/jquery.min.js"></script>

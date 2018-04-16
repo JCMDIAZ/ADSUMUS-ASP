@@ -392,7 +392,6 @@ class Ctr_Principal extends CI_Controller {
 		public function ChartEjecutivo($id){
 
 		}
-//PRUEBA DATATABLE
 
 //DATATABLE
 		public function ajax_list(){
@@ -451,6 +450,7 @@ class Ctr_Principal extends CI_Controller {
 			$output = '';
 			$query = '';
 			$this->load->model('Mdl_funciones');
+
 			if($this->input->post('query'))
 			{
 				$query = $this->input->post('query');
@@ -472,7 +472,7 @@ class Ctr_Principal extends CI_Controller {
 				foreach($data->result() as $row){
 					$output .= '
 					<tr>
-						<td><input type="radio" id="check" name="check" value='.$row->id_servicio.'"></td>
+						<td><input type="radio" id='.$row->id_servicio.' name="check" value='.$row->id_servicio.'></td>
 						<td>'.$row->id_servicio.'</td>
 						<td>'.$row->Fecha_elaboracion.'</td>
 						<td>'.$row->Razon_social_cliente.'</td>
@@ -484,14 +484,55 @@ class Ctr_Principal extends CI_Controller {
 			}
 			else
 			{
-				$output .= '<tr>
-											<td colspan="5">Sin Datos Encontrados</td>
-										</tr>';
+				$output .= '</table></div>
+				<div class="container  alert alert-danger" role="alert">
+				<strong>Upps lo sentimos!</strong> Ningún Dato Encontrado.
+				</div>';
 			}
 			$output .= '</table></div>';
 			echo $output;
 		}
+	
+		//Fin de Funciones de Listado del Servicios
+
+		//Inicio de Funciones de Informacion del Servicios
+		public function InformacionServicio($id){
+			$this->form_validation->set_rules('nombre_solicitante','Nombre del Solicitante', 'required');
+			$this->form_validation->set_rules('ejecutivo_asignado','Ejecutivo', 'required');
+			$this->form_validation->set_rules('correo_solicitante','Correo', 'required');
+			if ($this->form_validation->run()==false) {
+				$data['tipo_servicio'] = $this->Mdl_Consultas->Select('t_cat_catalogos','Tipo_servicio');
+			  $data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+				$data['servicios']=$this->Mdl_Consultas->ServicioFolio($id);
+				$this->load->view('sview_Header');
+				$this->load->view('mview_InformacionServicio',$data);
+				$this->load->view('sview_Footer');
+			}else {
+				$data['f_id_usuario'] = $this->input->post('ejecutivo_asignado');
+				$data['Ejecutivo_asignado'] = $this->Mdl_Consultas->NombreUsuario($data['f_id_usuario']);
+				$data['Razon_social_cliente'] = $this->input->post('razon');
+				$data['Nombre_solicitante'] = $this->input->post('nombre_solicitante');
+				$data['Correo_solicitante'] = $this->input->post('correo_solicitante');
+				$data['Direccion_cliente'] = $this->input->post('direccion_cliente');
+				$data['Ubicacion_servicio'] = $this->input->post('ubicacion_servicio');
+				$data['Telefono_solicitante'] = $this->input->post('telefono_solicitante');
+				if($this->input->post('tipo_servicio') != null){
+						$data['Tipo_servicio'] = $this->Mdl_Consultas->DescripcionSelect('Tipo_servicio',$this->input->post('tipo_servicio'));
+				}
+				$data['Descripcion_servicio'] = $this->input->post('descripcion_servicio');
+				$data['Fecha_cita_programada'] = $this->input->post('fecha_cita_programada');
+
+				$insertar = $this->Mdl_Consultas->ActualizarServicio($data,$id);
+				if ($insertar==false) {
+					echo "<script>alert('Ocurrio un Error');</script>";
+				}else {
+				echo	"<script>alert('Se Actualizo Correctamente');window.location='".base_url()."Inicio';</script>";
+				}
+			}
+
+		}
 
 
+		//Fin de Funciones de Informacion del Servicios
 }
 ?>
