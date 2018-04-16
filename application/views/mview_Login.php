@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="<?php echo base_url() ?>/img/logo.png"/>
 
     <title>Login Adsumus</title>
 
@@ -26,11 +26,14 @@
           padding-bottom: 40px;
           background-color: #f5f5f5;
         }
+        html,body{
+          height: 100%;
+        }
     </style>
   </head>
   <body class="text-center">
     <form class="form-signin" action="Login" method="POST">
-      <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <img class="mb-4" src="<?php echo base_url() ?>/img/adsumus-logo.png" alt="" width="150" height="55">
       <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
       <label for="Correo" class="sr-only">Correo</label>
       <input type="email" id="Correo" class="form-control" placeholder="Correo" name="correo" required autofocus>
