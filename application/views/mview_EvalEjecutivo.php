@@ -4,7 +4,7 @@
     <h2>Ejecutivos</h2>
   </div>
 <div class="table-responsive">
-  <table class="table table-striped table-sm" id="tabla_Servicios">
+  <table class="table table-sm table-hover" id="tabla_Servicios">
     <thead>
       <tr>
         <th>ID</th>

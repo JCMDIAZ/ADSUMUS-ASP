@@ -380,7 +380,7 @@ class Ctr_Principal extends CI_Controller {
 			}elseif ($tipo == 'Reparaci%C3%B3n') {
 				$tipo = 'Reparación';
 			}
-			$data['evaluacion'] = $this->Mdl_Consultas->EvaluacionServicio($tipo);
+			$data['evaluacion'] = $this->Mdl_Consultas->EvaluacionServicio($tipo,'Tipo_servicio');
 			$data['tipo'] = $tipo;
 			if ($data['evaluacion'] != false) {
 				$this->load->view('sview_HeaderEstadisticas');
@@ -390,7 +390,15 @@ class Ctr_Principal extends CI_Controller {
 		}
 
 		public function ChartEjecutivo($id){
-
+			$data['evaluacion'] = $this->Mdl_Consultas->EvaluacionServicio($id,'id_usuario');
+			$data['ejecutivo'] = $this->Mdl_Consultas->DatosRow('t_dat_usuarios','id_usuario',$id);
+			// Obtenemos las preguntas
+			$data['preguntas'] = $this->Mdl_Consultas->TiposCatalogos('Evaluacion');
+			if ($data['evaluacion'] != false) {
+				$this->load->view('sview_HeaderEstadisticas');
+				$this->load->view('sview_GraficaEjecutivos',$data);
+				$this->load->view('sview_Footer');
+			}
 		}
 
 //DATATABLE
@@ -492,7 +500,7 @@ class Ctr_Principal extends CI_Controller {
 			$output .= '</table></div>';
 			echo $output;
 		}
-	
+
 		//Fin de Funciones de Listado del Servicios
 
 		//Inicio de Funciones de Informacion del Servicios

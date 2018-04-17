@@ -5,16 +5,59 @@
   <input type="hidden" name="preg4" id="preg4" value="<?php echo $valor->Pregunta_4 ?>">
 <?php } ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-  <div id='Servicios'>
+  <?php foreach ($ejecutivo as $valor) { ?>
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h1 class="h2"><?php echo $tipo ?></h1>
+    <h1 class="h2"><?php echo $valor->Usuario; ?></h1>
   </div>
 
   <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
+  <table class="table table-responsive{-sm}">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Perfil</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Estatus</th>
+        <th scope="col">Fecha de alta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row"><?php echo $valor->id_usuario; ?></th>
+        <td><?php echo $valor->Usuario; ?></td>
+        <td><?php echo $valor->Perfil; ?></td>
+        <td><?php echo $valor->Correo; ?></td>
+        <td><?php echo $valor->Estatus; ?></td>
+        <td><?php echo $valor->Fecha_alta; ?></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <p class="font-italic">Promedio de evaluación de cada pregunta de los servicios realizados por <b><?php echo $valor->Usuario; ?></b></p>
+  <?php } ?>
 
-  </div>
-  </div>
-  </div>
+  <table class="table table-responsive{-sm}">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Pregunta</th>
+        <th>Evaluación Promedio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php for($i=0;$i<count($preguntas);$i++) { ?>
+      <tr>
+        <th scope="row"><?php echo $preguntas[$i]->Valor ?></th>
+        <td><?php echo $preguntas[$i]->Descripcion ?></td>
+        <?php $columna = 'Pregunta_'.($i+1); ?>
+        <td><?php echo $evaluacion[0]->$columna; ?></td>
+      </tr>
+        <?php } ?>
+    </tbody>
+  </table>
+
 </main>
 </div>
 </div>
@@ -37,6 +80,7 @@
     data: {
       labels: ["Pregunta 1", "Pregunta 2", "Pregunta 3", "Pregunta 4"],
       datasets: [{
+        label: 'Promedio de todos los servicios ()',
         data: [preg1,preg2,preg3,preg4],
         lineTension: 0,
         backgroundColor: 'transparent',

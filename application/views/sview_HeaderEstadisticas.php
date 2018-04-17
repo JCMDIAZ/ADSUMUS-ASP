@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
     <link rel="stylesheet" href="<?php echo base_url()?>css/estilos.css">
+    <link rel="stylesheet" href="<?php echo base_url()?>css/estilosSideBar.css">
 
     <script src="<?php echo base_url()?>js/JQuery.js"></script>
     <script src="<?php echo base_url()?>js/bootstrap.js"></script>
@@ -74,7 +75,7 @@
           </li>
         <?php } if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
           <li class="nav-item active">
-            <a class="nav-link" href="Evaluacion/Servicio" >Estadísticas</a>
+            <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio" >Estadísticas</a>
           </li>
         <?php } elseif($this->session->userdata('perfil')=='Administrador'){  ?>
           <li class="nav-item ">
@@ -111,7 +112,7 @@
   </div>
 </div>
 
-<div class="container-fluid">
+<!--<div class="container-fluid">
     <div class="row">
       <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="sidebar-sticky">
@@ -169,4 +170,38 @@
           <?php } ?>
           </ul>
         </div>
-      </nav>
+      </nav>-->
+
+      <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
