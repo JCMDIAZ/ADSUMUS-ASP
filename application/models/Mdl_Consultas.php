@@ -69,9 +69,9 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
             }
         }
 
+				//
 				function TiposCatalogos($campo){
-					$condicion = "Campo = '".$campo."'";
-					$this->db->where($condicion);
+					$this->db->where('Campo',$campo);
 					$query = $this->db->get('t_cat_catalogos');
 
 					if($query->num_rows() > 0){
@@ -236,8 +236,8 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 				}
 
 				// Obtiene el promedio de la evaluacion por servicio
-				function EvaluacionServicio($tipo){
-					$consulta = "SELECT AVG(Pregunta_1) as Pregunta_1,AVG(Pregunta_2) as Pregunta_2,AVG(Pregunta_3) as Pregunta_3,AVG(Pregunta_4) as Pregunta_4 FROM v_EvaluacionServicios WHERE Tipo_servicio = '$tipo';";
+				function EvaluacionServicio($tipo,$where){
+					$consulta = "SELECT AVG(Pregunta_1) as Pregunta_1,AVG(Pregunta_2) as Pregunta_2,AVG(Pregunta_3) as Pregunta_3,AVG(Pregunta_4) as Pregunta_4 FROM v_EvaluacionServicios WHERE $where = '$tipo';";
 					$query = $this->db->query($consulta);
 					if ($query->num_rows() == 1) {
 						return $query->result();
