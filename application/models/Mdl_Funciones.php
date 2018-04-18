@@ -17,7 +17,7 @@
         }
 
     function Select($nombre,$select,$def ="123qwe"){
-      echo '<option  value="" selected>Todos los Estatus</option>';
+      echo '<option  value="" selected>Seleccione una Opción</option>';
         foreach ($select->result() as $tipo) {
             if($tipo->Campo == $nombre){
                 if($tipo->Descripcion == $def){

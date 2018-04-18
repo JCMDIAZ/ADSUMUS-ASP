@@ -48,7 +48,7 @@
 
             <div class="form-group col-sm-12">
               <label for="Correo">Correo Electrónico:</label>
-                <input  class="form-control" type="email" name="Correo1" id="Correo">
+                <input  class="form-control" type="email" name="Correo1" id="Correo" required>
             </div>
 
             <div class="form-group col-sm-12">
@@ -84,7 +84,7 @@
                 </select>
             </div>
 
-            <div class="form-group col-sm-12 alertas">
+            <div class="form-group col-sm-12 alertas alert alert-danger" role="alert" hidden="true" id="MostrarAlerta">
 
             </div>
 
@@ -100,6 +100,8 @@
     </div>
   </div>
 </div>
+
+
 <!--  Modal Editar Usuarios -->
 <div class="modal " id="modal_form">
   <div class="modal-dialog">
@@ -124,12 +126,12 @@
 
                 <div class="form-group col-sm-12">
                   <label for="NombreE">Nombre:</label>
-                    <input class=" form-control" type = "text"  name = "Usuario" id="NombreE" required>
+                    <input class=" form-control" type="text"  name="Usuario" id="NombreE" required>
                 </div>
 
                 <div class="form-group col-sm-12">
                   <label for="CorreoE">Correo Electrónico:</label>
-                    <input  class="form-control" type="email" name="Correo" id="CorreoE">
+                    <input  class="form-control" type="email" name="Correo" id="CorreoE" required>
                 </div>
 
                 <div class="form-group col-sm-12">
@@ -175,7 +177,7 @@
     </div><!-- Cierre del Modal-Content -->
   </div><!-- Cierre del Modal-Dialog -->
 </div><!-- Cierre del Modal -->
-
+<!-- Fin del Modal Editar Usuario  -->
 
 <!-- Inico de Ajax del Modulo Usuarios -->
 <script type="text/javascript">
@@ -247,15 +249,12 @@ function Validar() {
 	var pass2 = document.getElementById("ContraseñaC").value;
 	var ok = true;
 	if (pass1 != pass2) {
-		alert("Las Contraseñas no Coiciden");
 		document.getElementById("ContraseñaU").style.borderColor = "#E34234";
 		document.getElementById("ContraseñaC").style.borderColor = "#E34234";
 		ok = false;
-	}else {
-
-  }
-
+	}
 }
+
 $('#Registrar').submit(function(e) {
 e.preventDefault();
 var link = $(this).attr('action');
@@ -271,6 +270,7 @@ $.ajax({
       alert(data);
       window.location.reload();
     }else {
+      $('#MostrarAlerta').removeAttr('hidden');
         $('.alertas').html(data);
 
     }
@@ -304,6 +304,43 @@ function editarUsuarios(id){
     }
   });
 }
+
+// function frm_validation(yeke) {
+//     if (yeke === "Usuario") {
+//         var am = $("#NombreE").val();
+//         if (am === null || am.length === 0 || am === "") {
+//             $("#NombreE").addClass("has-warning");
+//             $("#NombreE").removeClass("has-success");
+//             $("#NombreE").text("Campo requerido");
+//             $("#NombreE").show();
+//             return false;
+//         } else {
+//             $("#NombreE").hide();
+//             $("#NombreE").removeClass("has-warning");
+//             $("#NombreE").addClass("has-success");
+//             return true;
+//         }
+//     }
+//
+//     if (yeke === "Contraseña") {
+//         var am = $("#ContraseñaU2").val();
+//         if (am === null || am.length === 0 || am === "") {
+//             $("#ContraseñaU2").addClass("has-warning");
+//             $("#ContraseñaU2").removeClass("has-success");
+//             $("#NombContraseñaU2reE").text("Campo requerido");
+//             $("#ContraseñaU2").show();
+//             return false;
+//         } else {
+//             $("#ContraseñaU2").hide();
+//             $("#ContraseñaU2").removeClass("has-warning");
+//             $("#ContraseñaU2").addClass("has-success");
+//             return true;
+//         }
+//     }
+//   }
+
+
+
 
 function reloadTable(){
   table.ajax.reload(null,false); //Recarga la Tabla de Usuarios
