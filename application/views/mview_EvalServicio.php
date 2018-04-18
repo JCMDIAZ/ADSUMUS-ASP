@@ -1,7 +1,8 @@
 <div id="page-content-wrapper">
             <div class="container-fluid">
+              <div class="row">
               <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<main role="main" class="col-md-9 col-lg-10 mx-auto pt-4">
           <div id='Servicios'>
           <div class="py-4 text-center">
             <h2>Servicios</h2>
@@ -24,7 +25,7 @@
           </div>
           </div>
         </main>
-
+</div>
                   </div>
               </div>
               </div>
