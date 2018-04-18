@@ -8,12 +8,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="utf-8">
     <title>Adsumus</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <!-- CSS-Estilos Generales -->
     <link rel="stylesheet" href="<?php echo base_url()?>css/dataTables.bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo base_url()?>css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
     <link rel="stylesheet" href="<?php echo base_url()?>css/estilos.css">
-
+    <!-- JS-Script Generales -->
     <script src="<?php echo base_url()?>js/JQuery.js"></script>
     <script src="<?php echo base_url()?>js/bootstrap.js"></script>
     <script src="<?php echo base_url()?>js/jquery-mask.js"></script>

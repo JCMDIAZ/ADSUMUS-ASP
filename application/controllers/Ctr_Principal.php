@@ -30,12 +30,28 @@ class Ctr_Principal extends CI_Controller {
 	}
 
 	public function add(){
-		$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]');
+		$this->form_validation->set_rules('Contraseña1', 'Contraseña', 'required|min_length[6]|max_length[20]',
+                        array('required' => 'You must provide a %s.',
+															'min_length' => 'La %s Mayor a 6 Caracteres',
+															'max_length' => 'La %s Menor a 20 Caracteres',
+															)
+                );
+    $this->form_validation->set_rules('Contraseña2', 'Password Confirm', 'required|matches[Contraseña1]'
+	);
+		$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]',
+												array('required' => 'Escribe el %s',
+															'valid_email' => 'Verifique el %s',
+															'is_unique' => 'El %s ya Existe',
+															)
+											);
 		if ($this->form_validation->run() == true) {
 		$this->load->model('Mdl_funciones');
 		$this->Mdl_funciones->insertPrueba();
+		echo json_encode('Agregado Correctamente');
 		}else{
-			echo "<script>alert('¡Correo Existente!');window.location.href='javascript:history.back(-1);'</script>";
+			echo json_encode(validation_errors());
+			// echo  "<script>alert(".validation_errors().");window.location.href='javascript:history.back(-1);'</script>";;
+			// echo "<script>alert('¡Correo Existente!');window.location.href='javascript:history.back(-1);'</script>";
 			}
 		}
 
@@ -464,6 +480,7 @@ class Ctr_Principal extends CI_Controller {
 				$query = $this->input->post('query');
 			}
 			$data = $this->Mdl_funciones->Busqueda($_POST);
+				if ($this->session->userdata('perfil')=='Administrador') {
 			$output .= '
 			<div class="container">
 						<table class="table table-bordered table-striped">
@@ -475,9 +492,23 @@ class Ctr_Principal extends CI_Controller {
 							<th>Estatus</th>
 							<th>Ejecutivo Asignado</th>
 							</tr>
-			';
+			';}else {
+				$output .= '
+				<div class="container">
+							<table class="table table-bordered table-striped">
+								<tr class="table-active">
+								<th>Folio</th>
+								<th>Fecha de Solicitud</th>
+								<th>Razón Social</th>
+								<th>Estatus</th>
+								<th>Ejecutivo Asignado</th>
+								</tr>';
+			}
 			if($data->num_rows() > 0){
 				foreach($data->result() as $row){
+					if ($this->session->userdata('perfil')=='Administrador') {
+
+
 					$output .= '
 					<tr>
 						<td><input type="radio" id='.$row->id_servicio.' name="check" value='.$row->id_servicio.'></td>
@@ -488,6 +519,18 @@ class Ctr_Principal extends CI_Controller {
 						<td>'.$row->Ejecutivo_asignado.'</td>
 					</tr>
 					';
+				}else {
+					$output .= '
+					<tr>
+						<td>'.$row->id_servicio.'</td>
+						<td>'.$row->Fecha_elaboracion.'</td>
+						<td>'.$row->Razon_social_cliente.'</td>
+						<td>'.$row->Estatus_servicio.'</td>
+						<td>'.$row->Ejecutivo_asignado.'</td>
+					</tr>
+					';
+
+				}
 				}
 			}
 			else

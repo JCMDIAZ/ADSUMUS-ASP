@@ -48,8 +48,8 @@
 				'Estatus'=>$this->input->post('Estatus1')
          );
         $this->db->insert("t_dat_usuarios",$data);
-				echo "<script>alert('¡Se Agrego Correctamente!');</script>";
-				redirect('Inicio','refresh');
+				// echo "<script>alert('¡Se Agrego Correctamente!');</script>";
+				// redirect('ModuloU','refresh');
 				}
 
 				//Funciones del DATA-TABLE

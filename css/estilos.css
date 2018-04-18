@@ -129,6 +129,11 @@ button#tamañoB.btn-warning{
   border-color: #f15a22 !important;
 }
 
+button#tamañoA.btn-warning{
+  background-color: #f15a22 !important;
+  border-color: #f15a22 !important;
+}
+
 .feather {
   width: 16px;
   height: 16px;
