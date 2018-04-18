@@ -4,8 +4,9 @@
   <input type="hidden" name="preg3" id="preg3" value="<?php echo $valor->Pregunta_3 ?>">
   <input type="hidden" name="preg4" id="preg4" value="<?php echo $valor->Pregunta_4 ?>">
 <?php } ?>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
   <?php foreach ($ejecutivo as $valor) { ?>
+    <div class="container-fluid">
+      <div class="row">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <h1 class="h2"><?php echo $valor->Usuario; ?></h1>
   </div>
@@ -57,8 +58,8 @@
         <?php } ?>
     </tbody>
   </table>
-
-</main>
+</div>
+</div>
 </div>
 </div>
 

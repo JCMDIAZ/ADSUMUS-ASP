@@ -18,6 +18,11 @@
     <script src="<?php echo base_url()?>js/popper.min.js"></script>
     <script src="<?php echo base_url()?>js/funciones.js"></script>
     <script src="<?php echo base_url()?>js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $( window ).resize(function() {
+if($(window).width() >=500) $('#wrapper').addClass("toggled");
+else $('#wrapper').removeClass("toggled");
+});
     </script>
     <style >
       body{
@@ -172,36 +177,47 @@
         </div>
       </nav>-->
 
-      <div id="wrapper">
+      <div id="wrapper" class="toggled">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
-                </li>
                 <li>
-                    <a href="#">Dashboard</a>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        Estadísticas
+                    </h6>
                 </li>
-                <li>
-                    <a href="#">Shortcuts</a>
+                <?php $this->ci =& get_instance();
+                if ($this->ci->uri->segment(2)=='Servicio') {?>
+                <li class="nav-item">
+                    <a class="nav-link active" href="<?php echo base_url() ?>Evaluacion/Servicio" ><span data-feather="activity"></span>  Por servicio</a>
                 </li>
-                <li>
-                    <a href="#">Overview</a>
+              <?php }else{ ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio" ><span data-feather="activity"></span>  Por servicio</a>
                 </li>
-                <li>
-                    <a href="#">Events</a>
+              <?php }
+              if ($this->ci->uri->segment(2)=='Ejecutivo') {
+              ?>
+                <li class="nav-item">
+                    <a class="nav-link active" href="<?php echo base_url() ?>Evaluacion/Ejecutivo"><span data-feather="user"
+                    ></span>  Por ejecutivo</a>
                 </li>
-                <li>
-                    <a href="#">About</a>
+              <?php }else{  ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Ejecutivo"><span data-feather="user"
+                    ></span>  Por ejecutivo</a>
                 </li>
-                <li>
-                    <a href="#">Services</a>
+              <?php }
+              if ($this->ci->uri->segment(2)=='Empresa') {
+              ?>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><span data-feather="briefcase"></span>  Por empresa</a>
                 </li>
-                <li>
-                    <a href="#">Contact</a>
+              <?php }else{ ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><span data-feather="briefcase"></span>  Por empresa</a>
                 </li>
+              <?php } ?>
             </ul>
         </div>
