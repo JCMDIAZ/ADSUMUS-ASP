@@ -31,27 +31,25 @@ class Ctr_Principal extends CI_Controller {
 
 	public function add(){
 		$this->form_validation->set_rules('Contraseña1', 'Contraseña', 'required|min_length[6]|max_length[20]',
-                        array('required' => 'You must provide a %s.',
-															'min_length' => 'La %s Mayor a 6 Caracteres',
-															'max_length' => 'La %s Menor a 20 Caracteres',
-															)
-                );
-    $this->form_validation->set_rules('Contraseña2', 'Password Confirm', 'required|matches[Contraseña1]'
-	);
+                        array('required' => 'Error en %s.',
+															'min_length' => 'La %s Debe Tener Minimo 6 Caracteres',
+															'max_length' => 'La %s Debe Tener Maximo 20 Caracteres',
+															));
+    $this->form_validation->set_rules('Contraseña2', 'Confirmar Contraseña', 'required|matches[Contraseña1]',
+		  array('required' => 'Error en %s.',
+						'matches' => '¡Upps! Las Contraseñas No Coinciden.',
+						));
 		$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]',
 												array('required' => 'Escribe el %s',
-															'valid_email' => 'Verifique el %s',
-															'is_unique' => 'El %s ya Existe',
-															)
-											);
+															'valid_email' => 'Verifique el %s.',
+															'is_unique' => '¡Upps! %s Existente.',
+															));
 		if ($this->form_validation->run() == true) {
 		$this->load->model('Mdl_funciones');
 		$this->Mdl_funciones->insertPrueba();
 		echo json_encode('Agregado Correctamente');
 		}else{
 			echo json_encode(validation_errors());
-			// echo  "<script>alert(".validation_errors().");window.location.href='javascript:history.back(-1);'</script>";;
-			// echo "<script>alert('¡Correo Existente!');window.location.href='javascript:history.back(-1);'</script>";
 			}
 		}
 
@@ -115,21 +113,26 @@ class Ctr_Principal extends CI_Controller {
 
 
             }else{
-                echo '<script>alert("Ocurrio un error al levantar el servicio");</script>';
+                echo '<script>alert("Ocurrio un Error al Levantar el Servicio");</script>';
             }
         }
     }
 
     public function AtencionServicio(){
-        $this->form_validation->set_rules('activacion', 'Activacion', 'required');
+        $this->form_validation->set_rules('activacion', 'Activacion', 'required|min_length[4]');
+
          if($this->form_validation->run() == false){
              redirect('Inicio');
          }else{
+					 	$clave = $this->input->post('idSeleccionado');
              $activacion = $this->input->post('activacion');
 						 // valida que exista un servicio con el codigo de activacion proporcionado
              $servicioValido = $this->Mdl_Consultas->Servicio($activacion,'activacion');
 						 $ejecutivo = $this->session->userdata('ID');
+						 $servicioSelect = $this->Mdl_Consultas->ServicioFolio($clave);
 						 if($servicioValido != false){
+							 // Valida el codigo de activacion con el con codigo de activacion seleccionado
+							 if ($servicioSelect[0]->Codigo_activacion == $servicioValido[0]->Codigo_activacion) {
 							 foreach ($servicioValido as $value) {
 								 // Valida que el servicio sea el correspondiente con el ejecutivo actual
 								 $servicioEjecutivo = $this->Mdl_Consultas->ValidarServicioEjecutivo($value->id_servicio,$ejecutivo,$activacion);
@@ -176,6 +179,10 @@ class Ctr_Principal extends CI_Controller {
 								 }
 							 }
 						 }
+					 }else{
+						 echo '<script>alert("Codigo Activacion Incorrecto")</script>';
+						 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
+					 }
          }else{
 					 echo '<script>alert("No existe un servicio con el código de activación proporcionado")</script>';
 					 echo '<script>window.location.href = "'.base_url().'Inicio";</script>';
@@ -489,6 +496,7 @@ class Ctr_Principal extends CI_Controller {
 				<div class="container">
 							<table class="table table-bordered table-striped">
 								<tr class="table-active">
+								<th></th>
 								<th>Folio</th>
 								<th>Fecha de Solicitud</th>
 								<th>Razón Social</th>
@@ -514,6 +522,7 @@ class Ctr_Principal extends CI_Controller {
 				}else {
 					$output .= '
 					<tr>
+						<td><input type="radio" id='.$row->id_servicio.' name="check" value='.$row->id_servicio.'></td>
 						<td>'.$row->id_servicio.'</td>
 						<td>'.$row->Fecha_elaboracion.'</td>
 						<td>'.$row->Razon_social_cliente.'</td>

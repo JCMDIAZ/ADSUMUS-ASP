@@ -71,11 +71,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php }
         if ($this->ci->uri->segment(1)=='Atencion_servicio' and $this->session->userdata('perfil')=='Ejecutivo') { ?>
           <li class="nav-item active">
-            <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
+            <a class="nav-link" href="#">Atención del servicio</a>
           </li>
         <?php } elseif($this->session->userdata('perfil')=='Ejecutivo'){  ?>
-          <li class="nav-item ">
-            <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Atención del servicio</a>
           </li>
         <?php }
         if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
@@ -104,6 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </button>
       </div>
       <form action="Atencion_servicio" method="POST">
+        <input id="ocultoSeleccionado" type="hidden" name="idSeleccionado" value="">
           <div class="modal-body">
               <input type="text" class="form-control codigo" placeholder="Introduce el código de activación" name="activacion" required>
           </div>

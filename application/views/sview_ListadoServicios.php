@@ -51,9 +51,9 @@
 
           <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
             <div class="col-md-4 col-sm-4 mb-3 mx-auto">
-              <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">
+              <!-- <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter"> -->
                 <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoA">Atender</button>
-              </a>
+              <!-- </a> -->
           <?php } ?>
           </form>
   </div>
@@ -66,10 +66,23 @@
 <script>
 //Inicio de Buscador de Servicios
 $(document).ready(function(){
+  jQuery.noConflict();
   search();
+
   $('#tamañoB').on('click',function() {
     if (valor = $('input[name="check"]:checked').val()) {
       window.location = "Informacion/"+valor;
+    }else {
+      alert('Ningún Servicio Seleccionado');
+    }
+  })
+
+  $('#tamañoA').on('click',function() {
+    if (valor = $('input[name="check"]:checked').val()) {
+      console.log(valor);
+        $('#tamañoA').val(valor);
+        $('#ocultoSeleccionado').val(valor);
+        $('#exampleModalCenter').modal('show');
     }else {
       alert('Ningún Servicio Seleccionado');
     }
