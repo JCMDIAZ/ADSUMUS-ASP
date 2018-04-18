@@ -246,6 +246,20 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 					}
 				}
 
+				// Obtiene las evaluacion de todos los servicios de un determinado ejecutivo
+				function EvaluacionEjecutivo($id){
+					$this->db->where('id_usuario',$id);
+					$this->db->select('Pregunta_1,Pregunta_2,Pregunta_3,Pregunta_4,f_id_servicio');
+					$this->db->order_by('f_id_servicio','DESC');
+					$this->db->limit(10);
+					$query = $this->db->get('v_EvaluacionServicios');
+					if ($query->num_rows()>0) {
+						return $query->result();
+					}else{
+						return false;
+					}
+				}
+
 				// Valida si el servicio le pertenece al ejecutivos
 				function ValidarServicioEjecutivo($id_servicio,$id_ejecutivo,$codigo){
 					$this->db->where("id_servicio",$id_servicio);

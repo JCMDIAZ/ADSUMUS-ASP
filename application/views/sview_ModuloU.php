@@ -2,7 +2,7 @@
   <h3>Módulo Usuarios</h3>
     <hr>
       <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal1">Agregar Usuario</button>
-        <table id="table" class="table table-striped" style="width:100%">
+        <table id="table" class="table table-striped table-responsive{-sm}" style="width:100%">
           <thead>
               <tr class="table-active">
                   <th>Usuarios</th>

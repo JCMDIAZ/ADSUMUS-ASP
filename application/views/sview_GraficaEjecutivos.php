@@ -5,14 +5,16 @@
   <input type="hidden" name="preg4" id="preg4" value="<?php echo $valor->Pregunta_4 ?>">
 <?php } ?>
   <?php foreach ($ejecutivo as $valor) { ?>
-    <div class="container-fluid">
-      <div class="row">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <div id="page-content-wrapper">
+    <div class="container">
+      <a href="#menu-toggle" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mt-4 col-12 border-bottom mx-auto">
     <h1 class="h2"><?php echo $valor->Usuario; ?></h1>
   </div>
 
   <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
-  <table class="table table-responsive{-sm}">
+
+  <table class="table table-responsive{-sm|-md}">
     <thead>
       <tr>
         <th scope="col">ID</th>
@@ -58,6 +60,10 @@
         <?php } ?>
     </tbody>
   </table>
+  <br>
+  <br>
+  <p class="font-italic">Gráfica de relación entre los servicios con sus respectivas evaluaciónes</p>
+  <canvas class="my-4" id="serviciosEval" width="900" height="380"></canvas>
 </div>
 </div>
 </div>
@@ -71,7 +77,10 @@
 <!-- Graphs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script>
+  var servicios = <?php echo $serviciosEval ?>;
+  console.log(servicios);
   var ctx = document.getElementById("myChart");
+  var ctx2 = document.getElementById("serviciosEval");
   var preg1 = $("#preg1").val();
   var preg2 = $("#preg2").val();
   var preg3 = $("#preg3").val();
@@ -89,6 +98,78 @@
         borderWidth: 4,
         pointBackgroundColor: '#007bff'
       }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: false
+          }
+        }]
+      },
+      legend: {
+        display: false,
+      }
+    }
+  });
+  // Creamos array que almacena los datos de cada linea de la grafica
+  var datosServicios = [];
+  var valores = [];
+  var labels = [];
+  for (var i = 0; i < servicios.length; i++) {
+    if (i<4) {
+      valores = [];
+      switch (i) {
+        case 0:
+          for (var j = 0; j < servicios.length; j++) {
+            valores.push(servicios[j].Pregunta_1);
+          }
+          var color = "#00A388";
+          var pregunta = 'Pregunta 1';
+          break;
+        case 1:
+          for (var j = 0; j < servicios.length; j++) {
+            valores.push(servicios[j].Pregunta_2);
+          }
+          var color = "#71CC91";
+          var pregunta = 'Pregunta 2';
+          break;
+        case 2:
+          for (var j = 0; j < servicios.length; j++) {
+            valores.push(servicios[j].Pregunta_3);
+          }
+          var color = "#C6EB98";
+          var pregunta = 'Pregunta 3';
+          break;
+        case 3:
+          for (var j = 0; j < servicios.length; j++) {
+            valores.push(servicios[j].Pregunta_4);
+          }
+          var color = "#FFFF9D";
+          var pregunta = 'Pregunta 4';
+          break;
+        default:
+      }
+    datosServicios.push({
+      label: pregunta,
+      data: valores,
+      lineTension: 0,
+      backgroundColor: 'transparent',
+      borderColor: color,
+      borderWidth: 4,
+      pointBackgroundColor: color
+    });
+    }
+    labels.push("Servicio "+servicios[i].f_id_servicio);
+  }
+  console.log(datosServicios);
+  console.log(labels);
+  //
+  var myChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: datosServicios
     },
     options: {
       scales: {
