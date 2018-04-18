@@ -80,11 +80,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php }
         if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
           <li class="nav-item active">
-            <a class="nav-link" href="Evaluacion/Servicio" >Estadísticas</a>
+            <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio" >Estadísticas</a>
           </li>
         <?php } elseif($this->session->userdata('perfil')=='Administrador'){  ?>
           <li class="nav-item ">
-            <a class="nav-link" href="Evaluacion/Servicio">Estadísticas</a>
+            <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio">Estadísticas</a>
           </li>
         <?php } ?>
           <li class="nav-item">

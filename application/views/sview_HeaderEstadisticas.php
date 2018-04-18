@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
     <link rel="stylesheet" href="<?php echo base_url()?>css/estilos.css">
     <link rel="stylesheet" href="<?php echo base_url()?>css/estilosSideBar.css">
+    <link href="<?php echo base_url()?>css/fontawesome-all.css" rel="stylesheet">
 
     <script src="<?php echo base_url()?>js/JQuery.js"></script>
     <script src="<?php echo base_url()?>js/bootstrap.js"></script>
@@ -20,9 +21,9 @@
     <script src="<?php echo base_url()?>js/bootstrap.min.js"></script>
     <script type="text/javascript">
     $( window ).resize(function() {
-if($(window).width() >=500) $('#wrapper').addClass("toggled");
-else $('#wrapper').removeClass("toggled");
-});
+      if($(window).width() >=500) $('#wrapper').addClass("toggled");
+      else $('#wrapper').removeClass("toggled");
+    });
     </script>
     <style >
       body{
@@ -177,7 +178,7 @@ else $('#wrapper').removeClass("toggled");
         </div>
       </nav>-->
 
-      <div id="wrapper" class="toggled">
+      <div id="wrapper" class="">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">

@@ -14,6 +14,17 @@ $(document).ready(function() {
 			window.location = href;
 		}
 	})
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+	});
+	$(window).resize(function() {
+		if ($(window).width() >= 500) 
+			$('#wrapper').addClass("toggled");
+		else 
+			$('#wrapper').removeClass("toggled");
+		}
+	);
 });
 
 function ActualizarDatos(url, datos) {

@@ -407,6 +407,7 @@ class Ctr_Principal extends CI_Controller {
 
 		public function ChartEjecutivo($id){
 			$data['evaluacion'] = $this->Mdl_Consultas->EvaluacionServicio($id,'id_usuario');
+			$data['serviciosEval'] = json_encode($this->Mdl_Consultas->EvaluacionEjecutivo($id));
 			$data['ejecutivo'] = $this->Mdl_Consultas->DatosRow('t_dat_usuarios','id_usuario',$id);
 			// Obtenemos las preguntas
 			$data['preguntas'] = $this->Mdl_Consultas->TiposCatalogos('Evaluacion');
@@ -483,7 +484,7 @@ class Ctr_Principal extends CI_Controller {
 				if ($this->session->userdata('perfil')=='Administrador') {
 			$output .= '
 			<div class="container">
-						<table class="table table-bordered table-striped">
+						<table class="table table-bordered table-striped table-responsive{-sm}">
 							<tr class="table-active">
 							<th></th>
 							<th>Folio</th>
@@ -495,7 +496,7 @@ class Ctr_Principal extends CI_Controller {
 			';}else {
 				$output .= '
 				<div class="container">
-							<table class="table table-bordered table-striped">
+							<table class="table table-bordered table-striped table-responsive{-sm}">
 								<tr class="table-active">
 								<th>Folio</th>
 								<th>Fecha de Solicitud</th>

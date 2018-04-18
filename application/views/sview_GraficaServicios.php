@@ -4,9 +4,10 @@
   <input type="hidden" name="preg3" id="preg3" value="<?php echo $valor->Pregunta_3 ?>">
   <input type="hidden" name="preg4" id="preg4" value="<?php echo $valor->Pregunta_4 ?>">
 <?php } ?>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-  <div id='Servicios'>
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+<div id="page-content-wrapper">
+<div class="container">
+  <a href="#menu-toggle" class="pt-3" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 mt-3 col-12 border-bottom">
     <h1 class="h2"><?php echo $tipo ?></h1>
   </div>
 
@@ -15,7 +16,7 @@
   </div>
   </div>
   </div>
-</main>
+</div>
 </div>
 </div>
 

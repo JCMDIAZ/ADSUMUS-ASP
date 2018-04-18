@@ -63,17 +63,15 @@
             </div>
             <div class="col-md-12 col-sm-12 mb-3">
                 <label for="descripcion_servicio">Descripción del Servicio</label>
-                <textarea class="form-control" id="descripcion_servicio" value="<?php echo $row->Descripcion_servicio ?>" name="descripcion_servicio"></textarea>
+                <textarea class="form-control" id="descripcion_servicio" name="descripcion_servicio"><?php echo $row->Descripcion_servicio ?></textarea>
             </div>
             <div class="col-md-12 col-sm-12 mb-3">
                 <label for="observaciones">Observaciones</label>
-                <textarea class="form-control" id="observaciones" value="<?php echo $row->Telefono_solicitante ?>" name="observaciones" disabled>
-                </textarea>
+                <textarea class="form-control" id="observaciones" name="observaciones" disabled><?php echo $row->Observaciones ?></textarea>
             </div>
             <div class="col-md-12 col-sm-12 mb-3">
                 <label for="material_utilizado">Material Utilizado</label>
-                <textarea class="form-control" id="material_utilizado" value="<?php echo $row->Material_utilizado ?>" name="material_utilizado" disabled>
-                </textarea>
+                <textarea class="form-control" id="material_utilizado" name="material_utilizado" disabled><?php echo $row->Material_utilizado ?></textarea>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="fecha_hora_inicio">Fecha y Hora de Inicio</label>

@@ -1,8 +1,7 @@
 <div id="page-content-wrapper">
             <div class="container-fluid">
-              <div class="row">
-              <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
-<main role="main" class="col-md-9 col-lg-10 mx-auto pt-4">
+              <a href="#menu-toggle" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
+<main role="main" class="col-md-11 col-lg-11 mx-auto pt-4 mx-auto">
           <div id='Servicios'>
           <div class="py-4 text-center">
             <h2>Servicios</h2>
@@ -26,7 +25,6 @@
           </div>
         </main>
 </div>
-                  </div>
               </div>
               </div>
 
@@ -38,12 +36,6 @@
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
       feather.replace()
-    </script>
-    <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-  });
     </script>
   </body>
 </html>
