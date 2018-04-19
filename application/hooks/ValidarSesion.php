@@ -9,6 +9,7 @@ class ValidarSesion{
 	public function ValidarLogin(){
 		if($this->ci->uri->segment(1) == 'Login' && $this->ci->session->userdata('correo') == true){
 			redirect(base_url('Inicio'));
+		}else if($this->ci->session->userdata('correo') == false && $this->ci->uri->segment(1) == 'Encuesta'){
 		}else if($this->ci->session->userdata('correo') == false && $this->ci->uri->segment(1) != 'Login'){
 			redirect(base_url('Login'));
 		}

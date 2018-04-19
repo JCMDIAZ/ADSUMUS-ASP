@@ -39,6 +39,9 @@ div.logo{
   div.logo{
     width: 100px;
   }
+  footer>div{
+    font-size: 12px;
+  }
 }
 
 .form-signin {
@@ -232,4 +235,18 @@ table#tabla_Servicios a{
 }
 .info{
   display: flex;
+}
+a{
+  color: #2b2b28;
+  text-decoration: none;
+}
+a:hover{
+  color: #000;
+  text-decoration: none;
+}
+a:visited{
+  color: #2b2b28;
+}
+a:active{
+  color: #2b2b28;
 }

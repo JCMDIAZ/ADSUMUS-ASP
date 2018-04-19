@@ -18,13 +18,6 @@ $(document).ready(function() {
 		e.preventDefault();
 		$("#wrapper").toggleClass("toggled");
 	});
-	$(window).resize(function() {
-		if ($(window).width() >= 500) 
-			$('#wrapper').addClass("toggled");
-		else 
-			$('#wrapper').removeClass("toggled");
-		}
-	);
 });
 
 function ActualizarDatos(url, datos) {
@@ -52,7 +45,6 @@ function ActualizarDatos(url, datos) {
 		alert("error");
 	});
 }
-
 
 function Display(Seccion, button) {
 	$(".block").css("display", "none");
