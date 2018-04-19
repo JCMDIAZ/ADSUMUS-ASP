@@ -1,13 +1,12 @@
-<div id="page-content-wrapper">
-            <div class="container-fluid">
-              <a href="#menu-toggle" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
-<main role="main" class="col-md-11 col-lg-11 mx-auto pt-4 mx-auto">
-          <div id='Servicios'>
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <main role="main" class="col-md-11 col-lg-11 mx-auto pt-4 mx-auto">
+        <a href="#menu-toggle" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
+        <div id='Servicios'>
           <div class="py-4 text-center">
-            <h2>Servicios</h2>
+              <h2>Servicios</h2>
           </div>
-          <div class="table-responsive">
-            <table class="table table-sm table-hover" id="tabla_Servicios">
+            <table class="table table-sm table-hover table-responsive{-sm|-md}" id="tabla_Servicios">
               <thead>
                 <tr>
                   <th>Tipo</th>
@@ -18,21 +17,20 @@
                 <tr>
                   <td><a href="<?php echo base_url() ?>Evaluacion/Servicio/<?php echo $valor->Descripcion ?>"><?php echo $valor->Descripcion ?></a></td>
                 </tr>
-              <?php } ?>
+                <?php } ?>
               </tbody>
             </table>
-          </div>
-          </div>
-        </main>
+        </div>
+      </main>
+    </div>
+  </div>
 </div>
-              </div>
-              </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
 
-    <!-- Icons -->
+      <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
       feather.replace()

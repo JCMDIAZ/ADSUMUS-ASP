@@ -68,7 +68,7 @@ class Ctr_Principal extends CI_Controller {
         }else{
             $data['f_id_usuario'] = $this->input->post('ejecutivo_asignado');
             $data['Ejecutivo_asignado'] = $this->Mdl_Consultas->NombreUsuario($data['f_id_usuario']);
-            $data['Razon_social_cliente'] = $this->input->post('razon');
+            $data['Razon_social_cliente'] = limpiarEspacios($this->input->post('razon'));
             $data['Nombre_solicitante'] = $this->input->post('nombre_solicitante');
             $data['Correo_solicitante'] = $this->input->post('correo_solicitante');
             $data['Direccion_cliente'] = $this->input->post('direccion_cliente');
@@ -246,7 +246,7 @@ class Ctr_Principal extends CI_Controller {
 								// Se envia el email al solicitante
 								$para = $valor->Correo_solicitante;
 								$asunto = "Finalizacion del servicio - Adsumus";
-								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Evaluacion_servicio/".$data['token']."'>".base_url()."Evaluacion_servicio/".$data['token']."</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."No_satisfaccion_servicio/".$data['token']."'>".base_url()."No_satisfaccion_servicio/".$data['token']."</a></p>";
+								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Encuesta/Evaluacion_servicio/".$data['token']."'>".base_url()."Encuesta/Evaluacion_servicio/".$data['token']."</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."Encuesta/No_satisfaccion_servicio/".$data['token']."'>".base_url()."Encuesta/No_satisfaccion_servicio/".$data['token']."</a></p>";
 
 								$this->email->set_mailtype('html');
 								$this->email->from('aldo.martinez@niurons.com.mx', 'Aldo Martinez');
@@ -324,74 +324,80 @@ class Ctr_Principal extends CI_Controller {
 					$this->load->view('mview_NoExiste');
 				}
 			}
-	}
+		}
 
 		public function No_satisfaccion($token){
-			$registro = $this->Mdl_Consultas->ServicioToken($token);
-			$this->form_validation->set_rules('detalle','Detalle','required|max_length[500]');
-			$this->form_validation->set_rules('fecha','Fecha de cita posterior','required|max_length[500]');
-			if ($this->form_validation->run()==false) {
-				if ($registro == false) {
-					$data['titulo'] = 'No satisfacción del servicio';
-					$data['mensaje'] = 'WARNING: El link ha caducado';
-					$this->load->view('mview_NoExiste',$data);
-				}else{
-					foreach ($registro as $valor) {
-						// Valida si el registro ya ha sido reabierto
-						if ($valor->id_servicio_anterior === '0') {
-							$data['mensaje'] = 'Favor de verificar su nuevo numero de folio del servicio';
-							$data['titulo'] = 'No satisfacción del servicio';
-							echo "<script>alert('El servicio con folio ".$valor->id_servicio." ya ha sido reabierto')</script>";
-							$this->load->view('mview_NoExiste',$data);
-						}else{
-							$data['folio'] = $valor->id_servicio;
-							$data['token'] = $token;
-							$this->load->view('mview_NoSatisfaccion',$data);
+				$registro = $this->Mdl_Consultas->ServicioToken($token);
+				$this->form_validation->set_rules('detalle','Detalle','required|max_length[500]');
+				$this->form_validation->set_rules('fecha','Fecha de cita posterior','required|max_length[500]');
+				if ($this->form_validation->run()==false) {
+					if ($registro == false) {
+						$data['titulo'] = 'No satisfacción del servicio';
+						$data['mensaje'] = 'WARNING: El link ha caducado';
+						$this->load->view('mview_NoExiste',$data);
+					}else{
+						foreach ($registro as $valor) {
+							// Valida si el registro ya ha sido reabierto
+							if ($valor->id_servicio_anterior === '0') {
+								$data['mensaje'] = 'Favor de verificar su nuevo numero de folio del servicio';
+								$data['titulo'] = 'No satisfacción del servicio';
+								echo "<script>alert('El servicio con folio ".$valor->id_servicio." ya ha sido reabierto')</script>";
+								$this->load->view('mview_NoExiste',$data);
+							}else{
+								$data['folio'] = $valor->id_servicio;
+								$data['token'] = $token;
+								$this->load->view('mview_NoSatisfaccion',$data);
+							}
 						}
 					}
-				}
-		}else{
-				foreach ($registro as $valor) {
-					$folio = $valor->id_servicio;
-				}
-				$duplicar = $this->Mdl_Consultas->Duplicar('t_dat_servicios',$folio);
-				if ($duplicar==true) {
-					$datos['id_servicio_anterior'] = 0;
-					$this->Mdl_Consultas->ActualizarServicio($datos,$folio);
-					$data['Detalle_reabierto'] = $this->input->post('detalle');
-					$data['Fecha_cita_programada'] = $this->input->post('fecha');
-					$data['Codigo_activacion'] = NumeroAleatorio();
-					$data['Codigo_terminacion'] = NumeroAleatorio();
-					$data['id_servicio_anterior'] = $folio;
-					$IdregistroActualizado = $this->Mdl_Consultas->LastRow();
-					$registroActualizado = $this->Mdl_Consultas->ActualizarServicio($data,$IdregistroActualizado);
-					if ($registroActualizado) {
-						echo $IdregistroActualizado;
-						$this->Mdl_Consultas->EliminarToken('t_dat_token',$folio);
-						$reabierto = $this->Mdl_Consultas->ServicioFolio($IdregistroActualizado);
-						foreach ($reabierto as $valor) {
-							$para = $valor->Correo_solicitante;
-							$asunto = "Datos sobre el servicio(Reabierto) - Adsumus";
-							$body = "<p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ejecutivo asignado: ".$valor->Ejecutivo_asignado."</p>";
+			}else{
+					foreach ($registro as $valor) {
+						$folio = $valor->id_servicio;
+					}
+					$duplicar = $this->Mdl_Consultas->Duplicar('t_dat_servicios',$folio);
+					if ($duplicar==true) {
+						$datos['id_servicio_anterior'] = 0;
+						$this->Mdl_Consultas->ActualizarServicio($datos,$folio);
+						$data['Detalle_reabierto'] = $this->input->post('detalle');
+						$data['Fecha_cita_programada'] = $this->input->post('fecha');
+						$data['Codigo_activacion'] = NumeroAleatorio();
+						$data['Codigo_terminacion'] = NumeroAleatorio();
+						$data['id_servicio_anterior'] = $folio;
+						$IdregistroActualizado = $this->Mdl_Consultas->LastRow();
+						$registroActualizado = $this->Mdl_Consultas->ActualizarServicio($data,$IdregistroActualizado);
+						if ($registroActualizado) {
+							echo $IdregistroActualizado;
+							$this->Mdl_Consultas->EliminarToken('t_dat_token',$folio);
+							$reabierto = $this->Mdl_Consultas->ServicioFolio($IdregistroActualizado);
+							foreach ($reabierto as $valor) {
+								$para = $valor->Correo_solicitante;
+								$asunto = "Datos sobre el servicio(Reabierto) - Adsumus";
+								$body = "<p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ejecutivo asignado: ".$valor->Ejecutivo_asignado."</p>";
 
-							$config['mailtype'] = 'html';
-							$this->email->initialize($config);
-							$this->email->from('aldo@vision.com','Aldo Martinez');
-							$this->email->to($para);
-							$this->email->subject($asunto);
-							$this->email->message($body);
-						}
-						$this->email->send();
-				}else{
-					echo 'No existe registro con ese folio';
+								$config['mailtype'] = 'html';
+								$this->email->initialize($config);
+								$this->email->from('aldo@vision.com','Aldo Martinez');
+								$this->email->to($para);
+								$this->email->subject($asunto);
+								$this->email->message($body);
+							}
+							$this->email->send();
+					}else{
+						echo 'No existe registro con ese folio';
+					}
 				}
 			}
 		}
-}
+
+		public function Encuesta($token){
+			$data['token'] = $token;
+			$this->load->view('mview_Encuesta',$data);
+		}
 
 		public function Chart($eval){
 			$data['servicios'] = $this->Mdl_Consultas->TiposCatalogos('Tipo_servicio');
 			$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+			$data['empresas'] = $this->Mdl_Consultas->ValoresDistintos('t_dat_servicios','Razon_social_cliente');
 			$this->load->view('sview_HeaderEstadisticas');
 			$this->load->view('mview_Eval'.$eval,$data);
 			$this->load->view('sview_Footer');
@@ -409,18 +415,49 @@ class Ctr_Principal extends CI_Controller {
 				$this->load->view('sview_HeaderEstadisticas');
 				$this->load->view('sview_GraficaServicios',$data);
 				$this->load->view('sview_Footer');
+			}else{
+				echo 'alert("Este tipo de servicio aun no cuenta con servicios evaluados");';
+				echo 'window.location.href ='.base_url().'Evaluacion/Servicio;';
 			}
 		}
 
 		public function ChartEjecutivo($id){
 			$data['evaluacion'] = $this->Mdl_Consultas->EvaluacionServicio($id,'id_usuario');
-			$data['serviciosEval'] = json_encode($this->Mdl_Consultas->EvaluacionEjecutivo($id));
+			$validarServicios = $this->Mdl_Consultas->EvaluacionEjecutivo($id,'id_usuario','f_id_servicio');
+			if ($validarServicios != false) {
+				$data['serviciosEval'] = json_encode($validarServicios);
+			}else{
+				$data['serviciosEval'] = false;
+			}
 			$data['ejecutivo'] = $this->Mdl_Consultas->DatosRow('t_dat_usuarios','id_usuario',$id);
 			// Obtenemos las preguntas
 			$data['preguntas'] = $this->Mdl_Consultas->TiposCatalogos('Evaluacion');
 			if ($data['evaluacion'] != false) {
 				$this->load->view('sview_HeaderEstadisticas');
 				$this->load->view('sview_GraficaEjecutivos',$data);
+				$this->load->view('sview_Footer');
+			}else{
+				echo 'alert("Este ejecutivo aun no cuenta con servicios evaluados");';
+				echo 'window.location.href ='.base_url().'Evaluacion/Ejecutivo;';
+			}
+		}
+
+		public function ChartEmpresa($empresa){
+			//Obtenemos el promedio de evaluacion de la empresas
+			$data['promedio'] = $this->Mdl_Consultas->EvaluacionServicio($empresa,'Razon_social_cliente');
+			// Obtenemos la evaluacion de los ultimos 10 servicios y validamos que esta empresa tenga al menos un servicio evaluado
+			$validarServicios = $this->Mdl_Consultas->EvaluacionEjecutivo($empresa,'Razon_social_cliente','Razon_social_cliente');
+			if ($validarServicios != false) {
+				$data['servicios'] = json_encode($validarServicios);
+			}else{
+				$data['servicios'] = false;
+			}
+			$data['empresa'] = $empresa;
+			// Obtenemos las preguntas
+			$data['preguntas'] = $this->Mdl_Consultas->TiposCatalogos('Evaluacion');
+			if ($data['promedio'] != false) {
+				$this->load->view('sview_HeaderEstadisticas');
+				$this->load->view('sview_GraficaEmpresas',$data);
 				$this->load->view('sview_Footer');
 			}
 		}

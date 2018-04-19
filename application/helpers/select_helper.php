@@ -80,4 +80,10 @@ function CrearToken(){
   $token = bin2hex($token);
   return $token;
 }
+
+//Elimina espacios en blanco de una cadena
+function limpiarEspacios($cadena){
+  $cadenaSinEspacios = str_replace(" ","",$cadena);
+  return $cadenaSinEspacios;
+}
 ?>

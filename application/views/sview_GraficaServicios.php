@@ -6,8 +6,8 @@
 <?php } ?>
 <div id="page-content-wrapper">
 <div class="container">
-  <a href="#menu-toggle" class="pt-3" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 mt-3 col-12 border-bottom">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 mt-3 col-12">
+    <a href="#menu-toggle" class="pt-3" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
     <h1 class="h2"><?php echo $tipo ?></h1>
   </div>
 

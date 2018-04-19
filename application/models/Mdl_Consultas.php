@@ -143,8 +143,6 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
             // Obtenemos los datos del registro del codigo activacion proporcionado
             $this->db->where($condicion);
             $query = $this->db->get('t_dat_servicios');
-
-
             if($query->num_rows() == 1){
                 return $query->result();
             }else{
@@ -247,9 +245,9 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 				}
 
 				// Obtiene las evaluacion de todos los servicios de un determinado ejecutivo
-				function EvaluacionEjecutivo($id){
-					$this->db->where('id_usuario',$id);
-					$this->db->select('Pregunta_1,Pregunta_2,Pregunta_3,Pregunta_4,f_id_servicio');
+				function EvaluacionEjecutivo($id,$where,$select){
+					$this->db->where($where,$id);
+					$this->db->select('Pregunta_1,Pregunta_2,Pregunta_3,Pregunta_4,f_id_servicio,'.$select);
 					$this->db->order_by('f_id_servicio','DESC');
 					$this->db->limit(10);
 					$query = $this->db->get('v_EvaluacionServicios');
@@ -260,7 +258,7 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 					}
 				}
 
-				// Valida si el servicio le pertenece al ejecutivos
+				// Valida si el servicio le pertenece al ejecutivo
 				function ValidarServicioEjecutivo($id_servicio,$id_ejecutivo,$codigo){
 					$this->db->where("id_servicio",$id_servicio);
 					$this->db->where("f_id_usuario",$id_ejecutivo);
@@ -268,6 +266,18 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 					$query = $this->db->get('t_dat_servicios');
 
 					return($query->num_rows()==1);
+				}
+
+				// Retorna todos los valores de una columna sin que se repitan
+				function ValoresDistintos($tabla,$columna){
+					$consulta = "SELECT DISTINCT $columna FROM $tabla";
+					$query = $this->db->query($consulta);
+
+					if ($query->num_rows()>0) {
+						return $query->result();
+					}else{
+						return false;
+					}
 				}
     }
 ?>

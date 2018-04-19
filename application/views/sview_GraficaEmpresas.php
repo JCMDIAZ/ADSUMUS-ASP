@@ -1,46 +1,22 @@
-<?php foreach ($evaluacion as $valor) { ?>
+<?php foreach ($promedio as $valor) { ?>
   <input type="hidden" name="preg1" id="preg1" value="<?php echo $valor->Pregunta_1 ?>">
   <input type="hidden" name="preg2" id="preg2" value="<?php echo $valor->Pregunta_2 ?>">
   <input type="hidden" name="preg3" id="preg3" value="<?php echo $valor->Pregunta_3 ?>">
   <input type="hidden" name="preg4" id="preg4" value="<?php echo $valor->Pregunta_4 ?>">
-<?php } ?>
-  <?php foreach ($ejecutivo as $valor) {  ?>
+  <?php } ?><!-- Cierre de foreach promedio -->
     <div id="page-content-wrapper">
     <div class="container">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mt-4 col-12 mx-auto">
     <a href="#menu-toggle" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
-    <h1 class="h2"><?php echo $valor->Usuario; ?></h1>
+    <h1 class="h2"><?php echo $empresa; ?></h1>
   </div>
   <br>
-  <table class="table table-responsive{-sm|-md}">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Perfil</th>
-        <th scope="col">Correo</th>
-        <th scope="col">Estatus</th>
-        <th scope="col">Fecha de alta</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row"><?php echo $valor->id_usuario; ?></th>
-        <td><?php echo $valor->Usuario; ?></td>
-        <td><?php echo $valor->Perfil; ?></td>
-        <td><?php echo $valor->Correo; ?></td>
-        <td><?php echo $valor->Estatus; ?></td>
-        <td><?php echo $valor->Fecha_alta; ?></td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <?php if ($serviciosEval != false) { ?>
-  <p class="font-italic">Gráfica del promedio de evaluación de los servicios dados por <b><?php echo $valor->Usuario; ?></b></p>
+    <?php if ($servicios != false) { ?>
+  <p class="font-italic">Gráfica del promedio de evaluación dado de los servicios contratados</p>
   <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
   <br>
   <br>
-  <p class="font-italic">Promedio de evaluación de cada pregunta de los servicios realizados por <b><?php echo $valor->Usuario; ?></b></p>
+  <p class="font-italic">Promedio de evaluación dado de cada pregunta de los servicios contratados</p>
   <table class="table table-responsive{-sm|-md}">
     <thead>
       <tr>
@@ -55,22 +31,22 @@
         <th scope="row"><?php echo $preguntas[$i]->Valor ?></th>
         <td><?php echo $preguntas[$i]->Descripcion ?></td>
         <?php $columna = 'Pregunta_'.($i+1); ?>
-        <td><?php echo $evaluacion[0]->$columna; ?></td>
+        <td><?php echo $promedio[0]->$columna; ?></td>
       </tr>
         <?php } ?>
     </tbody>
   </table>
   <br>
   <br>
-  <p class="font-italic">Gráfica de relación entre los servicios con sus respectivas evaluaciónes</p>
+  <p class="font-italic">Gráfica de relación entre los servicios con sus respectivas evaluaciónes dadas.</p>
   <canvas class="my-4" id="serviciosEval" width="900" height="380"></canvas>
   <br>
-  <p class="font-italic">Calificación obtenidas de cada pregunta de los servicios realizados por <b><?php echo $valor->Usuario; ?></b></p>
+  <p class="font-italic">Calificaciónes dadas de cada pregunta a los servicios contratados.</p>
 
   <table class="table table-responsive{-sm|-md}">
     <thead>
       <tr>
-        <th>Id Servicio</th>
+        <th>Razón Social</th>
         <th>Pregunta 1</th>
         <th>Pregunta 2</th>
         <th>Pregunta 3</th>
@@ -80,10 +56,10 @@
     <tbody>
       <?php
       // Decodificamos el json para poder manejarlo como objetos
-      $serviciosEvalDecode = json_decode($serviciosEval);
+      $serviciosEvalDecode = json_decode($servicios);
       for($i=0;$i<count($serviciosEvalDecode);$i++) { ?>
       <tr>
-        <th scope="row"><?php echo $serviciosEvalDecode[$i]->f_id_servicio ?></th>
+        <th scope="row"><?php echo $serviciosEvalDecode[$i]->Razon_social_cliente ?></th>
         <td><?php echo $serviciosEvalDecode[$i]->Pregunta_1 ?></td>
         <td><?php echo $serviciosEvalDecode[$i]->Pregunta_2 ?></td>
         <td><?php echo $serviciosEvalDecode[$i]->Pregunta_3 ?></td>
@@ -91,9 +67,8 @@
       </tr>
     <?php } /*Termina ciclo for de serviciosEvalDecode*/
   }else{?>
-    <h4>El ejecutivo aún no cuenta con servicios evaluados</h4>
-<?php }//Termina ciclo if/else de serviciosEval
-    }/*Termina foreach del ejecutivo*/ ?>
+    <h4>La empresa aún no cuenta con servicios evaluados</h4>
+<?php }//Termina ciclo if/else de serviciosEval?>
     </tbody>
   </table>
 
@@ -110,7 +85,7 @@
 <!-- Graphs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script>
-  var servicios = <?php echo $serviciosEval ?>;
+  var servicios = <?php echo $servicios ?>;
   console.log(servicios);
   var ctx = document.getElementById("myChart");
   var ctx2 = document.getElementById("serviciosEval");

@@ -20,9 +20,8 @@
     <script src="<?php echo base_url()?>js/funciones.js"></script>
     <script src="<?php echo base_url()?>js/bootstrap.min.js"></script>
     <script type="text/javascript">
-    $( window ).resize(function() {
-      if($(window).width() >=500) $('#wrapper').addClass("toggled");
-      else $('#wrapper').removeClass("toggled");
+    $(document).ready(function(){
+
     });
     </script>
     <style >
@@ -33,6 +32,7 @@
     </style>
   </head>
   <body>
+    <!-- Empieza nav principal  -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="Inicio">
       <div class="logo">
@@ -94,7 +94,7 @@
           </li>
         </ul>
       </div>
-    </nav>
+    </nav><!-- Termina nav principal  -->
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -117,67 +117,7 @@
     </div>
   </div>
 </div>
-
-<!--<div class="container-fluid">
-    <div class="row">
-      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-        <div class="sidebar-sticky">
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Evaluación</span>
-          </h6>
-          <ul class="nav flex-column">
-            <?php $this->ci =& get_instance();
-            if ($this->ci->uri->segment(2)=='Servicio') {?>
-            <li class="nav-item">
-              <a class="nav-link active" href="<?php echo base_url(); ?>Evaluacion/Servicio"  id="BtnServicio">
-                <span data-feather="activity"></span>
-                Por servicio
-              </a>
-            </li>
-          <?php }else{ ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio"  id="BtnServicio">
-                <span data-feather="activity"></span>
-                Por servicio
-              </a>
-            </li>
-          <?php }
-          if ($this->ci->uri->segment(2)=='Ejecutivo') { ?>
-            <li class="nav-item">
-              <a class="nav-link active" href="<?php echo base_url() ?>Evaluacion/Ejecutivo"  id="BtnEjecutivo">
-                <span data-feather="user"
-                ></span>
-                Por Ejecutivo
-              </a>
-            </li>
-          <?php } else{ ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Ejecutivo"  id="BtnEjecutivo">
-                <span data-feather="user"
-                ></span>
-                Por Ejecutivo
-              </a>
-            </li>
-          <?php }
-          if ($this->ci->uri->segment(2)=='Empresa') { ?>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">
-                <span data-feather="briefcase" id="BtnEmpresa"></span>
-                Empresa
-              </a>
-            </li>
-          <?php }else{ ?>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="briefcase" id="BtnEmpresa"></span>
-                Empresa
-              </a>
-            </li>
-          <?php } ?>
-          </ul>
-        </div>
-      </nav>-->
-
+      <!-- Empieza sideBar de estadisticas  -->
       <div id="wrapper" class="">
 
         <!-- Sidebar -->
@@ -213,12 +153,13 @@
               if ($this->ci->uri->segment(2)=='Empresa') {
               ?>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"><span data-feather="briefcase"></span>  Por empresa</a>
+                    <a class="nav-link active" href="<?php echo base_url() ?>Evaluacion/Empresa"><span data-feather="briefcase"></span>  Por empresa</a>
                 </li>
               <?php }else{ ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span data-feather="briefcase"></span>  Por empresa</a>
+                    <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Empresa"><span data-feather="briefcase"></span>  Por empresa</a>
                 </li>
               <?php } ?>
             </ul>
         </div>
+        <!-- Termina sideBar de estadisticas  -->
