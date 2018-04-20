@@ -4,7 +4,7 @@
 <link rel="icon" href="/img/logo.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
-<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="<?php echo base_url()?>css/FuenteGoogle.css" rel="stylesheet">
 <link href="<?php echo base_url()?>css/fontawesome-all.css" rel="stylesheet">
 <script src="<?php echo base_url()?>js/JQuery.js"></script>
 <style>
@@ -102,7 +102,7 @@ div.titulo{
 }
 .logo{
   float: left;
-  background-image: url("../img/adsumus-logo.png");
+  background-image: url("../../img/adsumus-logo.png");
   background-repeat: no-repeat;
   width: 100%;
   height: 55px;

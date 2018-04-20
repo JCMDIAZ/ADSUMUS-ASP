@@ -60,7 +60,9 @@
 </div>
 
 <!-- BUSCADOR -->
-<div id="resultados">
+<div class="table-responsive">
+  <div id="resultados">
+  </div>
 </div>
 
 <script>

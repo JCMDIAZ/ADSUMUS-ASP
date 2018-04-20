@@ -4,7 +4,7 @@
 <link rel="icon" href="/img/logo.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
-<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="<?php echo base_url()?>css/FuenteGoogle.css" rel="stylesheet">
 <link href="<?php echo base_url()?>css/fontawesome-all.css" rel="stylesheet">
 <script src="<?php echo base_url()?>js/JQuery.js"></script>
 <style>
@@ -42,15 +42,19 @@ input.invalid {
   display: none;
 }
 
-button {
-  background-color: #F15A22;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 17px;
-  font-family: Raleway;
-  cursor: pointer;
-}
+  button.btn {
+    background-color: #F15A22;
+    color: #ffffff;
+    border: none;
+    font-size: 17px;
+    font-family: Raleway;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
 
 button:hover {
   opacity: 0.8;
@@ -131,9 +135,14 @@ div.contenedor{
     font-size: 1em;
   }
 }
+div.radio{
+  display: inline-flex;
+}
+div.radio > div{
+  margin: 2% 0 0 30%;
+}
 </style>
 <body>
-  <input type="hidden" name="token" value="<?php echo $token ?>">
   <div class="wizard">
     <div class="titulo clearfix">
       <div class="logo">
@@ -146,16 +155,29 @@ div.contenedor{
       <hr>
     </div>
     <div class="contenedor">
-      <h3 class="mb-1 text-center">Se finalizo correctamente el servicio?</h3>
+      <h4 class="mb-1 text-center pregunta">Se finalizo correctamente el servicio?</h4>
       <form action="<?php echo base_url() ?>Encuesta/<?php echo $token ?>" method="post">
-        <div class="custom-control custom-radio">
-          <input id='si' type="radio" name="evaluar" value="1" class="custom-control-input">
-          <label for="si" class="custom-control-label">Si</label>
-        </div>
-        <div class="custom-control custom-radio">
-          <input id='no' type="radio" name="evaluar" value="2" class="custom-control-input">
-          <label for="no" class="custom-control-label">No</label>
-        </div>
+        <input type="hidden" name="token" value="<?php echo $token ?>">
+          <div class="row">
+            <div class="col-md-6 mx-auto">
+              <div class="container-fluid radio">
+                <div class="custom-control custom-radio mx-auto">
+                  <input id='si' type="radio" name="evaluar" value="1" class="custom-control-input">
+                  <label for="si" class="custom-control-label">Si</label>
+                </div>
+                <div class="custom-control custom-radio mx-auto">
+                  <input id='no' type="radio" name="evaluar" value="2" class="custom-control-input">
+                  <label for="no" class="custom-control-label">No</label>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-md-4 mx-auto mt-3">
+                <button class="btn" type="submit" name="submit">Aceptar</button>
+            </div>
+            </div>
+          </div>
       </form>
     </div>
 </div>

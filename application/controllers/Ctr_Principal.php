@@ -227,8 +227,12 @@ class Ctr_Principal extends CI_Controller {
 			if ($this->form_validation->run() == false) {
 
 			}else{
-					$terminacion = $this->input->post('terminacion');
 					$id = $this->input->post('servicio_id');
+					$datos['Fecha_cita_posterior'] = $this->input->post('fecha_cita_posterior2');
+					$datos['Observaciones'] = $this->input->post('observaciones2');
+					$datos['Material_utilizado'] = $this->input->post('material_utilizado2');
+					$this->Mdl_Consultas->ActualizarServicio($datos,$id);
+					$terminacion = $this->input->post('terminacion');
 					$resultado = $this->Mdl_Consultas->ServicioFolio($id);
 						foreach ($resultado as  $valor) {
 							if ($valor->Codigo_terminacion === $terminacion) {
@@ -246,7 +250,7 @@ class Ctr_Principal extends CI_Controller {
 								// Se envia el email al solicitante
 								$para = $valor->Correo_solicitante;
 								$asunto = "Finalizacion del servicio - Adsumus";
-								$body = "<p>El servicio ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link evaluacion del servicio - <a href='".base_url()."Encuesta/Evaluacion_servicio/".$data['token']."'>".base_url()."Encuesta/Evaluacion_servicio/".$data['token']."</a><br><br>Link No satisfacción del servicio - <a href='".base_url()."Encuesta/No_satisfaccion_servicio/".$data['token']."'>".base_url()."Encuesta/No_satisfaccion_servicio/".$data['token']."</a></p>";
+								$body = "<p>El servicio con folio: #".$id." ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link para encuesta del servicio - <a href='".base_url()."Encuesta/".$data['token']."'>".base_url()."Encuesta/".$data['token']."</a>";
 
 								$this->email->set_mailtype('html');
 								$this->email->from('aldo.martinez@niurons.com.mx', 'Aldo Martinez');
@@ -277,7 +281,30 @@ class Ctr_Principal extends CI_Controller {
 				}
 		}
 
-		public function Evaluacion_servicio($token){
+		public function Encuesta($token){
+			$validarToken = $this->Mdl_Consultas->ServicioToken($token);
+			if ($validarToken != false) {
+				$this->form_validation->set_rules('evaluar', 'Evaluar','required');
+				if ($this->form_validation->run()==false) {
+					$data['token'] = $token;
+					$this->load->view('mview_Encuesta',$data);
+				}else{
+					$this->session->set_flashdata('tokenServicio',$token);
+					$respuesta = $this->input->post('evaluar');
+					if ($respuesta==1) {
+						redirect(base_url().'Encuesta/Evaluacion_servicio/1');
+					}else{
+						redirect(base_url().'Encuesta/No_satisfaccion_servicio/2');
+					}
+				}
+			}else{
+				$data['titulo'] = 'Encuesta';
+				$data['mensaje'] = 'WARNING: Ya se realizó la encuesta de este servicio';
+				$this->load->view('mview_NoExiste',$data);
+			}
+		}
+		public function Evaluacion_servicio(){
+			$token = $this->session->flashdata('tokenServicio');
 			$this->form_validation->set_rules("evaluacion","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion2","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion3","Evaluacion","required");
@@ -291,47 +318,49 @@ class Ctr_Principal extends CI_Controller {
 					}
 					// Validamos si no se ha evaluado anteriormente el servicio
 					if ($id_servicio == false) {
-						$data['token'] = $token;
-						$this->load->view('mview_EvaluacionServicio',$data);
+						foreach ($validarToken as $valor) {
+							$data['token'] = $token;
+							$idServicio = $valor->f_id_servicio;
+							$this->session->set_flashdata('idServicio',$idServicio);
+							$this->load->view('mview_EvaluacionServicio',$data);
+							$this->Mdl_Consultas->EliminarToken('t_dat_token',$idServicio);
+						}
 					}else{
 						$data['titulo'] = 'Evaluación del servicio prestado';
 						$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado';
 						$this->load->view('mview_NoExiste',$data);
 					}
 				}else{
-					$data['titulo'] = 'Evaluación del servicio prestado';
-					$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado o el link ha caducado';
-					$this->load->view('mview_NoExiste',$data);
+						$data['titulo'] = 'Evaluación del servicio prestado';
+						$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado o el link ha caducado';
+						$this->load->view('mview_NoExiste',$data);
 				}
 			}else{
-				$datosToken = $this->Mdl_Consultas->DatosRow('t_dat_token','token',$token);
-				if ($datosToken != false) {
-					foreach ($datosToken as $valor) {
-						$data['f_id_servicio'] = $valor->f_id_servicio;
+				$idServicio = $this->session->flashdata('idServicio');
+						$data['f_id_servicio'] = $idServicio;
 						$data['Pregunta_1'] = $this->input->post('evaluacion');
 						$data['Pregunta_2'] = $this->input->post('evaluacion2');
 						$data['Pregunta_3'] = $this->input->post('evaluacion3');
 						$data['Pregunta_4'] = $this->input->post('evaluacion4');
 						$resultado = $this->Mdl_Consultas->InsertarDatos('t_dat_evaluacion',$data);
-						$this->Mdl_Consultas->EliminarToken('t_dat_token',$valor->f_id_servicio);
 						if ($resultado==true) {
 							$this->load->view('mview_SuccessEval');
 						}else{
-							echo "error";
+							$data['titulo'] = 'Evaluación del servicio prestado';
+							$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado o el link ha caducado';
+							$this->load->view('mview_NoExiste',$data);
 						}
-					}
-				}else{
-					$this->load->view('mview_NoExiste');
-				}
 			}
 		}
 
-		public function No_satisfaccion($token){
+		public function No_satisfaccion(){
+				$token = $this->session->flashdata('tokenServicio');
 				$registro = $this->Mdl_Consultas->ServicioToken($token);
 				$this->form_validation->set_rules('detalle','Detalle','required|max_length[500]');
 				$this->form_validation->set_rules('fecha','Fecha de cita posterior','required|max_length[500]');
 				if ($this->form_validation->run()==false) {
 					if ($registro == false) {
+						$data['token'] = $token;
 						$data['titulo'] = 'No satisfacción del servicio';
 						$data['mensaje'] = 'WARNING: El link ha caducado';
 						$this->load->view('mview_NoExiste',$data);
@@ -345,12 +374,17 @@ class Ctr_Principal extends CI_Controller {
 								$this->load->view('mview_NoExiste',$data);
 							}else{
 								$data['folio'] = $valor->id_servicio;
+								$servicio = $valor->f_id_servicio;
+								$this->session->set_flashdata('idServicio',$servicio);
 								$data['token'] = $token;
 								$this->load->view('mview_NoSatisfaccion',$data);
+								$this->Mdl_Consultas->EliminarToken('t_dat_token',$data['folio']);
 							}
 						}
 					}
 			}else{
+					$idServicio = $this->session->flashdata('idServicio');
+					$registro = $this->Mdl_Consultas->ServicioFolio($idServicio);
 					foreach ($registro as $valor) {
 						$folio = $valor->id_servicio;
 					}
@@ -367,7 +401,6 @@ class Ctr_Principal extends CI_Controller {
 						$registroActualizado = $this->Mdl_Consultas->ActualizarServicio($data,$IdregistroActualizado);
 						if ($registroActualizado) {
 							echo $IdregistroActualizado;
-							$this->Mdl_Consultas->EliminarToken('t_dat_token',$folio);
 							$reabierto = $this->Mdl_Consultas->ServicioFolio($IdregistroActualizado);
 							foreach ($reabierto as $valor) {
 								$para = $valor->Correo_solicitante;
@@ -389,11 +422,6 @@ class Ctr_Principal extends CI_Controller {
 			}
 		}
 
-		public function Encuesta($token){
-			$data['token'] = $token;
-			$this->load->view('mview_Encuesta',$data);
-		}
-
 		public function Chart($eval){
 			$data['servicios'] = $this->Mdl_Consultas->TiposCatalogos('Tipo_servicio');
 			$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
@@ -409,6 +437,7 @@ class Ctr_Principal extends CI_Controller {
 			}elseif ($tipo == 'Reparaci%C3%B3n') {
 				$tipo = 'Reparación';
 			}
+			$data['preguntas'] = $this->Mdl_Consultas->TiposCatalogos('Evaluacion');
 			$data['evaluacion'] = $this->Mdl_Consultas->EvaluacionServicio($tipo,'Tipo_servicio');
 			$data['tipo'] = $tipo;
 			if ($data['evaluacion'] != false) {
@@ -528,7 +557,7 @@ class Ctr_Principal extends CI_Controller {
 				if ($this->session->userdata('perfil')=='Administrador') {
 			$output .= '
 			<div class="container">
-						<table class="table table-bordered table-striped table-responsive{-sm}">
+						<table class="table table-bordered table-striped">
 							<tr class="table-active">
 							<th></th>
 							<th>Folio</th>
@@ -540,7 +569,7 @@ class Ctr_Principal extends CI_Controller {
 			';}else {
 				$output .= '
 				<div class="container">
-							<table class="table table-bordered table-striped table-responsive{-sm}">
+							<table class="table table-bordered table-striped">
 								<tr class="table-active">
 								<th></th>
 								<th>Folio</th>
