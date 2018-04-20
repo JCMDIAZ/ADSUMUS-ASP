@@ -12,7 +12,8 @@
     <h1 class="h2"><?php echo $valor->Usuario; ?></h1>
   </div>
   <br>
-  <table class="table table-responsive{-sm|-md}">
+  <div class="table-responsive">
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">ID</th>
@@ -34,6 +35,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
   <br>
   <?php if ($serviciosEval != false) { ?>
   <p class="font-italic">Gráfica del promedio de evaluación de los servicios dados por <b><?php echo $valor->Usuario; ?></b></p>
@@ -41,7 +43,8 @@
   <br>
   <br>
   <p class="font-italic">Promedio de evaluación de cada pregunta de los servicios realizados por <b><?php echo $valor->Usuario; ?></b></p>
-  <table class="table table-responsive{-sm|-md}">
+  <div class="table-responsive">
+  <table class="table">
     <thead>
       <tr>
         <th>#</th>
@@ -60,14 +63,15 @@
         <?php } ?>
     </tbody>
   </table>
+</div>
   <br>
   <br>
   <p class="font-italic">Gráfica de relación entre los servicios con sus respectivas evaluaciónes</p>
   <canvas class="my-4" id="serviciosEval" width="900" height="380"></canvas>
   <br>
   <p class="font-italic">Calificación obtenidas de cada pregunta de los servicios realizados por <b><?php echo $valor->Usuario; ?></b></p>
-
-  <table class="table table-responsive{-sm|-md}">
+  <div class="table-responsive">
+  <table class="table">
     <thead>
       <tr>
         <th>Id Servicio</th>
@@ -96,7 +100,7 @@
     }/*Termina foreach del ejecutivo*/ ?>
     </tbody>
   </table>
-
+</div>
 </div>
 </div>
 </div>

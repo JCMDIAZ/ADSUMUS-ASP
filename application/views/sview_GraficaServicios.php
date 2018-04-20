@@ -12,7 +12,31 @@
   </div>
 
   <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
-
+  <br>
+  <br>
+  <?php $this->ci =& get_instance(); ?>
+  <p class="font-italic">Promedio de evaluación de cada pregunta de los servicios realizados de <b><?php echo $tipo; ?></b>.</p>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Pregunta</th>
+          <th>Promedio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php for($i=0;$i<count($preguntas);$i++) { ?>
+        <tr>
+          <th scope="row"><?php echo $preguntas[$i]->Valor ?></td>
+          <td><?php echo $preguntas[$i]->Descripcion ?></td>
+          <?php $columna = "Pregunta_".($i+1); ?>
+          <td><?php echo $evaluacion[0]->$columna ?></td>
+        </tr>
+      <?php } ?>
+      </tbody>
+    </table>
+  </div>
   </div>
   </div>
   </div>

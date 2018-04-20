@@ -23,10 +23,10 @@ $route['Evaluacion/Servicio/(:any)'] = 'Ctr_Principal/ChartServicio/$1';
 $route['Evaluacion/Ejecutivo/(:num)'] = 'Ctr_Principal/ChartEjecutivo/$1';
 $route['Evaluacion/Empresa/(:any)'] = 'Ctr_Principal/ChartEmpresa/$1';
 $route['Terminado']= 'Ctr_Principal/TerminarServicio';
-$route['Encuesta/(:any)']= 'Ctr_Principal/Encuesta/$1';
-$route['Encuesta/Evaluacion_servicio/(:any)']= 'Ctr_Principal/Evaluacion_servicio/$1';
 
-$route['Encuesta/No_satisfaccion_servicio/(:any)']= 'Ctr_Principal/No_satisfaccion/$1';
+$route['Encuesta/(:any)']= 'Ctr_Principal/Encuesta/$1';
+$route['Encuesta/Evaluacion_servicio/1']= 'Ctr_Principal/Evaluacion_servicio';
+$route['Encuesta/No_satisfaccion_servicio/2']= 'Ctr_Principal/No_satisfaccion';
 
 
 $route['Informacion/(:num)']= 'Ctr_Principal/InformacionServicio/$1';

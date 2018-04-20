@@ -86,7 +86,7 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar cambios</button>
             </div>
             <div class="col-md-4 offset-md-4 col-sm-6 mb-3">
-                <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#Terminacion">Finalizar servicio</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#Terminacion" id="finalizarButton">Finalizar servicio</button>
             </div>
             <div class="col-md-12 col-sm-12 alert alert-success " role="alert" id="success" >
               El servicio se actualizo correctamente.
@@ -108,6 +108,9 @@
         </button>
       </div>
       <form action="Terminado" method="POST" id="terminacionForm">
+        <input type="hidden" class="form-control" id="fecha_cita_posterior2" name="fecha_cita_posterior2" value="">
+        <input type="hidden" class="form-control" id="observaciones2" name="observaciones2" >
+        <input type="hidden" class="form-control" id="material_utilizado2" name="material_utilizado2">
           <div class="modal-body">
               <input type="text" name="servicio_id" value="<?php echo $columna->id_servicio; ?>" hidden>
               <input type="text" class="form-control codigo" placeholder="Introduce el código de terminación" name="terminacion" required>

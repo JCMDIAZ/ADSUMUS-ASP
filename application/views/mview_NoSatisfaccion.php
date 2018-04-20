@@ -5,7 +5,7 @@
 <link rel="icon" href="/img/logo.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
-<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="<?php echo base_url()?>css/FuenteGoogle.css" rel="stylesheet">
 <link href="<?php echo base_url()?>css/fontawesome-all.css" rel="stylesheet">
 <script src="<?php echo base_url()?>js/JQuery.js"></script>
 <style>
@@ -108,7 +108,7 @@
   }
   .logo{
     float: left;
-    background-image: url("../img/adsumus-logo.png");
+    background-image: url("../../img/adsumus-logo.png");
     background-repeat: no-repeat;
     width: 100%;
     height: 55px;
@@ -140,7 +140,6 @@
 </style>
 </head>
 <body>
-<input type="hidden" name="token" value="<?php echo $token; ?>" id="token">
   <div class="wizard">
     <div class="titulo clearfix">
       <div class="logo">
@@ -189,13 +188,12 @@
   $(document).ready(function() {
     $("#noSatis").submit(function(e){
       e.preventDefault();
-      MandarDatos("<?php echo base_url() ?>"+"No_satisfaccion_servicio/",this);
+      MandarDatos("<?php echo base_url() ?>"+"Encuesta/No_satisfaccion_servicio/2",this);
     })
   });
   function MandarDatos(url,datos){
-    var id = $("#token").val();
     $.ajax({
-      url: url+id,
+      url: url,
       type: 'post',
       data: new FormData(datos),
       processData: false,

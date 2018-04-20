@@ -13,6 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url()?>css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo base_url()?>css/bootstrap.css ">
     <link rel="stylesheet" href="<?php echo base_url()?>css/estilos.css">
+    <link href="<?php echo base_url()?>css/fontawesome-all.css" rel="stylesheet">
     <!-- JS-Script Generales -->
     <script src="<?php echo base_url()?>js/JQuery.js"></script>
     <script src="<?php echo base_url()?>js/bootstrap.js"></script>
@@ -25,6 +26,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </head>
 
   <body>
+    <!-- Scroll hasta arriba -->
+    <a href="#" class="back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="<?php echo base_url()?>Inicio">
       <div class="logo">
@@ -68,17 +71,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url()?>Levantamiento_servicio">Levantar Servicio</a>
           </li>
-        <?php }
-        if ($this->ci->uri->segment(1)=='Atencion_servicio' and $this->session->userdata('perfil')=='Ejecutivo') { ?>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Atención del servicio</a>
-          </li>
-        <?php } elseif($this->session->userdata('perfil')=='Ejecutivo'){  ?>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Atención del servicio</a>
-          </li>
-        <?php }
-        if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
+        <?php } ?>
+        <?php if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
           <li class="nav-item active">
             <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio" >Estadísticas</a>
           </li>

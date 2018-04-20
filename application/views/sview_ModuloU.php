@@ -2,18 +2,20 @@
   <h3>Módulo Usuarios</h3>
     <hr>
       <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal1">Agregar Usuario</button>
-        <table id="table" class="table table-striped table-responsive{-sm}" style="width:100%">
-          <thead>
-              <tr class="table-active">
-                  <th>Usuarios</th>
-                  <th>Perfil</th>
-                  <th>Estatus</th>
-                  <th id="hidden">Opciones</th>
-              </tr>
-          </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+          <table id="table" class="table table-striped" style="width:100%">
+            <thead>
+                <tr class="table-active">
+                    <th>Usuarios</th>
+                    <th>Perfil</th>
+                    <th>Estatus</th>
+                    <th id="hidden">Opciones</th>
+                </tr>
+            </thead>
+              <tbody>
+              </tbody>
+          </table>
+        </div>
 </div>
 <!-- Script del Modulo Usuario -->
 <script src="<?php echo base_url()?>jquery/jquery.js"></script>

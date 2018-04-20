@@ -1,3 +1,4 @@
+<?php header("Content-Type: text/html;charset=utf-8"); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,11 +20,6 @@
     <script src="<?php echo base_url()?>js/popper.min.js"></script>
     <script src="<?php echo base_url()?>js/funciones.js"></script>
     <script src="<?php echo base_url()?>js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function(){
-
-    });
-    </script>
     <style >
       body{
         min-height: 75rem;
@@ -32,12 +28,11 @@
     </style>
   </head>
   <body>
+    <!-- Scroll hasta arriba -->
+    <a href="#" class="back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
     <!-- Empieza nav principal  -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="Inicio">
-      <div class="logo">
-
-      </div></a>
+      <a class="navbar-brand" href="<?php echo base_url() ?>Inicio"> <div class="logo"> </div></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -70,16 +65,8 @@
           <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url() ?>Levantamiento_servicio">Levantar Servicio</a>
           </li>
-        <?php }
-        if ($this->ci->uri->segment(1)=='Atencion_servicio' and $this->session->userdata('perfil')=='Ejecutivo') { ?>
-          <li class="nav-item active">
-            <a class="nav-link" href="<?php echo base_url() ?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
-          </li>
-        <?php } elseif($this->session->userdata('perfil')=='Ejecutivo'){  ?>
-          <li class="nav-item ">
-            <a class="nav-link" href="<?php echo base_url() ?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter">Atención del servicio</a>
-          </li>
-        <?php } if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
+        <?php } ?>
+        <?php if ($this->ci->uri->segment(1)=='Evaluacion' and $this->session->userdata('perfil')=='Administrador') { ?>
           <li class="nav-item active">
             <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio" >Estadísticas</a>
           </li>

@@ -18,6 +18,34 @@ $(document).ready(function() {
 		e.preventDefault();
 		$("#wrapper").toggleClass("toggled");
 	});
+	var offset = 400;
+	var duration = 400;
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > offset) {
+			$(".back-to-top").fadeIn(duration);
+		} else {
+			$(".back-to-top").fadeOut(duration);
+		}
+	});
+	$('.back-to-top').click(function() {
+		$('html,body').animate({
+			scrollTop: 0
+		}, 1000);
+		return false;
+	});
+	/* Asignamos los valores a los input hidden del buton finalizar servicio */
+	$("#finalizarButton").click(function() {
+		$("#fecha_cita_posterior2").val(function() {
+			return $("#fecha_cita_posterior").val();
+		});
+		$("#observaciones2").val(function() {
+			return $("#observaciones").val();
+		});
+		$("#material_utilizado2").val(function() {
+			return $("#material_utilizado").val();
+		});
+	});
+
 });
 
 function ActualizarDatos(url, datos) {
