@@ -114,7 +114,7 @@
       </div>
         <div class="modal-body">
 
-          <form action="#" id="form">
+          <form action="#" id="form" >
             <input type="hidden" value="" name="id"/>
 
             <div class="col-12 bg-white">
@@ -124,33 +124,37 @@
                   <input name="id_usuario" class="form-control" type="hidden">
                 </div>
 
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-12 aviso1">
                   <label for="NombreE">Nombre:</label>
-                    <input class=" form-control" type="text"  name="Usuario" id="NombreE" required>
+                    <input class="form-control" type="text"  name="Usuario" id="NombreE" required>
+                    <div></div><!-- No Borrar Validacion del Form Editar Usuario-->
                 </div>
 
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-12 aviso2">
                   <label for="CorreoE">Correo Electrónico:</label>
                     <input  class="form-control" type="email" name="Correo" id="CorreoE" required>
+                      <div></div> <!-- No Borrar Validacion del Form Editar Usuario-->
                 </div>
 
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-12 avisoS1">
                   <label for="PerfilE">Perfil del Usuario:</label>
-                    <select name="Perfil" class="form-control" id="PerfilE"  required>
+                    <select name="Perfil" class="form-control" id="PerfilEditar" required>
                       <?php
                         $this->Mdl_funciones->Select("Perfil_Usuario",$Tipos);
                        ?>
                     </select>
                 </div>
 
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-12 aviso3">
                   <label for="ContraseñaUE" >Contraseña del Usuario:</label>
-      				 	    <input class="form-control" type="password" name="Contraseña" id="ContraseñaU2" required>
+      				 	    <input class="form-control" type="password" name="Password1" id="ContraseñaUE" required>
+                    <div></div> <!-- No Borrar Validacion del Form Editar Usuario-->
                 </div>
 
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-12 aviso4">
                   <label for="ContraseñaCE">Confirmar Contraseña:</label>
-                    <input class="form-control" type="password" name="Contraseña" id="ContraseñaE2" required>
+                    <input class="form-control" type="password" name="Password2" id="ContraseñaCE" required>
+                    <div></div> <!-- No Borrar Validacion del Form Editar Usuario-->
                 </div>
 
                 <div class="form-group col-sm-12">
@@ -158,7 +162,7 @@
                    <input class="form-control" type="text" name="Fecha_alta" min="1950-01-01" max="2100-01-01"  id="Fecha_AltaE" disabled>
                 </div>
 
-                <div class="form-group col-sm-12">
+                <div class="form-group col-sm-12 avisoS2">
                   <label for="EstatusE">Estatus:</label>
                     <select name="Estatus" class="form-control" placeholder="Selecciona una Opción" id="EstatusE" required>
                       <?php
@@ -166,12 +170,17 @@
                        ?>
                     </select>
                 </div>
+
+                <div class="form-group col-sm-12 alertas2 alert alert-danger" role="alert" hidden="true" id="MostrarAlerta2">
+                  <div></div>
+                </div>
               </div>
             </div>
           </form>
         </div>
+
       <div class="modal-footer">
-          <button type="button" id="btnSave" onclick="save()" class="btn btn-primary form-control">Guardar</button>
+          <button type="button" id="btnSave" onclick="fn_step1()" class="btn btn-primary form-control">Guardar</button>
           <button  type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
       </div>
     </div><!-- Cierre del Modal-Content -->
@@ -228,22 +237,9 @@ $(document).ready(function() {
         },
 
     ],
+  });
 });
 //Fin del Data Table
-$("input").change(function(){
-    $(this).parent().parent().removeClass('has-error');
-    $(this).next().empty();
-});
-$("textarea").change(function(){
-    $(this).parent().parent().removeClass('has-error');
-    $(this).next().empty();
-});
-$("select").change(function(){
-    $(this).parent().parent().removeClass('has-error');
-    $(this).next().empty();
-});
-});
-
 function Validar() {
 	var pass1 = document.getElementById("ContraseñaU").value;
 	var pass2 = document.getElementById("ContraseñaC").value;
@@ -272,7 +268,6 @@ $.ajax({
     }else {
       $('#MostrarAlerta').removeAttr('hidden');
         $('.alertas').html(data);
-
     }
   }});
 });
@@ -293,53 +288,158 @@ function editarUsuarios(id){
         $('[name="Usuario"]').val(data.Usuario);
         $('[name="Correo"]').val(data.Correo);
         $('[name="Perfil"]').val(data.Perfil);
-        $('[name="Contraseña"]').val(data.Contraseña);
-        $('[name="Contraseña"]').val(data.Contraseña);
+        $('[name="Password1"]').val(data.Contraseña);
+        $('[name="Password2"]').val(data.Contraseña);
         $('[name="Fecha_alta"]').val(data.Fecha_alta);
         $('[name="Estatus"]').val(data.Estatus);
         $('#modal_form').modal('show'); // Muestra el Modal
     },
-    error: function (jqXHR, textStatus, errorThrown){
-        alert('Error al Obtener Datos de AJAX');
-    }
+    // error: function (jqXHR, textStatus, errorThrown){
+    //     alert('Error al Obtener Datos de AJAX');
+    // }
   });
 }
 
-// function frm_validation(yeke) {
-//     if (yeke === "Usuario") {
-//         var am = $("#NombreE").val();
-//         if (am === null || am.length === 0 || am === "") {
-//             $("#NombreE").addClass("has-warning");
-//             $("#NombreE").removeClass("has-success");
-//             $("#NombreE").text("Campo requerido");
-//             $("#NombreE").show();
-//             return false;
-//         } else {
-//             $("#NombreE").hide();
-//             $("#NombreE").removeClass("has-warning");
-//             $("#NombreE").addClass("has-success");
-//             return true;
-//         }
-//     }
-//
-//     if (yeke === "Contraseña") {
-//         var am = $("#ContraseñaU2").val();
-//         if (am === null || am.length === 0 || am === "") {
-//             $("#ContraseñaU2").addClass("has-warning");
-//             $("#ContraseñaU2").removeClass("has-success");
-//             $("#NombContraseñaU2reE").text("Campo requerido");
-//             $("#ContraseñaU2").show();
-//             return false;
-//         } else {
-//             $("#ContraseñaU2").hide();
-//             $("#ContraseñaU2").removeClass("has-warning");
-//             $("#ContraseñaU2").addClass("has-success");
-//             return true;
-//         }
-//     }
-//   }
+//Inicio validacion para el modulo usuario
+function fn_step1(){
+    var r1 = frm_validation("Usuario");
+    var r2 = frm_validation("Correo");
+    var r3 = frm_validation("Password1");
+    var r4 = frm_validation("Password2");
+    var r5 = frm_validation("Perfil");
+    var r6 = frm_validation("Estatus");
+
+    var pass1 = $('[name=Password1]');
+	  var pass2 = $('[name=Password2]');
+    var valor1 = pass1.val();
+  	var valor2 = pass2.val();
+  	var vacio = "La contraseña no puede estar vacía";
 
 
+     if (r1 === false || r2 === false || r3 === false || r4 === false || r5 === false || r6 === false) {
+       return false;
+    }else{
+        if (valor1 != valor2) {
+          document.getElementById("ContraseñaUE").style.borderColor = "#E34234";
+      		document.getElementById("ContraseñaCE").style.borderColor = "#E34234";
+          $('#MostrarAlerta2').removeAttr('hidden');
+          $(".alertas2 div").text("¡Upps! Las contraseñas no coiciden.");
+          return false;
+        }
+
+        if(valor1.length<6 || valor1.length>20){
+          document.getElementById("ContraseñaUE").style.borderColor = "#E34234";
+          document.getElementById("ContraseñaCE").style.borderColor = "#E34234";
+          $('#MostrarAlerta2').removeAttr('hidden');
+          $(".alertas2 div").text("¡Upps! La contraseña debe estar formada entre 6-20 carácteres.");
+          return false;
+      	}
+
+        save();
+        window.location.reload();
+    }
+}
+
+
+// Validacion del formulario modulo usuario
+function frm_validation(name) {
+  if(name === "Usuario"){
+    var nombre =  $("#NombreE").val();
+    if(nombre === null || nombre.length === 0 || nombre === ""){
+      $('#NombreE').addClass("is-invalid");
+      $("#NombreE").removeClass("is-valid");
+      $(".aviso1 div").addClass("invalid-feedback");
+      $(".aviso1 div").text("Campo Requerido");
+      $(".aviso1 div").show();
+      return false;
+   }else {
+     $("#NombreE").removeClass("is-invalid");
+     $("#NombreE").addClass("is-valid");
+     return true;
+   }
+ }
+
+ if (name === "Correo" ) {
+  var correo = $("#CorreoE").val();
+   if(correo === null || correo.length === 0 || correo === ""){
+     $('#CorreoE').addClass("is-invalid");
+     $("#CorreoE").removeClass("is-valid");
+     $(".aviso2 div").addClass("invalid-feedback");
+     $(".aviso2 div").text("Campo Requerido");
+     $(".aviso2 div").show();
+     return false;
+   }else {
+    $("#CorreoE").removeClass("is-invalid");
+    $("#CorreoE").addClass("is-valid");
+    return true;
+   }
+ }
+
+ if (name === "Password1" ) {
+   var contraseña = $("#ContraseñaUE").val();
+   if(contraseña === null ||  contraseña === ""){
+     $('#ContraseñaUE').addClass("is-invalid");
+     $("#ContraseñaUE").removeClass("is-valid");
+     $(".aviso3 div").addClass("invalid-feedback");
+     $(".aviso3 div").text("La contraseña no puede estar vacía");
+     $(".aviso3 div").show();
+     return false
+   }else {
+     $("#ContraseñaUE").removeClass("is-invalid");
+     $("#ContraseñaUE").addClass("is-valid");
+    return true;
+   }
+ }
+
+ if (name === "Password2" ) {
+  var contraseña2 = $("#ContraseñaCE").val();
+   if(contraseña2 === null || contraseña2 === ""){
+     $('#ContraseñaCE').addClass("is-invalid");
+     $("#ContraseñaCE").removeClass("is-valid");
+     $(".aviso4 div").addClass("invalid-feedback");
+     $(".aviso4 div").text("La contraseña no puede estar vacía");
+     $(".aviso4 div").show();
+     return false
+   }else {
+    $("#ContraseñaCE").removeClass("is-invalid");
+    $("#ContraseñaCE").addClass("is-valid");
+    return true;
+   }
+ }
+
+ if (name === "Perfil" ) {
+  var perfil = $("#PerfilEditar").val();
+   if(perfil === null || perfil.length === 0 || perfil === ""){
+     $('#PerfilEditar').addClass("is-invalid");
+     $("#PerfilEditar").removeClass("is-valid");
+     $(".avisoS1 div").addClass("invalid-feedback");
+     $(".avisoS1 div").text("Campo Requerido");
+     $(".avisoS1 div").show();
+     return false
+   }else {
+    $("#PerfilEditar").removeClass("is-invalid");
+    $("#PerfilEditar").addClass("is-valid");
+    return true;
+   }
+ }
+
+ if (name === "Estatus" ) {
+  var estatus = $("#EstatusE").val();
+   if(estatus === null || estatus.length === 0 || estatus === ""){
+     $('#EstatusE').addClass("is-invalid");
+     $("#EstatusE").removeClass("is-valid");
+     $(".avisoS2 div").addClass("invalid-feedback");
+     $(".avisoS2 div").text("Campo Requerido");
+     $(".avisoS2 div").show();
+     return false
+   }else {
+    $("#EstatusE").removeClass("is-invalid");
+    $("#EstatusE").addClass("is-valid");
+    return true;
+    }
+ }
+}
+//Fin de las pruebas de validacion para el modulo usuario
 
 
 function reloadTable(){
@@ -378,11 +478,6 @@ function save(){
             $('#btnSave').text('Guardar'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable
           },
-          error: function (jqXHR, textStatus, errorThrown){
-            alert('Error adding / update data');
-            $('#btnSave').text('Guardar'); //change button text
-            $('#btnSave').attr('disabled',false); //set button enable
-          }
       });
 }
 </script>

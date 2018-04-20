@@ -497,8 +497,8 @@ class Ctr_Principal extends CI_Controller {
               'Usuario' => $this->input->post('Usuario'),
               'Correo' => $this->input->post('Correo'),
               'Perfil' => $this->input->post('Perfil'),
-              'Contraseña' => $this->input->post('Contraseña'),
-              'Contraseña' => $this->input->post('Contraseña'),
+              'Contraseña' => $this->input->post('Password1'),
+              'Contraseña' => $this->input->post('Password2'),
               'Estatus' => $this->input->post('Estatus')
           );
       $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);

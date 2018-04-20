@@ -16,20 +16,11 @@
 
           <div class="form-group col-md-3 col-sm-6 mb-3">
             <label for="EstatusLS">Estatus:</label>
-            <?php if($this->session->userdata('perfil')=='Administrador') { ?>
             <select class="form-control" name="EstatusLS" id="EstatusLS" onchange="search()">
               <?php
                 $this->Mdl_funciones->Select("Estatus_servicio",$Tipos);
                ?>
             </select>
-            <?php } ?>
-            <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
-            <select class="form-control" name="EstatusLS" id="EstatusLS" onchange="search()">
-              <?php
-                $this->Mdl_funciones->Select("Estatus_servicioE",$Tipos);
-               ?>
-            </select>
-            <?php } ?>
           </div>
 
           <?php if($this->session->userdata('perfil')=='Administrador') { ?>
