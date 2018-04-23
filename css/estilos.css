@@ -262,3 +262,6 @@ a:active{
   font-size: 50px;
   color: #F15A22;
 }
+.table th.social{
+  vertical-align: middle;
+}

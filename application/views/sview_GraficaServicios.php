@@ -2,7 +2,6 @@
   <input type="hidden" name="preg1" id="preg1" value="<?php echo $valor->Pregunta_1 ?>">
   <input type="hidden" name="preg2" id="preg2" value="<?php echo $valor->Pregunta_2 ?>">
   <input type="hidden" name="preg3" id="preg3" value="<?php echo $valor->Pregunta_3 ?>">
-  <input type="hidden" name="preg4" id="preg4" value="<?php echo $valor->Pregunta_4 ?>">
 <?php } ?>
 <div id="page-content-wrapper">
 <div class="container">
@@ -26,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php for($i=0;$i<count($preguntas);$i++) { ?>
+        <?php for($i=0;$i<count($preguntas)-1;$i++) { ?>
         <tr>
           <th scope="row"><?php echo $preguntas[$i]->Valor ?></td>
           <td><?php echo $preguntas[$i]->Descripcion ?></td>
@@ -56,13 +55,12 @@
   var preg1 = $("#preg1").val();
   var preg2 = $("#preg2").val();
   var preg3 = $("#preg3").val();
-  var preg4 = $("#preg4").val();
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ["Pregunta 1", "Pregunta 2", "Pregunta 3", "Pregunta 4"],
+      labels: ["Pregunta 1", "Pregunta 2", "Pregunta 3"],
       datasets: [{
-        data: [preg1,preg2,preg3,preg4],
+        data: [preg1,preg2,preg3],
         lineTension: 0,
         backgroundColor: 'transparent',
         borderColor: '#007bff',
