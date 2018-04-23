@@ -263,6 +263,7 @@ a:active{
   color: #F15A22;
 }
 
+
 table#tabla_servicios{
   text-align: center;
   text-decoration: none;
@@ -274,4 +275,8 @@ div.centrado>.form-inline{
 
 div.table-responsive>div#resultados{
   text-align: center;
+
+.table th.social{
+  vertical-align: middle;
+
 }
