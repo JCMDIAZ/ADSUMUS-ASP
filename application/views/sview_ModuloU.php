@@ -17,7 +17,8 @@
           </table>
         </div>
 </div>
-<!-- Script del Modulo Usuario -->
+
+<!-- Inicio de los Script del Modulo Usuario -->
 <script src="<?php echo base_url()?>jquery/jquery.js"></script>
 <script src="<?php echo base_url()?>jquery/jquery.min.js"></script>
 <script src="<?php echo base_url()?>jquery/jquery-1.10.2.js"></script>
@@ -26,6 +27,8 @@
 <script src="<?php echo base_url()?>js/jquery-mask.js"></script>
 <script src="<?php echo base_url()?>assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url()?>assets/datatables/js/dataTables.bootstrap.js"></script>
+<!-- Fin de los Script del Modulo Usuario -->
+
 <!-- Modal Agregar Usuario  -->
 <div class="modal fade" id="modal1">
   <div class="modal-dialog">

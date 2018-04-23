@@ -28,5 +28,4 @@ $route['Encuesta/(:any)']= 'Ctr_Principal/Encuesta/$1';
 $route['Encuesta/Evaluacion_servicio/1']= 'Ctr_Principal/Evaluacion_servicio';
 $route['Encuesta/No_satisfaccion_servicio/2']= 'Ctr_Principal/No_satisfaccion';
 
-
 $route['Informacion/(:num)']= 'Ctr_Principal/InformacionServicio/$1';

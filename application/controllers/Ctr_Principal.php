@@ -542,7 +542,7 @@ class Ctr_Principal extends CI_Controller {
 			$this->load->view('sview_Header');
 			$this->load->view('sview_ListadoServicios',$datos);
 			$this->load->view('sview_Footer');
-		}
+	}
 
 		function fetch(){
 			$output = '';
@@ -559,50 +559,49 @@ class Ctr_Principal extends CI_Controller {
 			<div class="container">
 						<table class="table table-bordered table-striped">
 							<tr class="table-active">
-							<th></th>
 							<th>Folio</th>
 							<th>Fecha de Solicitud</th>
 							<th>Razón Social</th>
 							<th>Estatus</th>
 							<th>Ejecutivo Asignado</th>
+							<th>Opciones</th>
 							</tr>
 			';}else {
 				$output .= '
 				<div class="container">
 							<table class="table table-bordered table-striped">
 								<tr class="table-active">
-								<th></th>
 								<th>Folio</th>
 								<th>Fecha de Solicitud</th>
 								<th>Razón Social</th>
 								<th>Estatus</th>
 								<th>Ejecutivo Asignado</th>
+								<th>Opciones</th>
 								</tr>';
 			}
 			if($data->num_rows() > 0){
 				foreach($data->result() as $row){
 					if ($this->session->userdata('perfil')=='Administrador') {
-
-
 					$output .= '
 					<tr>
-						<td><input type="radio" id='.$row->id_servicio.' name="check" value='.$row->id_servicio.'></td>
 						<td>'.$row->id_servicio.'</td>
 						<td>'.$row->Fecha_elaboracion.'</td>
 						<td>'.$row->Razon_social_cliente.'</td>
 						<td>'.$row->Estatus_servicio.'</td>
 						<td>'.$row->Ejecutivo_asignado.'</td>
+						<td>  <a href="'.base_url().'Informacion/'.$row->id_servicio.'"  id="tamañoB" class="btn btn-warning btn-sm btn-block">Editar</a></td>
+
 					</tr>
 					';
 				}else {
 					$output .= '
 					<tr>
-						<td><input type="radio" id='.$row->id_servicio.' name="check" value='.$row->id_servicio.'></td>
 						<td>'.$row->id_servicio.'</td>
 						<td>'.$row->Fecha_elaboracion.'</td>
 						<td>'.$row->Razon_social_cliente.'</td>
 						<td>'.$row->Estatus_servicio.'</td>
 						<td>'.$row->Ejecutivo_asignado.'</td>
+					  <td><a class="btn btn-warning btn-sm btn-block" title="Atender un Servicio" onclick="Atender('."'".$row->id_servicio."'".')">Atender</a></td>
 					</tr>
 					';
 
@@ -619,7 +618,6 @@ class Ctr_Principal extends CI_Controller {
 			$output .= '</table></div>';
 			echo $output;
 		}
-
 		//Fin de Funciones de Listado del Servicios
 
 		//Inicio de Funciones de Informacion del Servicios
@@ -658,8 +656,6 @@ class Ctr_Principal extends CI_Controller {
 			}
 
 		}
-
-
 		//Fin de Funciones de Informacion del Servicios
 }
 ?>
