@@ -4,7 +4,7 @@
    <?php
     foreach($servicio as $columna){
     ?>
-    <form action="" method="POST" id="atservicio">
+    <form action="" method="POST" id="atservicio" >
         <div class="row">
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="folio">Folio del Servicio</label>

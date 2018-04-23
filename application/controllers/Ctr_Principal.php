@@ -308,7 +308,7 @@ class Ctr_Principal extends CI_Controller {
 			$this->form_validation->set_rules("evaluacion","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion2","Evaluacion","required");
 			$this->form_validation->set_rules("evaluacion3","Evaluacion","required");
-			$this->form_validation->set_rules("evaluacion4","Evaluacion","required");
+			$this->form_validation->set_rules("sugerencias","Sugerencias","max_length[250]");
 			if ($this->form_validation->run()==false) {
 				$validarToken = $this->Mdl_Consultas->ServicioToken($token);
 				// Validamos si existe el token proporcionado
@@ -323,7 +323,7 @@ class Ctr_Principal extends CI_Controller {
 							$idServicio = $valor->f_id_servicio;
 							$this->session->set_flashdata('idServicio',$idServicio);
 							$this->load->view('mview_EvaluacionServicio',$data);
-							$this->Mdl_Consultas->EliminarToken('t_dat_token',$idServicio);
+							//$this->Mdl_Consultas->EliminarToken('t_dat_token',$idServicio);
 						}
 					}else{
 						$data['titulo'] = 'Evaluación del servicio prestado';
@@ -336,12 +336,12 @@ class Ctr_Principal extends CI_Controller {
 						$this->load->view('mview_NoExiste',$data);
 				}
 			}else{
-				$idServicio = $this->session->flashdata('idServicio');
+						$idServicio = $this->session->flashdata('idServicio');
 						$data['f_id_servicio'] = $idServicio;
 						$data['Pregunta_1'] = $this->input->post('evaluacion');
 						$data['Pregunta_2'] = $this->input->post('evaluacion2');
 						$data['Pregunta_3'] = $this->input->post('evaluacion3');
-						$data['Pregunta_4'] = $this->input->post('evaluacion4');
+						$data['Sugerencias'] = $this->input->post('sugerencias');
 						$resultado = $this->Mdl_Consultas->InsertarDatos('t_dat_evaluacion',$data);
 						if ($resultado==true) {
 							$this->load->view('mview_SuccessEval');
