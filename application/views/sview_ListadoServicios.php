@@ -34,16 +34,16 @@
           </div>
           <?php } ?>
 
-          <?php if($this->session->userdata('perfil')=='Administrador') { ?>
+          <!-- <?php if($this->session->userdata('perfil')=='Administrador') { ?>
             <div class="col-md-4 col-sm-4 mb-3 mx-auto">
               <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Editar</button>
             </div>
-          <?php } ?>
+          <?php } ?> -->
 
           <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
             <div class="col-md-4 col-sm-4 mb-3 mx-auto">
               <!-- <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter"> -->
-                <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoA">Atender</button>
+                <!-- <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoA">Atender</button> -->
               <!-- </a> -->
           <?php } ?>
           </form>
@@ -62,25 +62,31 @@ $(document).ready(function(){
   jQuery.noConflict();
   search();
 
-  $('#tamañoB').on('click',function() {
-    if (valor = $('input[name="check"]:checked').val()) {
-      window.location = "Informacion/"+valor;
-    }else {
-      alert('Ningún Servicio Seleccionado');
-    }
-  })
+  // $('#tamañoB').on('click',function() {
+  //   if (valor = $('input[name="check"]:checked').val()) {
+  //     window.location = "Informacion/"+valor;
+  //   }else {
+  //     alert('Ningún Servicio Seleccionado');
+  //   }
+  // })
 
-  $('#tamañoA').on('click',function() {
-    if (valor = $('input[name="check"]:checked').val()) {
-      console.log(valor);
-        $('#tamañoA').val(valor);
-        $('#ocultoSeleccionado').val(valor);
-        $('#exampleModalCenter').modal('show');
-    }else {
-      alert('Ningún Servicio Seleccionado');
-    }
-  })
+  // $('#tamañoA').on('click',function() {
+  //   if (valor = $('input[name="check"]:checked').val()) {
+  //     console.log(valor);
+  //       $('#tamañoA').val(valor);
+  //       $('#ocultoSeleccionado').val(valor);
+  //       $('#exampleModalCenter').modal('show');
+  //   }else {
+  //     alert('Ningún Servicio Seleccionado');
+  //   }
+  // })
 });
+
+function Atender(id){
+    $('#ocultoSeleccionado').val(id);
+    $('#exampleModalCenter').modal('show');
+    console.log(id);
+}
 
 function search() {
   var search = $('#FolioS').val();

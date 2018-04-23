@@ -16,6 +16,16 @@
 			}
         }
 
+		function Tabla_S(){
+      $query= "SELECT * FROM t_dat_servicios";
+      $query= $this->db->query($query);
+			if ($query->num_rows()>0) {
+				return $query;
+			}else{
+				return 0;
+			}
+        }
+
     function Select($nombre,$select,$def ="123qwe"){
       echo '<option  value="" selected>Seleccione una Opción</option>';
         foreach ($select->result() as $tipo) {
@@ -58,6 +68,7 @@
     		var $order = array('id_usuario' => 'asc'); // default order
 
 				private function _get_datatables_query(){
+
         $this->db->select('id_usuario, Usuario, Perfil, Estatus');
         $this->db->from($this->table);
         $i = 0;
@@ -146,13 +157,13 @@ function Busqueda($data){
 	$Estatus = $data["estatus"];
 	$Ejecutivo = $data["ejecutivo"];
 	if ($Folio=='' && $Razon=='' && $Estatus=='' && $Ejecutivo=='') {
-		$query= "SELECT * FROM t_dat_servicios";
+		$query= "SELECT * FROM t_dat_servicios ORDER BY Fecha_elaboracion DESC";
 	}else {
 		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
 		AND Razon_social_cliente LIKE '%".$Razon."%'
 		AND Estatus_servicio LIKE '%".$Estatus."%'
 		AND f_id_usuario LIKE '%".$Ejecutivo."%'
-		ORDER BY id_servicio ASC";
+		ORDER BY Fecha_elaboracion DESC";
 	}
 	$query= $this->db->query($query);
 	return $query;
@@ -163,26 +174,20 @@ function Busqueda($data){
 	$Estatus = $data["estatus"];
 	if ($Folio=='' && $Razon=='' && $Estatus=='') {
 		$query= "SELECT * FROM t_dat_servicios WHERE
-		Ejecutivo_asignado = '".$this->session->userdata('Nombre')."' AND Estatus_servicio != 'Terminado' AND f_id_usuario = '".$this->session->userdata('ID')."' ";
+		Ejecutivo_asignado = '".$this->session->userdata('Nombre')."' AND Estatus_servicio != 'Terminado' AND f_id_usuario = '".$this->session->userdata('ID')."' ORDER BY Fecha_elaboracion DESC";
 	}else {
 		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
 		AND Razon_social_cliente LIKE '%".$Razon."%'
 		AND Estatus_servicio LIKE '%".$Estatus."%'
 		AND Ejecutivo_asignado = '".$this->session->userdata('Nombre')."'
 		AND f_id_usuario = '".$this->session->userdata('ID')."'
-		ORDER BY id_servicio ASC";
+		ORDER BY Fecha_elaboracion DESC";
 	}
 	$query= $this->db->query($query);
 	return $query;
 }
 }
 }
-
-function Editar($id){
-
-}
-
-
 
 }
 ?>
