@@ -275,8 +275,51 @@ div.centrado>.form-inline{
 
 div.table-responsive>div#resultados{
   text-align: center;
-
+}
 .table th.social{
   vertical-align: middle;
-
+}
+/*estilos tabla */
+div.estilos{
+  text-align: center;
+  text-decoration: none;
+}
+div.estilos>table{
+  width: 100%;
+}
+/*Estilos paginacion*/
+div.paginacion{
+  text-align: center;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
+  display: flex;
+  justify-content: center;
+}
+div.paginacion>a{
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  text-decoration: none;
+}
+div.paginacion>a:visited{
+  color: #000;
+}
+div.paginacion>strong{
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+}
+div.paginacion>a:last-child{
+  margin-right: 0;
 }

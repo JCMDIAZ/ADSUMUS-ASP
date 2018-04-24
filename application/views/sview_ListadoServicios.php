@@ -50,12 +50,20 @@
   </div>
 </div>
 
-<!-- BUSCADOR -->
+<!-- BUSCADOR
 <div class="table-responsive">
   <div id="resultados">
   </div>
 </div>
-
+<h2>Tabla con paginación</h2>-->
+<?php
+  $this->table->set_heading("Folio","Fecha de Solicitud","Razón Social","Estatus","Ejecutivo Asignado","Opciones");
+  foreach ($records as $valores) {
+    $this->table->add_row($valores->id_servicio,$valores->Fecha_elaboracion,$valores->Razon_social_cliente,$valores->Estatus_servicio,$valores->Ejecutivo_asignado,'<a href="'.base_url().'Informacion/'.$valores->id_servicio.'"  id="tamañoB" class="btn btn-warning btn-sm btn-block">Editar</a>');
+  }
+  echo "<div class='container'><div class='table table-striped table-responsive estilos'>".$this->table->generate()."</div>";
+  echo "<div class='paginacion'>".$this->pagination->create_links()."</div></div>";
+?>
 <script>
 //Inicio de Buscador de Servicios
 $(document).ready(function(){
@@ -99,7 +107,8 @@ function search() {
     method:"POST",
     data:{search:search,razon:razon,estatus:estatus,ejecutivo:ejecutivo},
     success:function(data){
-      $('#resultados').html(data);
+      console.log(data);
+      //$('body').html(data);
     }
   });
 }
