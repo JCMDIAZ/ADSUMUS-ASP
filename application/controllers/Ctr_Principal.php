@@ -536,15 +536,57 @@ class Ctr_Principal extends CI_Controller {
 
 	//Inicio de Funciones de Listado del Servicios
 	public function ListadoServicios(){
-			$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
-			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
-			$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
+		$this->load->library("pagination");
+		$this->load->library("table");
+		$header['title'] = "Servicios";
+		$header['description'] = "Listado de servicios";
+
+		$data['base_url'] = base_url()."Inicio/";
+		$data['total_rows'] = $this->db->get("t_dat_servicios")->num_rows();
+		$data['per_page'] = 5;
+		$data['num_links'] = 4;
+		$data['records'] = $this->db->order_by("Fecha_elaboracion","DESC")->get("t_dat_servicios",$data['per_page'],$this->uri->segment(2))->result();
+
+		$this->pagination->initialize($data);
+			$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+			$data['Tipos'] = $this->Mdl_funciones->Tipos();
+			$data['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
 			$this->load->view('sview_Header');
-			$this->load->view('sview_ListadoServicios',$datos);
+			$this->load->view('sview_ListadoServicios',$data);
 			$this->load->view('sview_Footer');
 	}
+	function fetch(){
+		$output = '';
+		$query = '';
+		$this->load->model('Mdl_funciones');
 
-		function fetch(){
+		if($this->input->post('query'))
+		{
+			$query = $this->input->post('query');
+		}
+
+		$this->load->library("pagination");
+		$this->load->library("table");
+		$header['title'] = "Servicios";
+		$header['description'] = "Listado de servicios";
+
+		$data['base_url'] = base_url()."Inicio/";
+		$data['total_rows'] = $this->db->get("t_dat_servicios")->num_rows();
+		$data['per_page'] = 5;
+		$data['num_links'] = 4;
+		if($this->uri->segment(2)!= null){
+			$data = $this->Mdl_funciones->Busqueda2($_POST,$data['per_page'],0);
+		}else{
+			$data = $this->Mdl_funciones->Busqueda($_POST);
+		}
+		$data['records'] = $data;
+		$this->pagination->initialize($data);
+			$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+			$data['Tipos'] = $this->Mdl_funciones->Tipos();
+			$data['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
+			$this->load->view('sview_ListadoServicios',$data);
+	}
+		/*function fetch(){
 			$output = '';
 			$query = '';
 			$this->load->model('Mdl_funciones');
@@ -617,7 +659,7 @@ class Ctr_Principal extends CI_Controller {
 			}
 			$output .= '</table></div>';
 			echo $output;
-		}
+		}*/
 		//Fin de Funciones de Listado del Servicios
 
 		//Inicio de Funciones de Informacion del Servicios
