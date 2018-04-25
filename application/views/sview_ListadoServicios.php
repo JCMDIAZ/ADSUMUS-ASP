@@ -1,94 +1,152 @@
 <div class="container" style="margin-top:30px">
   <h3>Buscador de Servicios</h3>
     <hr>
-      <form>
-        <div class="row" style="justify-content:center;">
-
-          <div class="form-group col-md-3 col-sm-6 mb-3">
-            <label for="FolioS">Folio del Servicio:</label>
-            <input type="number" min="0" class="form-control" id="FolioS" onkeyup="search()" >
-          </div>
-
-          <div class="form-group col-md-3 col-sm-6 mb-3">
-            <label for="RazonLS">Razón Social:</label>
-            <input type="text" class="form-control" id="RazonLS" onkeyup="search()" >
-          </div>
-
-          <div class="form-group col-md-3 col-sm-6 mb-3">
-            <label for="EstatusLS">Estatus:</label>
-            <select class="form-control" name="EstatusLS" id="EstatusLS" onchange="search()">
-              <?php
-                $this->Mdl_funciones->Select("Estatus_servicio",$Tipos);
-               ?>
-            </select>
-          </div>
-
-          <?php if($this->session->userdata('perfil')=='Administrador') { ?>
-          <div class="form-group col-md-3 col-sm-6 mb-3">
-            <label for="EjecutivoLS">Ejecutivo:</label>
-            <select class="form-control" name="EjecutivoLS" id="EjecutivoLS" onchange="search()">
-              <?php
-                $this->Mdl_funciones->Select2("Ejecutivo",$ejecutivos);
-               ?>
-            </select>
-          </div>
-          <?php } ?>
-
-          <!-- <?php if($this->session->userdata('perfil')=='Administrador') { ?>
-            <div class="col-md-4 col-sm-4 mb-3 mx-auto">
-              <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoB">Editar</button>
-            </div>
-          <?php } ?> -->
-
-          <?php if($this->session->userdata('perfil')=='Ejecutivo') { ?>
-            <div class="col-md-4 col-sm-4 mb-3 mx-auto">
-              <!-- <a class="nav-link" href="<?php echo base_url()?>Atencion_servicio" data-toggle="modal" data-target="#exampleModalCenter"> -->
-                <!-- <button type="button" class="btn btn-warning btn-sm btn-block" id="tamañoA">Atender</button> -->
-              <!-- </a> -->
-          <?php } ?>
-          </form>
+    
+<!-- tabla de buscador servicios-->
+<div class="row">
+  <div class="col col-md-3" id="filter_col1" data-column="0">
+    <label for="col0_filter">Folio del Servicio:</label>
+    <input type="number" class="column_filter form-control" id="col0_filter">
   </div>
+
+  <div class="col col-md-3" id="filter_col2" data-column="2">
+    <label for="col2_filter">Razón Social:</label>
+    <input type="text" class="column_filter form-control" id="col2_filter">
+  </div>
+
+  <div class="col col-md-3" id="filter_col4" data-column="3">
+    <label for="col3_filter">Estatus:</label>
+    <select  class="column_filter form-control" id="col3_filter">
+      <?php
+        $this->Mdl_funciones->Select("Estatus_servicio",$Tipos);
+       ?>
+     </select>
+  </div>
+
+<?php if($this->session->userdata('perfil')=='Administrador') { ?>
+  <div class="col col-md-3" id="filter_col5" data-column="4">
+    <label for="col4_filter">Ejecutivo:</label>
+    <select  class="column_filter form-control" id="col4_filter">
+      <?php
+        $this->Mdl_funciones->Select3("Ejecutivo",$ejecutivos);
+       ?>
+     </select>
+  </div>
+<?php } ?>
+
 </div>
 
-<!-- BUSCADOR
-<div class="table-responsive">
-  <div id="resultados">
+  <table cellpadding="4" class="container table-responsive" style="width: 100%; margin: 0 auto 2em auto;">
+		<thead>
+		</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+  <div class="container table-responsive">
+    <table id="tabla_servicios" class="table table-bordered table-hover estilos" style="width:100%">
+      <thead>
+        <tr class="table-active">
+            <th>Folio</th>
+            <th>Fecha de Solicitud</th>
+            <th>Razón Social</th>
+            <th>Estatus</th>
+            <th>Ejecutivo Asignado</th>
+            <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+<?php if ($this->session->userdata('perfil')=='Administrador') {?>
+  <?php foreach ($tablas as $row): ?>
+    <tr>
+        <td><?= $row->id_servicio?></td>
+        <td><?= $row->Fecha_elaboracion?></td>
+        <td><?= $row->Razon_social_cliente?></td>
+        <td><?= $row->Estatus_servicio?></td>
+        <td><?= $row->Ejecutivo_asignado?></td>
+        <td><a href="<?php echo base_url().'Informacion/'.$row->id_servicio?>"  id="tamañoB" class="btn btn-warning btn-sm btn-block" title="Editar el #Folio <?php echo $row->id_servicio?>">Editar</a></td>
+    </tr>
+  <?php endforeach; ?>
+<?php }else {?>
+
+  <?php foreach ($tablas as $row): ?>
+    <tr>
+        <td><?= $row->id_servicio?></td>
+        <td><?= $row->Fecha_elaboracion?></td>
+        <td><?= $row->Razon_social_cliente?></td>
+        <td><?= $row->Estatus_servicio?></td>
+        <td><?= $row->Ejecutivo_asignado?></td>
+        <td><a class="btn btn-warning btn-sm btn-block" title="Atender el #Folio <?php echo $row->id_servicio?>" onclick="Atender(<?php echo $row->id_servicio?>)">Atender</a></td>
+    </tr>
+    <?php endforeach; ?>
+<?php } ?>
+
+      </tbody>
+    </table>
   </div>
 </div>
-<h2>Tabla con paginación</h2>-->
-<?php
-  $this->table->set_heading("Folio","Fecha de Solicitud","Razón Social","Estatus","Ejecutivo Asignado","Opciones");
-  foreach ($records as $valores) {
-    $this->table->add_row($valores->id_servicio,$valores->Fecha_elaboracion,$valores->Razon_social_cliente,$valores->Estatus_servicio,$valores->Ejecutivo_asignado,'<a href="'.base_url().'Informacion/'.$valores->id_servicio.'"  id="tamañoB" class="btn btn-warning btn-sm btn-block">Editar</a>');
-  }
-  echo "<div class='container'><div class='table table-striped table-responsive estilos'>".$this->table->generate()."</div>";
-  echo "<div class='paginacion'>".$this->pagination->create_links()."</div></div>";
-?>
-<script>
-//Inicio de Buscador de Servicios
-$(document).ready(function(){
-  jQuery.noConflict();
-  search();
+<!-- Inicio de los Script del Buscador Servicios -->
+<script src="<?php echo base_url()?>jquery/jquery.js"></script>
+<script src="<?php echo base_url()?>jquery/jquery.min.js"></script>
+<script src="<?php echo base_url()?>jquery/jquery-1.10.2.js"></script>
+<script src="<?php echo base_url()?>jquery/jquery-ui.js"></script>
+<script src="<?php echo base_url()?>javascript/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url()?>js/jquery-mask.js"></script>
+<script src="<?php echo base_url()?>assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url()?>assets/datatables/js/dataTables.bootstrap.js"></script>
+<!-- Fin de los Script del Buscador Servicios -->
 
-  // $('#tamañoB').on('click',function() {
-  //   if (valor = $('input[name="check"]:checked').val()) {
-  //     window.location = "Informacion/"+valor;
-  //   }else {
-  //     alert('Ningún Servicio Seleccionado');
-  //   }
-  // })
 
-  // $('#tamañoA').on('click',function() {
-  //   if (valor = $('input[name="check"]:checked').val()) {
-  //     console.log(valor);
-  //       $('#tamañoA').val(valor);
-  //       $('#ocultoSeleccionado').val(valor);
-  //       $('#exampleModalCenter').modal('show');
-  //   }else {
-  //     alert('Ningún Servicio Seleccionado');
-  //   }
-  // })
-});
+<!-- Inicio de Buscador de Servicios -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#tabla_servicios').DataTable({
+     "ordering": false,
+      language: {
+          "decimal": "",
+          "emptyTable": "No hay Información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin Datos Encontrados",
+          "paginate": {
+                      "first": "Primero",
+                      "last": "Ultimo",
+                      "next": "Siguiente",
+                      "previous": "Anterior"
+                      }
+          },
+    });
+
+    $('input.global_filter').on( 'keyup click', function () {
+		filterGlobal();
+	} );
+
+	$('input.column_filter, select.column_filter').on( 'keyup change', function () {
+		filterColumn( $(this).parents('div').attr('data-column') );
+	} );
+
+
+
+} );
+
+function filterGlobal () {
+	$('#tabla_servicios').DataTable().search(
+		$('#global_filter').val()
+	).draw();
+}
+
+function filterColumn ( i ) {
+	$('#tabla_servicios').DataTable().column( i ).search(
+		$('#col'+i+'_filter').val()
+	).draw();
+}
 
 function Atender(id){
     $('#ocultoSeleccionado').val(id);
@@ -96,23 +154,5 @@ function Atender(id){
     console.log(id);
 }
 
-function search() {
-  var search = $('#FolioS').val();
-  var razon = $('#RazonLS').val();
-  var estatus = $('#EstatusLS').val();
-  var ejecutivo = $('#EjecutivoLS').val();
-
-  $.ajax({
-    url:"<?php echo base_url(); ?>Ctr_Principal/fetch",
-    method:"POST",
-    data:{search:search,razon:razon,estatus:estatus,ejecutivo:ejecutivo},
-    success:function(data){
-      console.log(data);
-      //$('body').html(data);
-    }
-  });
-}
 //Fin de Buscador de Servicios
 </script>
-<script src="<?php echo base_url()?>jquery/jquery.min.js"></script>
-<script src="<?php echo base_url()?>js/jquery-mask.js"></script>

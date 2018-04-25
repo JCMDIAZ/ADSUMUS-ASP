@@ -49,6 +49,15 @@
             }
         }
 
+				function Select3($nombre,$select){
+		      echo '<option  value="" selected>Todos los Ejecutivos</option>';
+		        foreach ($select as $tipo) {
+		            if($tipo->Perfil == $nombre){
+		                    echo '<option value="'.$tipo->Usuario.'" >'.$tipo->Usuario.'</option>';
+		                }
+		            }
+		        }
+
 				public function insertPrueba(){
         $data = array(
         'Usuario'=>$this->input->post('Usuario1'),
@@ -150,77 +159,25 @@
 	}
 
 
-function Busqueda($data){
-	if($this->session->userdata('perfil')=='Administrador'){
-	$Folio = $data["search"];
-	$Razon = $data["razon"];
-	$Estatus = $data["estatus"];
-	$Ejecutivo = $data["ejecutivo"];
-	if ($Folio=='' && $Razon=='' && $Estatus=='' && $Ejecutivo=='') {
-		$query= "SELECT * FROM t_dat_servicios ORDER BY Fecha_elaboracion DESC";
-	}else {
-		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
-		AND Razon_social_cliente LIKE '%".$Razon."%'
-		AND Estatus_servicio LIKE '%".$Estatus."%'
-		AND f_id_usuario LIKE '%".$Ejecutivo."%'
-		ORDER BY Fecha_elaboracion DESC";
-	}
-	$query= $this->db->query($query);
-	return $query;
-}else {
-	if($this->session->userdata('perfil')=='Ejecutivo'){
-	$Folio = $data["search"];
-	$Razon = $data["razon"];
-	$Estatus = $data["estatus"];
-	if ($Folio=='' && $Razon=='' && $Estatus=='') {
-		$query= "SELECT * FROM t_dat_servicios WHERE
-		Ejecutivo_asignado = '".$this->session->userdata('Nombre')."' AND Estatus_servicio != 'Terminado' AND f_id_usuario = '".$this->session->userdata('ID')."' ORDER BY Fecha_elaboracion DESC";
-	}else {
-		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
-		AND Razon_social_cliente LIKE '%".$Razon."%'
-		AND Estatus_servicio LIKE '%".$Estatus."%'
-		AND Ejecutivo_asignado = '".$this->session->userdata('Nombre')."'
-		AND f_id_usuario = '".$this->session->userdata('ID')."'
-		ORDER BY Fecha_elaboracion DESC";
-	}
-	$query= $this->db->query($query);
-	return $query;
+	//Inicio del data table servicios
+function o_tabla(){
+		if($this->session->userdata('perfil')=='Administrador'){
+			$this->db->select('id_servicio, Fecha_elaboracion, Razon_social_cliente, Estatus_servicio, Ejecutivo_asignado');
+			$datos = $this->db->order_by('Fecha_elaboracion desc')->from('t_dat_servicios')->get();
+			return $datos->result();
+		}else {
+			if($this->session->userdata('perfil')=='Ejecutivo'){
+				$this->db->select('id_servicio, Fecha_elaboracion, Razon_social_cliente, Estatus_servicio, Ejecutivo_asignado');
+				$this->db->where('Ejecutivo_asignado',$this->session->userdata('Nombre'));
+				$this->db->where('Estatus_servicio != "Terminado"');
+				$this->db->where('f_id_usuario',$this->session->userdata('ID'));
+				$datos = $this->db->order_by('Fecha_elaboracion desc')->from('t_dat_servicios')->get();
+				return $datos->result();
+			}
+		}
 }
-}
-}
-function Busqueda2($data,$limit,$offset){
-	if($this->session->userdata('perfil')=='Administrador'){
-	$Folio = $data["search"];
-	$Razon = $data["razon"];
-	$Estatus = $data["estatus"];
-	$Ejecutivo = $data["ejecutivo"];
-	if ($Folio=='' && $Razon=='' && $Estatus=='' && $Ejecutivo=='') {
-		$query= "SELECT * FROM t_dat_servicios ORDER BY id_servicio DESC";
-	}else {
-		$query = "SELECT * FROM t_dat_servicios WHERE id_servicio LIKE '%$Folio%' AND Razon_social_cliente LIKE '%$Razon%' AND Estatus_servicio LIKE '%$Estatus%' AND f_id_usuario LIKE '%$Ejecutivo%' ORDER BY Fecha_elaboracion DESC LIMIT $limit;";
-	}
-	$query= $this->db->query($query);
-	return $query->result();
-}else {
-	if($this->session->userdata('perfil')=='Ejecutivo'){
-	$Folio = $data["search"];
-	$Razon = $data["razon"];
-	$Estatus = $data["estatus"];
-	if ($Folio=='' && $Razon=='' && $Estatus=='') {
-		$query= "SELECT * FROM t_dat_servicios WHERE
-		Ejecutivo_asignado = '".$this->session->userdata('Nombre')."' AND Estatus_servicio != 'Terminado' AND f_id_usuario = '".$this->session->userdata('ID')."' ORDER BY Fecha_elaboracion DESC";
-	}else {
-		$query= "SELECT * FROM t_dat_servicios". " WHERE  id_servicio LIKE '%".$Folio."%'
-		AND Razon_social_cliente LIKE '%".$Razon."%'
-		AND Estatus_servicio LIKE '%".$Estatus."%'
-		AND Ejecutivo_asignado = '".$this->session->userdata('Nombre')."'
-		AND f_id_usuario = '".$this->session->userdata('ID')."'
-		ORDER BY Fecha_elaboracion DESC";
-	}
-	$query= $this->db->query($query);
-	return $query;
-}
-}
-}
+	//Fin del data table servicios
+
+
 }
 ?>
