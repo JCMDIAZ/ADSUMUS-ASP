@@ -2,8 +2,8 @@
   <h3>Módulo Usuarios</h3>
     <hr>
       <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal1">Agregar Usuario</button>
-        <div class="table-responsive">
-          <table id="table" class="table table-striped" style="width:100%">
+        <div class="container table-responsive">
+          <table id="table" class="table table-bordered table-hover" style="width:100%">
             <thead>
                 <tr class="table-active">
                     <th>Usuarios</th>
@@ -299,9 +299,6 @@ function editarUsuarios(id){
         $('[name="Estatus"]').val(data.Estatus);
         $('#modal_form').modal('show'); // Muestra el Modal
     },
-    // error: function (jqXHR, textStatus, errorThrown){
-    //     alert('Error al Obtener Datos de AJAX');
-    // }
   });
 }
 
@@ -328,20 +325,40 @@ function fn_step1(){
           document.getElementById("ContraseñaUE").style.borderColor = "#E34234";
       		document.getElementById("ContraseñaCE").style.borderColor = "#E34234";
           $('#MostrarAlerta2').removeAttr('hidden');
-          $(".alertas2 div").text("¡Upps! Las contraseñas no coiciden.");
+          $(".alertas2 div").text("¡Las contraseñas no coiciden!");
           return false;
         }
 
         if(valor1.length<6 || valor1.length>20){
-          document.getElementById("ContraseñaUE").style.borderColor = "#E34234";
-          document.getElementById("ContraseñaCE").style.borderColor = "#E34234";
-          $('#MostrarAlerta2').removeAttr('hidden');
-          $(".alertas2 div").text("¡Upps! La contraseña debe estar formada entre 6-20 carácteres.");
-          return false;
+          if (valor1.length<6) {
+            document.getElementById("ContraseñaUE").style.borderColor = "#E34234";
+            document.getElementById("ContraseñaCE").style.borderColor = "#E34234";
+            $('#MostrarAlerta2').removeAttr('hidden');
+            $(".alertas2 div").text("¡La contraseña debe tener minimo 6 caracteres!");
+            return false;
+          }
+          if (valor1.length>20) {
+            document.getElementById("ContraseñaUE").style.borderColor = "#E34234";
+            document.getElementById("ContraseñaCE").style.borderColor = "#E34234";
+            $('#MostrarAlerta2').removeAttr('hidden');
+            $(".alertas2 div").text("¡La contraseña debe tener maximo 20 caracteres!");
+            return false;
+          }
       	}
 
-        save();
-        window.location.reload();
+        if($("#CorreoE").val().indexOf('@', 0) == -1 || $("#CorreoE").val().indexOf('.', 0) == -1) {
+          document.getElementById("CorreoE").style.borderColor = "#E34234";
+          $('#MostrarAlerta2').removeAttr('hidden');
+          $('#MostrarAlerta2 div').text('¡El correo es invalido!');
+          return false;
+        }
+
+        else {
+          save();
+          alert('¡Usuario editado correctamente!');
+          window.location.reload();
+        }
+
     }
 }
 

@@ -4,53 +4,60 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Ctr_Principal extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
+		$this->load->database();
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->model('Mdl_funciones');
 		$this->load->model('Mdl_Consultas');
-		$this->load->database();
     $this->load->library('email');
 	}
 
-	public function Index(){
-		$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
-		$datos['Tipos'] = $this->Mdl_funciones->Tipos();
-		$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
-		$this->load->view('sview_Header');
-		$this->load->view('sview_ListadoServicios',$datos);
-		$this->load->view('sview_Footer');
-	}
+		public function Index(){
+			$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
+			$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
+			$datos['tablas'] = $this->Mdl_funciones->o_tabla();
+			$this->load->view('sview_Header');
+			$this->load->view('sview_ListadoServicios',$datos);
+			$this->load->view('sview_Footer');
+		}
 
-	//Modulo Usuarios
-	public function ModuloU(){
-		$datos['Tipos'] = $this->Mdl_funciones->Tipos();
-		$this->load->view('sview_Header');
-		$this->load->view('sview_ModuloU',$datos);
-		$this->load->view('sview_Footer');
-	}
+	//Inicio del Modulo Usuarios
+		public function ModuloU(){
+			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
+			$this->load->view('sview_Header');
+			$this->load->view('sview_ModuloU',$datos);
+			$this->load->view('sview_Footer');
+		}
+	//Fin del Modulo Usuarios
 
-	public function add(){
-		$this->form_validation->set_rules('Contraseña1', 'Contraseña', 'required|min_length[6]|max_length[20]',
-                        array('required' => 'Error en %s.',
-															'min_length' => 'La %s Debe Tener Minimo 6 Caracteres',
-															'max_length' => 'La %s Debe Tener Maximo 20 Caracteres',
-															));
-    $this->form_validation->set_rules('Contraseña2', 'Confirmar Contraseña', 'required|matches[Contraseña1]',
-		  array('required' => 'Error en %s.',
-						'matches' => '¡Upps! Las Contraseñas No Coinciden.',
-						));
-		$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]',
-												array('required' => 'Escribe el %s',
-															'valid_email' => 'Verifique el %s.',
-															'is_unique' => '¡Upps! %s Existente.',
-															));
-		if ($this->form_validation->run() == true) {
-		$this->load->model('Mdl_funciones');
-		$this->Mdl_funciones->insertPrueba();
-		echo json_encode('Agregado Correctamente');
-		}else{
-			echo json_encode(validation_errors());
-			}
+		public function add(){
+			$this->form_validation->set_rules('Usuario1', 'nombre', 'required|min_length[3]|max_length[50]',
+	                        array('required' => '¡El %s es requerido!',
+																'min_length' => '¡El %s debe tener minimo 3 caracteres!',
+																'max_length' => '¡El %s debe tener maximo 50 caracteres!',
+																));
+			$this->form_validation->set_rules('Contraseña1', 'contraseña', 'required|min_length[6]|max_length[20]',
+	                        array('required' => '¡La %s es requerida!',
+																'min_length' => '¡La %s debe tener minimo 6 caracteres!',
+																'max_length' => '¡La %s debe tener maximo 20 caracteres!',
+																));
+	    $this->form_validation->set_rules('Contraseña2', 'Confirmar Contraseña', 'required|matches[Contraseña1]',
+			  array('required' => 'Error en %s.',
+							'matches' => '¡Las contraseñas no coinciden!',
+							));
+			$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]',
+													array('required' => 'Escribe el %s',
+																'valid_email' => '¡Verifique el %s!',
+																'is_unique' => '¡%s existente!',
+																));
+			if ($this->form_validation->run() == true) {
+			$this->load->model('Mdl_funciones');
+			$this->Mdl_funciones->insertPrueba();
+			echo json_encode('Agregado Correctamente');
+			}else{
+				echo json_encode(validation_errors());
+				}
 		}
 
 		public function Levantamiento(){
@@ -491,19 +498,18 @@ class Ctr_Principal extends CI_Controller {
 			}
 		}
 
-//DATATABLE
+	//Inicio de funciones del data table modulo usuarios
 		public function ajax_list(){
 		 $list = $this->Mdl_funciones->get_datatables();
 		 $data = array();
 		 $no = $_POST['start'];
-		 foreach ($list as $usuario) {
+		 foreach ($list as $usuario){
 				 $no++;
 				 $row = array();
 				 $row[] = $usuario->Usuario;
 				 $row[] = $usuario->Perfil;
 				 $row[] = $usuario->Estatus;
-				 //add html for action
-				 $row[] = '<a class="btn btn-sm btn-warning" title="Edit" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
+				 $row[] = '<a class="btn btn-warning btn-sm btn-block" title="Editar al Usuario '. $usuario->Usuario.'" data-target="#modal_form" onclick="editarUsuarios('."'".$usuario->id_usuario."'".')"> Editar</a>';
 				 $data[] = $row;
 		 }
 		 $output = array(
@@ -512,158 +518,42 @@ class Ctr_Principal extends CI_Controller {
 										 "recordsFiltered" => $this->Mdl_funciones->count_filtered(),
 										 "data" => $data
 						 );
-		 //output to json format
 		 echo json_encode($output);
- }
+ 		}
 
- public function ajax_edit($id){
-       $data = $this->Mdl_funciones->get_by_id($id);
-       echo json_encode($data);
-   }
+		public function ajax_edit($id){
+		     $data = $this->Mdl_funciones->get_by_id($id);
+		     echo json_encode($data);
+		}
 
-	public function ajax_update(){
-      $data = array(
-              'Usuario' => $this->input->post('Usuario'),
-              'Correo' => $this->input->post('Correo'),
-              'Perfil' => $this->input->post('Perfil'),
-              'Contraseña' => $this->input->post('Password1'),
-              'Contraseña' => $this->input->post('Password2'),
-              'Estatus' => $this->input->post('Estatus')
-          );
-      $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);
-      echo json_encode(array("status" => TRUE));
-  }
+		public function ajax_update(){
+		    $data = array(
+		            'Usuario' => $this->input->post('Usuario'),
+		            'Correo' => $this->input->post('Correo'),
+		            'Perfil' => $this->input->post('Perfil'),
+		            'Contraseña' => $this->input->post('Password1'),
+		            'Contraseña' => $this->input->post('Password2'),
+		            'Estatus' => $this->input->post('Estatus')
+		        );
+		    $this->Mdl_funciones->update(array('id_usuario' => $this->input->post('id_usuario')), $data);
+		    echo json_encode(array("status" => TRUE));
+		}
+	//Fin de funciones del data table modulo usuarios
 
 	//Inicio de Funciones de Listado del Servicios
 	public function ListadoServicios(){
-		$this->load->library("pagination");
-		$this->load->library("table");
-		$header['title'] = "Servicios";
-		$header['description'] = "Listado de servicios";
-
-		$data['base_url'] = base_url()."Inicio/";
-		$data['total_rows'] = $this->db->get("t_dat_servicios")->num_rows();
-		$data['per_page'] = 5;
-		$data['num_links'] = 4;
-		$data['records'] = $this->db->order_by("Fecha_elaboracion","DESC")->get("t_dat_servicios",$data['per_page'],$this->uri->segment(2))->result();
-
-		$this->pagination->initialize($data);
-			$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
-			$data['Tipos'] = $this->Mdl_funciones->Tipos();
-			$data['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
+			$datos['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
+			$datos['Tipos'] = $this->Mdl_funciones->Tipos();
+			$datos['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
+			$datos['tablas'] = $this->Mdl_funciones->o_tabla();
 			$this->load->view('sview_Header');
-			$this->load->view('sview_ListadoServicios',$data);
+			$this->load->view('sview_ListadoServicios',$datos);
 			$this->load->view('sview_Footer');
 	}
-	function fetch(){
-		$output = '';
-		$query = '';
-		$this->load->model('Mdl_funciones');
+	//Fin de Funciones de Listado del Servicios
 
-		if($this->input->post('query'))
-		{
-			$query = $this->input->post('query');
-		}
-
-		$this->load->library("pagination");
-		$this->load->library("table");
-		$header['title'] = "Servicios";
-		$header['description'] = "Listado de servicios";
-
-		$data['base_url'] = base_url()."Inicio/";
-		$data['total_rows'] = $this->db->get("t_dat_servicios")->num_rows();
-		$data['per_page'] = 5;
-		$data['num_links'] = 4;
-		if($this->uri->segment(2)!= null){
-			$data = $this->Mdl_funciones->Busqueda2($_POST,$data['per_page'],0);
-		}else{
-			$data = $this->Mdl_funciones->Busqueda($_POST);
-		}
-		$data['records'] = $data;
-		$this->pagination->initialize($data);
-			$data['ejecutivos'] = $this->Mdl_Consultas->Ejecutivos();
-			$data['Tipos'] = $this->Mdl_funciones->Tipos();
-			$data['mostrar'] = $this->Mdl_funciones->Mostrar('t_dat_servicios');
-			$this->load->view('sview_ListadoServicios',$data);
-	}
-		/*function fetch(){
-			$output = '';
-			$query = '';
-			$this->load->model('Mdl_funciones');
-
-			if($this->input->post('query'))
-			{
-				$query = $this->input->post('query');
-			}
-			$data = $this->Mdl_funciones->Busqueda($_POST);
-				if ($this->session->userdata('perfil')=='Administrador') {
-			$output .= '
-			<div class="container">
-						<table class="table table-bordered table-striped">
-							<tr class="table-active">
-							<th>Folio</th>
-							<th>Fecha de Solicitud</th>
-							<th>Razón Social</th>
-							<th>Estatus</th>
-							<th>Ejecutivo Asignado</th>
-							<th>Opciones</th>
-							</tr>
-			';}else {
-				$output .= '
-				<div class="container">
-							<table class="table table-bordered table-striped">
-								<tr class="table-active">
-								<th>Folio</th>
-								<th>Fecha de Solicitud</th>
-								<th>Razón Social</th>
-								<th>Estatus</th>
-								<th>Ejecutivo Asignado</th>
-								<th>Opciones</th>
-								</tr>';
-			}
-			if($data->num_rows() > 0){
-				foreach($data->result() as $row){
-					if ($this->session->userdata('perfil')=='Administrador') {
-					$output .= '
-					<tr>
-						<td>'.$row->id_servicio.'</td>
-						<td>'.$row->Fecha_elaboracion.'</td>
-						<td>'.$row->Razon_social_cliente.'</td>
-						<td>'.$row->Estatus_servicio.'</td>
-						<td>'.$row->Ejecutivo_asignado.'</td>
-						<td>  <a href="'.base_url().'Informacion/'.$row->id_servicio.'"  id="tamañoB" class="btn btn-warning btn-sm btn-block">Editar</a></td>
-
-					</tr>
-					';
-				}else {
-					$output .= '
-					<tr>
-						<td>'.$row->id_servicio.'</td>
-						<td>'.$row->Fecha_elaboracion.'</td>
-						<td>'.$row->Razon_social_cliente.'</td>
-						<td>'.$row->Estatus_servicio.'</td>
-						<td>'.$row->Ejecutivo_asignado.'</td>
-					  <td><a class="btn btn-warning btn-sm btn-block" title="Atender un Servicio" onclick="Atender('."'".$row->id_servicio."'".')">Atender</a></td>
-					</tr>
-					';
-
-				}
-				}
-			}
-			else
-			{
-				$output .= '</table></div>
-				<div class="container  alert alert-danger" role="alert">
-				<strong>Upps lo sentimos!</strong> Ningún Dato Encontrado.
-				</div>';
-			}
-			$output .= '</table></div>';
-			echo $output;
-		}*/
-		//Fin de Funciones de Listado del Servicios
-
-		//Inicio de Funciones de Informacion del Servicios
-		public function InformacionServicio($id){
+	//Inicio de Funciones de Informacion del Servicios
+	 public function InformacionServicio($id){
 			$this->form_validation->set_rules('nombre_solicitante','Nombre del Solicitante', 'required');
 			$this->form_validation->set_rules('ejecutivo_asignado','Ejecutivo', 'required');
 			$this->form_validation->set_rules('correo_solicitante','Correo', 'required');
@@ -696,8 +586,8 @@ class Ctr_Principal extends CI_Controller {
 				echo	"<script>alert('Se Actualizo Correctamente');window.location='".base_url()."Inicio';</script>";
 				}
 			}
-
 		}
-		//Fin de Funciones de Informacion del Servicios
+	//Fin de Funciones de Informacion del Servicios
+
 }
 ?>
