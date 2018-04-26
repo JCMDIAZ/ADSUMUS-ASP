@@ -82,7 +82,7 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 				}
 
         function Ejecutivos(){
-            $condicion = "Perfil = 'Ejecutivo'";
+            $condicion = "Perfil = 'Ingeniero'";
             $this->db->where($condicion);
             $query = $this->db->get('t_dat_usuarios');
 

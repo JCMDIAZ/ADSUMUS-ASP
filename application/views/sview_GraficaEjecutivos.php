@@ -94,9 +94,9 @@
       </tr>
     <?php } /*Termina ciclo for de serviciosEvalDecode*/
   }else{?>
-    <h4>El ejecutivo aún no cuenta con servicios evaluados</h4>
+    <h4>El ingeniero aún no cuenta con servicios evaluados</h4>
 <?php }//Termina ciclo if/else de serviciosEval
-    }/*Termina foreach del ejecutivo*/ ?>
+    }/*Termina foreach del Ingeniero*/ ?>
     </tbody>
   </table>
 </div>

@@ -16,7 +16,8 @@
   <br>
   <br>
   <p class="font-italic">Promedio de evaluación dado de cada pregunta de los servicios contratados</p>
-  <table class="table table-responsive{-sm|-md}">
+  <div class="table table-responsive">
+  <table class="table">
     <thead>
       <tr>
         <th>#</th>
@@ -35,14 +36,15 @@
         <?php } ?>
     </tbody>
   </table>
+  </div>
   <br>
   <br>
   <p class="font-italic">Gráfica de relación entre los servicios con sus respectivas evaluaciónes dadas.</p>
   <canvas class="my-4" id="serviciosEval" width="900" height="380"></canvas>
   <br>
   <p class="font-italic">Calificaciónes dadas de cada pregunta a los servicios contratados.</p>
-
-  <table class="table table-responsive{-sm|-md}">
+  <div class="table-responsive">
+  <table class="table">
     <thead>
       <tr>
         <th>Razón Social</th>
@@ -70,7 +72,7 @@
 <?php }//Termina ciclo if/else de serviciosEval?>
     </tbody>
   </table>
-
+</div>
 </div>
 </div>
 </div>

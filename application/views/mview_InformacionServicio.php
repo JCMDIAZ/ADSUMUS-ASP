@@ -48,7 +48,7 @@
                 </select>
             </div>
             <div class="col-md-4 col-sm-6 mb-3">
-                <label for="ejecutivo_asignado">Ejecutivo Asignado</label>
+                <label for="ejecutivo_asignado">Ingeniero Asignado</label>
                 <select class="form-control" id="ejecutivo_asignado" name="ejecutivo_asignado" required>
                     <?php SelectUsuarios($ejecutivos,$row->Ejecutivo_asignado); ?>
                 </select>

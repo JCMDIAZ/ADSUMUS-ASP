@@ -41,7 +41,7 @@
     }
 
 		function Select2($nombre,$select){
-      echo '<option  value="" selected>Todos los Ejecutivos</option>';
+      echo '<option  value="" selected>Todos los Ingenieros</option>';
         foreach ($select as $tipo) {
             if($tipo->Perfil == $nombre){
                     echo '<option value="'.$tipo->id_usuario.'" >'.$tipo->Usuario.'</option>';
@@ -50,7 +50,7 @@
         }
 
 				function Select3($nombre,$select){
-		      echo '<option  value="" selected>Todos los Ejecutivos</option>';
+		      echo '<option  value="" selected>Todos los Ingenieros</option>';
 		        foreach ($select as $tipo) {
 		            if($tipo->Perfil == $nombre){
 		                    echo '<option value="'.$tipo->Usuario.'" >'.$tipo->Usuario.'</option>';
@@ -166,8 +166,8 @@ function o_tabla(){
 			$datos = $this->db->order_by('Fecha_elaboracion desc')->from('t_dat_servicios')->get();
 			return $datos->result();
 		}else {
-			if($this->session->userdata('perfil')=='Ejecutivo'){
-				$this->db->select('id_servicio, Fecha_elaboracion, Razon_social_cliente, Estatus_servicio, Ejecutivo_asignado');
+			if($this->session->userdata('perfil')=='Ingeniero'){
+				$this->db->select('id_servicio, Fecha_elaboracion, Razon_social_cliente, Estatus_servicio, Ejecutivo_asignado,Descripcion_servicio');
 				$this->db->where('Ejecutivo_asignado',$this->session->userdata('Nombre'));
 				$this->db->where('Estatus_servicio != "Terminado"');
 				$this->db->where('f_id_usuario',$this->session->userdata('ID'));

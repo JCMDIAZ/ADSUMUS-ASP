@@ -125,16 +125,16 @@
                     <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio" ><span data-feather="activity"></span>  Por servicio</a>
                 </li>
               <?php }
-              if ($this->ci->uri->segment(2)=='Ejecutivo') {
+              if ($this->ci->uri->segment(2)=='Ingeniero') {
               ?>
                 <li class="nav-item">
                     <a class="nav-link active" href="<?php echo base_url() ?>Evaluacion/Ejecutivo"><span data-feather="user"
-                    ></span>  Por ejecutivo</a>
+                    ></span>  Por Ingeniero</a>
                 </li>
               <?php }else{  ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Ejecutivo"><span data-feather="user"
-                    ></span>  Por ejecutivo</a>
+                    ></span>  Por Ingeniero</a>
                 </li>
               <?php }
               if ($this->ci->uri->segment(2)=='Empresa') {

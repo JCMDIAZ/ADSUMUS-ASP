@@ -96,7 +96,7 @@ class Ctr_Principal extends CI_Controller {
 							foreach ($servicio as $valor) {
 	                $para = $data['Correo_solicitante'];
 	                $asunto = "Datos sobre el servicio - Adsumus";
-	                $body = "<p>Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$data['Codigo_activacion']."<br><br>Código de Terminación: ".$data['Codigo_terminacion']."<br><br>Ejecutivo asignado: ".$data['Ejecutivo_asignado']."</p>";
+	                $body = "<p>Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$data['Codigo_activacion']."<br><br>Código de Terminación: ".$data['Codigo_terminacion']."<br><br>Ingeniero asignado: ".$data['Ejecutivo_asignado']."</p>";
 
 	                $config['mailtype'] = 'html';
 	                $this->email->initialize($config);
@@ -412,7 +412,7 @@ class Ctr_Principal extends CI_Controller {
 							foreach ($reabierto as $valor) {
 								$para = $valor->Correo_solicitante;
 								$asunto = "Datos sobre el servicio(Reabierto) - Adsumus";
-								$body = "<p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ejecutivo asignado: ".$valor->Ejecutivo_asignado."</p>";
+								$body = "<p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ingeniero asignado: ".$valor->Ejecutivo_asignado."</p>";
 
 								$config['mailtype'] = 'html';
 								$this->email->initialize($config);

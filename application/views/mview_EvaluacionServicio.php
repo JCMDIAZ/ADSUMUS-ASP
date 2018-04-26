@@ -216,7 +216,6 @@
     </div>
   </div>
   <div class="tab">
-      <?php echo $this->session->flashdata('idServicio'); ?>
       <label for="sugerencias">Sugerencias</label>
       <textarea name="sugerencias" class="form-control col-md-12 mb-4 valid" id="sugerencias"></textarea>
   </div>

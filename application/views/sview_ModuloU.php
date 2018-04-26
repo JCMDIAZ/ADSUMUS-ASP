@@ -1,7 +1,7 @@
 <div class="container"  style="margin-top:30px">
   <h3>Módulo Usuarios</h3>
     <hr>
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal1">Agregar Usuario</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">Agregar Usuario</button>
         <div class="container table-responsive">
           <table id="table" class="table table-bordered table-hover" style="width:100%">
             <thead>

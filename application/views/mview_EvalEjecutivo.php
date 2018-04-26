@@ -4,7 +4,7 @@
   <a href="#menu-toggle" id="menu-toggle"><i class="fas fa-bars fa-2x"></i></a>
 <div id='Ejecutivos'>
   <div class="py-4 text-center">
-    <h2>Ejecutivos</h2>
+    <h2>Ingenieros</h2>
   </div>
 <div class="table-responsive">
   <table class="table table-sm table-hover" id="tabla_Servicios">

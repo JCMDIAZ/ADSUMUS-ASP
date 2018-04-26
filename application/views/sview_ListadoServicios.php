@@ -1,7 +1,7 @@
 <div class="container" style="margin-top:30px">
   <h3>Buscador de Servicios</h3>
     <hr>
-    
+
 <!-- tabla de buscador servicios-->
 <div class="row">
   <div class="col col-md-3" id="filter_col1" data-column="0">
@@ -25,10 +25,10 @@
 
 <?php if($this->session->userdata('perfil')=='Administrador') { ?>
   <div class="col col-md-3" id="filter_col5" data-column="4">
-    <label for="col4_filter">Ejecutivo:</label>
+    <label for="col4_filter">Ingeniero:</label>
     <select  class="column_filter form-control" id="col4_filter">
       <?php
-        $this->Mdl_funciones->Select3("Ejecutivo",$ejecutivos);
+        $this->Mdl_funciones->Select3("Ingeniero",$ejecutivos);
        ?>
      </select>
   </div>
@@ -51,7 +51,7 @@
             <th>Fecha de Solicitud</th>
             <th>Razón Social</th>
             <th>Estatus</th>
-            <th>Ejecutivo Asignado</th>
+            <th>Ingeniero Asignado</th>
             <th>Opciones</th>
         </tr>
       </thead>
@@ -77,6 +77,9 @@
         <td><?= $row->Estatus_servicio?></td>
         <td><?= $row->Ejecutivo_asignado?></td>
         <td><a class="btn btn-warning btn-sm btn-block" title="Atender el #Folio <?php echo $row->id_servicio?>" onclick="Atender(<?php echo $row->id_servicio?>)">Atender</a></td>
+    </tr>
+    <tr>
+      <td colspan="6"><?php echo $row->Descripcion_servicio ?></td>
     </tr>
     <?php endforeach; ?>
 <?php } ?>
