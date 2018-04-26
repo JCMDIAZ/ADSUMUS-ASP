@@ -330,7 +330,7 @@ class Ctr_Principal extends CI_Controller {
 							$idServicio = $valor->f_id_servicio;
 							$this->session->set_flashdata('idServicio',$idServicio);
 							$this->load->view('mview_EvaluacionServicio',$data);
-							//$this->Mdl_Consultas->EliminarToken('t_dat_token',$idServicio);
+							$this->Mdl_Consultas->EliminarToken('t_dat_token',$idServicio);
 						}
 					}else{
 						$data['titulo'] = 'Evaluación del servicio prestado';

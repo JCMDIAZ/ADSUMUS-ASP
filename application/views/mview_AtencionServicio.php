@@ -82,6 +82,12 @@
                 <label for="estatus">Estatus del Servicio</label>
                 <input type="text" name="estatus" id="estatus" value="<?php echo $columna->Estatus_servicio ?>" class="form-control" disabled>
             </div>
+            <?php if ($columna->Detalle_reabierto != null): ?>
+            <div class="col-md-12 col-sm-12 mb-3">
+              <label for="detalle">Detalle de reabierto</label>
+              <textarea name="detalle" id="detalle" class="form-control border border-warning" disabled><?php echo $columna->Detalle_reabierto ?></textarea>
+            </div>
+            <?php endif; ?>
             <div class="col-md-4 col-sm-6 mb-3">
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar cambios</button>
             </div>
