@@ -44,6 +44,18 @@
 
   <div class="container table-responsive">
     <table id="tabla_servicios" class="table table-bordered table-hover estilos" style="width:100%">
+      <?php if ($this->session->userdata('perfil')=='Administrador') {?>
+        <thead>
+          <tr class="table-active">
+              <th>Folio</th>
+              <th>Fecha de Solicitud</th>
+              <th>Razón Social</th>
+              <th>Estatus</th>
+              <th>Ejecutivo Asignado</th>
+              <th>Opciones</th>
+          </tr>
+        </thead>
+      <?php } else{?>
       <thead>
         <tr class="table-active">
             <th></th>
@@ -55,11 +67,11 @@
             <th>Opciones</th>
         </tr>
       </thead>
+    <?php } ?>
       <tbody>
 <?php if ($this->session->userdata('perfil')=='Administrador') {?>
   <?php foreach ($tablas as $row): ?>
     <tr>
-        <td class="details-control"></td>
         <td><?= $row->id_servicio?></td>
         <td><?= $row->Fecha_elaboracion?></td>
         <td><?= $row->Razon_social_cliente?></td>
