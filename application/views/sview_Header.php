@@ -16,11 +16,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?php echo base_url()?>css/fontawesome-all.css" rel="stylesheet">
     <!-- JS-Script Generales -->
     <script src="<?php echo base_url()?>js/JQuery.js"></script>
-    <script src="<?php echo base_url()?>js/bootstrap.js"></script>
+
     <script src="<?php echo base_url()?>js/jquery-mask.js"></script>
     <script src="<?php echo base_url()?>js/popper.min.js"></script>
     <script src="<?php echo base_url()?>js/funciones.js"></script>
-    <script src="<?php echo base_url()?>js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
     </script>
   </head>

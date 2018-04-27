@@ -285,8 +285,10 @@ div.table-responsive>div#resultados{
 
 }
 
-div.table-responsive>div.dataTables_wrapper>div.row{
-    width: 100% !important;
+@media only screen and (min-width: 600px){
+  div.table-responsive>div.dataTables_wrapper>div.row{
+      width: 100% !important;
+  }
 }
 
 td.details-control {
@@ -296,5 +298,3 @@ td.details-control {
 tr.shown td.details-control {
 	background: url('../img/details_close.png') no-repeat center center;
 }
-
-  

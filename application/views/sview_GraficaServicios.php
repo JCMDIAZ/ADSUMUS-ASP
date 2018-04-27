@@ -63,9 +63,9 @@
         data: [preg1,preg2,preg3],
         lineTension: 0,
         backgroundColor: 'transparent',
-        borderColor: '#007bff',
+        borderColor: '#A53422',
         borderWidth: 4,
-        pointBackgroundColor: '#007bff'
+        pointBackgroundColor: '#A53422'
       }]
     },
     options: {

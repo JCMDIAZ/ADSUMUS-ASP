@@ -125,7 +125,7 @@
                     <a class="nav-link" href="<?php echo base_url() ?>Evaluacion/Servicio" ><span data-feather="activity"></span>  Por servicio</a>
                 </li>
               <?php }
-              if ($this->ci->uri->segment(2)=='Ingeniero') {
+              if ($this->ci->uri->segment(2)=='Ejecutivo') {
               ?>
                 <li class="nav-item">
                     <a class="nav-link active" href="<?php echo base_url() ?>Evaluacion/Ejecutivo"><span data-feather="user"

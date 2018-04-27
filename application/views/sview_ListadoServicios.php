@@ -3,17 +3,17 @@
     <hr>
 <!-- tabla de buscador servicios-->
 <div class="row">
-  <div class="col col-md-3" id="filter_col1" data-column="0">
+  <div class="col-sm-12 col-md-3 mb-2" id="filter_col1" data-column="0">
     <label for="col0_filter">Folio del Servicio:</label>
     <input type="number" class="column_filter form-control" id="col0_filter">
   </div>
 
-  <div class="col col-md-3" id="filter_col2" data-column="2">
+  <div class="col-sm-12 col-md-3 mb-2" id="filter_col2" data-column="2">
     <label for="col2_filter">Razón Social:</label>
     <input type="text" class="column_filter form-control" id="col2_filter">
   </div>
 
-  <div class="col col-md-3" id="filter_col4" data-column="3">
+  <div class="col-sm-12 col-md-3 mb-2" id="filter_col4" data-column="3">
     <label for="col3_filter">Estatus:</label>
     <select  class="column_filter form-control" id="col3_filter">
       <?php
@@ -23,7 +23,7 @@
   </div>
 
 <?php if($this->session->userdata('perfil')=='Administrador') { ?>
-  <div class="col col-md-3" id="filter_col5" data-column="4">
+  <div class="col-sm-12 col-md-3 mb-2" id="filter_col5" data-column="4">
     <label for="col4_filter">Ingeniero:</label>
     <select  class="column_filter form-control" id="col4_filter">
       <?php

@@ -129,9 +129,9 @@
         data: [preg1,preg2,preg3],
         lineTension: 0,
         backgroundColor: 'transparent',
-        borderColor: '#007bff',
+        borderColor: '#A53422',
         borderWidth: 4,
-        pointBackgroundColor: '#007bff'
+        pointBackgroundColor: '#A53422'
       }]
     },
     options: {
@@ -159,21 +159,21 @@
             valores.push(servicios[j].Pregunta_1);
             labels.push("Servicio "+servicios[j].f_id_servicio);
           }
-          var color = "#00A388";
+          var color = "#F15A22";
           var pregunta = 'Pregunta 1';
           break;
         case 1:
           for (var j = 0; j < servicios.length; j++) {
             valores.push(servicios[j].Pregunta_2);
           }
-          var color = "#71CC91";
+          var color = "#000";
           var pregunta = 'Pregunta 2';
           break;
         case 2:
           for (var j = 0; j < servicios.length; j++) {
             valores.push(servicios[j].Pregunta_3);
           }
-          var color = "#C6EB98";
+          var color = "#f15a22b0";
           var pregunta = 'Pregunta 3';
           break;
         default:

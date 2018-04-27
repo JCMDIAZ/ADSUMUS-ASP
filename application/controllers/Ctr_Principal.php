@@ -47,9 +47,8 @@ class Ctr_Principal extends CI_Controller {
 			  array('required' => 'Error en %s.',
 							'matches' => '¡Las contraseñas no coinciden!',
 							));
-			$this->form_validation->set_rules('Correo1', 'Correo', 'required|valid_email|is_unique[t_dat_usuarios.Correo]',
+			$this->form_validation->set_rules('Correo1', 'Correo', 'required|is_unique[t_dat_usuarios.Correo]',
 													array('required' => 'Escribe el %s',
-																'valid_email' => '¡Verifique el %s!',
 																'is_unique' => '¡%s existente!',
 																));
 			if ($this->form_validation->run() == true) {
@@ -190,7 +189,7 @@ class Ctr_Principal extends CI_Controller {
 										</div>
 									</div>".
 												"<div class='contenedor'><p><b>Folio del servicio:</b> ".$valor->id_servicio.
-												"<br><br><b>Nombre del cliente:</b>".$valor->Nombre_solicitante.
+												"<br><br><b>Nombre del cliente:</b> ".$valor->Nombre_solicitante.
 												"<br><br><b>Descripcion del servicio:</b> ".$data['Descripcion_servicio']."</p></div>".
 												"</body></html>";
 
