@@ -1,7 +1,7 @@
 <div class="container"  style="margin-top:30px">
        <h3>Levantamiento de Servicios</h3>
    <hr />
-    <form action="Levantamiento_servicio" method="POST">
+    <form action="<?= base_url() ?>Levantamiento_servicio" method="POST">
         <div class="row">
             <div class="col-md-4 col-sm-6 mb-3">
                 <label for="folio">Folio del Servicio</label>

@@ -111,7 +111,9 @@ div.titulo{
 .container{
   padding-bottom: 15px;
 }
-
+.fas{
+  color: #ffc107;
+}
 .clearfix{
   content: '';
   clear: both;

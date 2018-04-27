@@ -78,9 +78,6 @@
         <td><?= $row->Ejecutivo_asignado?></td>
         <td><a class="btn btn-warning btn-sm btn-block" title="Atender el #Folio <?php echo $row->id_servicio?>" onclick="Atender(<?php echo $row->id_servicio?>)">Atender</a></td>
     </tr>
-    <tr>
-      <td colspan="6"><?php echo $row->Descripcion_servicio ?></td>
-    </tr>
     <?php endforeach; ?>
 <?php } ?>
 

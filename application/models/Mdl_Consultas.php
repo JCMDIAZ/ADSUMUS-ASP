@@ -235,7 +235,7 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 
 				// Obtiene el promedio de la evaluacion por servicio
 				function EvaluacionServicio($tipo,$where){
-					$consulta = "SELECT AVG(Pregunta_1) as Pregunta_1,AVG(Pregunta_2) as Pregunta_2,AVG(Pregunta_3) as Pregunta_3 FROM v_EvaluacionServicios WHERE $where = '$tipo';";
+					$consulta = "SELECT AVG(Pregunta_1) as Pregunta_1,AVG(Pregunta_2) as Pregunta_2,AVG(Pregunta_3) as Pregunta_3 FROM v_evaluacionservicios WHERE $where = '$tipo';";
 					$query = $this->db->query($consulta);
 					if ($query->num_rows() == 1) {
 						return $query->result();
@@ -250,7 +250,7 @@ Ejecutivo_asignado,Observaciones,Material_utilizado FROM ".$tabla." WHERE id_ser
 					$this->db->select('Pregunta_1,Pregunta_2,Pregunta_3,Sugerencias,f_id_servicio,'.$select);
 					$this->db->order_by('f_id_servicio','DESC');
 					$this->db->limit(10);
-					$query = $this->db->get('v_EvaluacionServicios');
+					$query = $this->db->get('v_evaluacionservicios');
 					if ($query->num_rows()>0) {
 						return $query->result();
 					}else{

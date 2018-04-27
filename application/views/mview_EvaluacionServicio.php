@@ -221,8 +221,8 @@
   </div>
   <div style="overflow:auto;">
       <div style="float:right;">
-        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
       </div>
   </div>
   <!-- Circles which indicates the steps of the form: -->
@@ -249,9 +249,9 @@ function showTab(n) {
     document.getElementById("prevBtn").style.display = "inline";
   }
   if (n == (x.length-1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").innerHTML = "Enviar";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
+    document.getElementById("nextBtn").innerHTML = "Siguiente";
   }
   if (n==4) {
     $("button").remove();
