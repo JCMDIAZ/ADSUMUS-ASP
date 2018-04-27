@@ -167,7 +167,7 @@ function o_tabla(){
 			return $datos->result();
 		}else {
 			if($this->session->userdata('perfil')=='Ejecutivo'){
-				$this->db->select('id_servicio, Fecha_elaboracion, Razon_social_cliente, Estatus_servicio, Ejecutivo_asignado');
+				$this->db->select('id_servicio, Fecha_elaboracion, Razon_social_cliente, Estatus_servicio, Ejecutivo_asignado, Descripcion_servicio');
 				$this->db->where('Ejecutivo_asignado',$this->session->userdata('Nombre'));
 				$this->db->where('Estatus_servicio != "Terminado"');
 				$this->db->where('f_id_usuario',$this->session->userdata('ID'));
