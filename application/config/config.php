@@ -521,3 +521,12 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['protocol']  = 'smtp';
+$config['smtp_host'] = 'mail.adsumus.com.mx'; //change this
+$config['smtp_port'] = '465';
+$config['smtp_user'] = 'noreply@repair.adsumus.com.mx';
+$config['smtp_pass'] = '%?*Ad!-Sum"@18';
+$config['mailtype']  = 'html';
+$config['wordwrap']  = true;
+$config['newline']   = "\r\n"; //use double quotes to comply with RFC 822 standard

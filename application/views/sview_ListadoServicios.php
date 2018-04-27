@@ -24,10 +24,10 @@
 
 <?php if($this->session->userdata('perfil')=='Administrador') { ?>
   <div class="col col-md-3" id="filter_col5" data-column="4">
-    <label for="col4_filter">Ejecutivo:</label>
+    <label for="col4_filter">Ingeniero:</label>
     <select  class="column_filter form-control" id="col4_filter">
       <?php
-        $this->Mdl_funciones->Select3("Ejecutivo",$ejecutivos);
+        $this->Mdl_funciones->Select3("Ingeniero",$ejecutivos);
        ?>
      </select>
   </div>
@@ -63,7 +63,7 @@
             <th>Fecha de Solicitud</th>
             <th>Razón Social</th>
             <th>Estatus</th>
-            <th>Ejecutivo Asignado</th>
+            <th>Ingeniero Asignado</th>
             <th>Opciones</th>
         </tr>
       </thead>

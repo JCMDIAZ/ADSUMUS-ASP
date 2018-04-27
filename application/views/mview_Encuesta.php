@@ -11,7 +11,9 @@
 * {
   box-sizing: border-box;
 }
-
+.fas{
+  color: #ffc107;
+}
 body {
   background-color: #f1f1f1;
 }

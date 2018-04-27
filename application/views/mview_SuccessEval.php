@@ -41,7 +41,12 @@
   .tab {
     display: none;
   }
-
+  .far{
+    color: #28a745;
+  }
+  .fas{
+    color: #ffc107;
+  }
   button {
     background-color: #F15A22;
     color: #ffffff;

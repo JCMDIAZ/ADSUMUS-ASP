@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Monterrey');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ctr_Principal extends CI_Controller {
@@ -93,14 +94,49 @@ class Ctr_Principal extends CI_Controller {
 							// Manda correo con los codigos de activacion y terminacion, asi como el ejecutivo asignado
 							$Idservicio = $this->Mdl_Consultas->LastRow();
 							$servicio = $this->Mdl_Consultas->ServicioFolio($Idservicio);
+							// Manda el correo al cliente
 							foreach ($servicio as $valor) {
 	                $para = $data['Correo_solicitante'];
 	                $asunto = "Datos sobre el servicio - Adsumus";
-	                $body = "<p>Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$data['Codigo_activacion']."<br><br>Código de Terminación: ".$data['Codigo_terminacion']."<br><br>Ejecutivo asignado: ".$data['Ejecutivo_asignado']."</p>";
+	                $body = "<html><head><title>Servicio</title>
+											<style>
+										    body{
+										      margin: 0;
+										    }
+										    div.navegador{
+										      width: 100%;
+										      height: 50px;
+										      position: fixed;
+										      top: 0;
+										      background-color: #2B2B28;
+										      padding: 10px;
+													position: relative;
+										    }
+										    div.logo{
+										      background-image: url(http://repair.adsumus.com.mx/img/adsumus-logo.png);
+										      height: 55px;
+										      width: 150px;
+										      margin-right: 30px;
+										      background-size: contain;
+										      background-position: center;
+										      background-repeat: no-repeat;
+										    }
+												div.contenedor{
+													position: absolute;
+													margin-top: 10px;
+												}
+										  </style></head><body><div class='navegador'>
+										    <div class='logo'>
+										    </div>
+										  </div>".
+													"<div class='contenedor'><p>Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".
+													$data['Codigo_activacion']."<br><br>Código de Terminación: ".$data['Codigo_terminacion'].
+													"<br><br>Ingeniero asignado: ".$data['Ejecutivo_asignado']."</p></div>".
+													"</body></html>";
 
 	                $config['mailtype'] = 'html';
 	                $this->email->initialize($config);
-	                $this->email->from('aldo@vision.com','Aldo Martinez');
+	                $this->email->from('noreply@repair.adsumus.com.mx','Adsumus');
 	                $this->email->to($para);
 	                $this->email->subject($asunto);
 	                $this->email->message($body);
@@ -118,7 +154,53 @@ class Ctr_Principal extends CI_Controller {
                     echo $para;
                 }
 
+								// Manda el correo al Ingeniero
+								$ingeniero = $this->Mdl_Consultas->DatosRow('t_dat_usuarios','id_usuario',$data['f_id_usuario']);
+								$para = $data['Correo_solicitante'];
+								$asunto = "Nuevo servicio asignado - Adsumus";
+								$body = "<html><head><title>Servicio asignado</title><style>
+									body{
+										margin: 0;
+									}
+									div.navegador{
+										width: 100%;
+										height: 50px;
+										position: fixed;
+										top: 0;
+										background-color: #2B2B28;
+										padding: 10px;
+										position: relative;
+									}
+									div.logo{
+										background-image: url(http://repair.adsumus.com.mx/img/adsumus-logo.png);
+										height: 55px;
+										width: 150px;
+										margin-right: 30px;
+										background-size: contain;
+										background-position: center;
+										background-repeat: no-repeat;
+									}
+									div.contenedor{
+										position: absolute;
+										margin-top: 10px;
+									}
+									</style></head><body><div class='navegador'>
+										<div class='logo'>
 
+										</div>
+									</div>".
+												"<div class='contenedor'><p><b>Folio del servicio:</b> ".$valor->id_servicio.
+												"<br><br><b>Nombre del cliente:</b>".$valor->Nombre_solicitante.
+												"<br><br><b>Descripcion del servicio:</b> ".$data['Descripcion_servicio']."</p></div>".
+												"</body></html>";
+
+								$config['mailtype'] = 'html';
+								$this->email->initialize($config);
+								$this->email->from('noreply@repair.adsumus.com.mx','Adsumus');
+								$this->email->to($ingeniero[0]->Correo);
+								$this->email->subject($asunto);
+								$this->email->message($body);
+								$this->email->send();
             }else{
                 echo '<script>alert("Ocurrio un Error al Levantar el Servicio");</script>';
             }
@@ -257,10 +339,41 @@ class Ctr_Principal extends CI_Controller {
 								// Se envia el email al solicitante
 								$para = $valor->Correo_solicitante;
 								$asunto = "Finalizacion del servicio - Adsumus";
-								$body = "<p>El servicio con folio: #".$id." ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link para encuesta del servicio - <a href='".base_url()."Encuesta/".$data['token']."'>".base_url()."Encuesta/".$data['token']."</a>";
+								$body = "<html><head><title>Servicio asignado</title><style>
+									body{
+										margin: 0;
+									}
+									div.navegador{
+										width: 100%;
+										height: 50px;
+										position: fixed;
+										top: 0;
+										background-color: #2B2B28;
+										padding: 10px;
+										position: relative;
+									}
+									div.logo{
+										background-image: url(http://repair.adsumus.com.mx/img/adsumus-logo.png);
+										height: 55px;
+										width: 150px;
+										margin-right: 30px;
+										background-size: contain;
+										background-position: center;
+										background-repeat: no-repeat;
+									}
+									div.contenedor{
+										position: absolute;
+										margin-top: 10px;
+									}
+									</style></head><body><div class='navegador'>
+										<div class='logo'>
 
+										</div>
+									</div>".
+												"<div class='contenedor'><p>El servicio con folio: #".$id." ha finalizado.<br> Le pedimos atentamente contestar la evaluación del servicio o la no satisfacción de éste para así poder seguir mejorando dia con dia.<br><br>Link para encuesta del servicio - <a href='".base_url()."Encuesta/".$data['token']."'>".base_url()."Encuesta/".$data['token']."</a></div>".
+												"</body></html>";
 								$this->email->set_mailtype('html');
-								$this->email->from('aldo.martinez@niurons.com.mx', 'Aldo Martinez');
+								$this->email->from('noreply@repair.adsumus.com.mx', 'Adsumus');
 								$this->email->to($para);
 								$this->email->subject($asunto);
 								$this->email->message($body);
@@ -306,7 +419,7 @@ class Ctr_Principal extends CI_Controller {
 				}
 			}else{
 				$data['titulo'] = 'Encuesta';
-				$data['mensaje'] = 'WARNING: Ya se realizó la encuesta de este servicio';
+				$data['mensaje'] = 'ADVERTENCIA: Ya se realizó la encuesta de este servicio';
 				$this->load->view('mview_NoExiste',$data);
 			}
 		}
@@ -330,16 +443,16 @@ class Ctr_Principal extends CI_Controller {
 							$idServicio = $valor->f_id_servicio;
 							$this->session->set_flashdata('idServicio',$idServicio);
 							$this->load->view('mview_EvaluacionServicio',$data);
-							//$this->Mdl_Consultas->EliminarToken('t_dat_token',$idServicio);
+							$this->Mdl_Consultas->EliminarToken('t_dat_token',$idServicio);
 						}
 					}else{
 						$data['titulo'] = 'Evaluación del servicio prestado';
-						$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado';
+						$data['mensaje'] = 'ADVERTENCIA: El servicio ya ha sido evaluado';
 						$this->load->view('mview_NoExiste',$data);
 					}
 				}else{
 						$data['titulo'] = 'Evaluación del servicio prestado';
-						$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado o el link ha caducado';
+						$data['mensaje'] = 'ADVERTENCIA: El servicio ya ha sido evaluado o el link ha caducado';
 						$this->load->view('mview_NoExiste',$data);
 				}
 			}else{
@@ -354,7 +467,7 @@ class Ctr_Principal extends CI_Controller {
 							$this->load->view('mview_SuccessEval');
 						}else{
 							$data['titulo'] = 'Evaluación del servicio prestado';
-							$data['mensaje'] = 'WARNING: El servicio ya ha sido evaluado o el link ha caducado';
+							$data['mensaje'] = 'ADVERTENCIA: El servicio ya ha sido evaluado o el link ha caducado';
 							$this->load->view('mview_NoExiste',$data);
 						}
 			}
@@ -369,7 +482,7 @@ class Ctr_Principal extends CI_Controller {
 					if ($registro == false) {
 						$data['token'] = $token;
 						$data['titulo'] = 'No satisfacción del servicio';
-						$data['mensaje'] = 'WARNING: El link ha caducado';
+						$data['mensaje'] = 'ADVERTENCIA: El link ha caducado';
 						$this->load->view('mview_NoExiste',$data);
 					}else{
 						foreach ($registro as $valor) {
@@ -412,16 +525,52 @@ class Ctr_Principal extends CI_Controller {
 							foreach ($reabierto as $valor) {
 								$para = $valor->Correo_solicitante;
 								$asunto = "Datos sobre el servicio(Reabierto) - Adsumus";
-								$body = "<p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ejecutivo asignado: ".$valor->Ejecutivo_asignado."</p>";
+								$body = "<html><head><title>Servicio asignado</title><style>
+									body{
+										margin: 0;
+									}
+									div.navegador{
+										width: 100%;
+										height: 50px;
+										position: fixed;
+										top: 0;
+										background-color: #2B2B28;
+										padding: 10px;
+										position: relative;
+									}
+									div.logo{
+										background-image: url(http://repair.adsumus.com.mx/img/adsumus-logo.png);
+										height: 55px;
+										width: 150px;
+										margin-right: 30px;
+										background-size: contain;
+										background-position: center;
+										background-repeat: no-repeat;
+									}
+									div.contenedor{
+										position: absolute;
+										margin-top: 10px;
+									}
+									</style></head><body><div class='navegador'>
+										<div class='logo'>
 
-								$config['mailtype'] = 'html';
-								$this->email->initialize($config);
-								$this->email->from('aldo@vision.com','Aldo Martinez');
+										</div>
+									</div>".
+												"<div class='contenedor'><p>Nuevo Folio del servicio: ".$valor->id_servicio."<br><br>Código de Activación: ".$valor->Codigo_activacion."<br><br>Código de Terminación: ".$valor->Codigo_terminacion."<br><br>Ingeniero asignado: ".$valor->Ejecutivo_asignado."</p></div>".
+												"</body></html>";
+								$this->email->set_mailtype('html');
+								$this->email->from('noreply@repair.adsumus.com.mx','Adsumus');
 								$this->email->to($para);
 								$this->email->subject($asunto);
 								$this->email->message($body);
+
+							if($this->email->send()){
+								echo "<script>alert('sen envio correo');</script>";
+								print_r($valor->Correo_solicitante);
+							}else{
+								echo $this->email->print_debugger();
 							}
-							$this->email->send();
+						}
 					}else{
 						echo 'No existe registro con ese folio';
 					}
