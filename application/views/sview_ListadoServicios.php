@@ -1,7 +1,6 @@
 <div class="container" style="margin-top:30px">
   <h3>Buscador de Servicios</h3>
     <hr>
-
 <!-- tabla de buscador servicios-->
 <div class="row">
   <div class="col col-md-3" id="filter_col1" data-column="0">
@@ -45,8 +44,21 @@
 
   <div class="container table-responsive">
     <table id="tabla_servicios" class="table table-bordered table-hover estilos" style="width:100%">
+      <?php if ($this->session->userdata('perfil')=='Administrador') {?>
+        <thead>
+          <tr class="table-active">
+              <th>Folio</th>
+              <th>Fecha de Solicitud</th>
+              <th>Razón Social</th>
+              <th>Estatus</th>
+              <th>Ejecutivo Asignado</th>
+              <th>Opciones</th>
+          </tr>
+        </thead>
+      <?php } else{?>
       <thead>
         <tr class="table-active">
+            <th></th>
             <th>Folio</th>
             <th>Fecha de Solicitud</th>
             <th>Razón Social</th>
@@ -55,6 +67,7 @@
             <th>Opciones</th>
         </tr>
       </thead>
+    <?php } ?>
       <tbody>
 <?php if ($this->session->userdata('perfil')=='Administrador') {?>
   <?php foreach ($tablas as $row): ?>
@@ -71,6 +84,7 @@
 
   <?php foreach ($tablas as $row): ?>
     <tr>
+        <td class="details-control" id="valor"><p class="descrip" hidden><?= $row->Descripcion_servicio ?></p></td>
         <td><?= $row->id_servicio?></td>
         <td><?= $row->Fecha_elaboracion?></td>
         <td><?= $row->Razon_social_cliente?></td>
@@ -99,8 +113,19 @@
 
 <!-- Inicio de Buscador de Servicios -->
 <script type="text/javascript">
+/* Formatting function for row details - modify as you need */
+function format ( d, p) {
+    // `d` is the original data object for the row
+    return '<table class="table-bordered" style="width:100%">'+
+        '<tr class="table-warning">'+
+            '<td style="width:15%"><i><b>Descripción del Servicio:</b></i></td>'+
+            '<td>'+p+'</td>'+
+        '</tr>'+
+    '</table>';
+}
+
 $(document).ready(function() {
-    $('#tabla_servicios').DataTable({
+    var table = $('#tabla_servicios').DataTable({
      "ordering": false,
       language: {
           "decimal": "",
@@ -122,19 +147,36 @@ $(document).ready(function() {
                       "previous": "Anterior"
                       }
           },
+
     });
 
-    $('input.global_filter').on( 'keyup click', function () {
+  $('input.global_filter').on( 'keyup click', function () {
 		filterGlobal();
-	} );
+	});
 
 	$('input.column_filter, select.column_filter').on( 'keyup change', function () {
 		filterColumn( $(this).parents('div').attr('data-column') );
-	} );
+	});
 
+  $('#tabla_servicios tbody').on('click', 'td.details-control', function (){
+    var tr = $(this).closest('tr');
+    var row = table.row( tr );
+    var texto = $(this).find('p').text();
 
+    if ( row.child.isShown() ) {
+      // This row is already open - close it
+      row.child.hide();
+      tr.removeClass('shown');
+    }
+    else {
+      // Open this row
+      row.child( format(row.data(),texto) ).show();
+      tr.addClass('shown');
+    }
+  });
 
-} );
+});
+
 
 function filterGlobal () {
 	$('#tabla_servicios').DataTable().search(

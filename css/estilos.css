@@ -288,3 +288,13 @@ div.table-responsive>div#resultados{
 div.table-responsive>div.dataTables_wrapper>div.row{
     width: 100% !important;
 }
+
+td.details-control {
+	background: url('../img/details_open.png') no-repeat center center;
+	cursor: pointer;
+}
+tr.shown td.details-control {
+	background: url('../img/details_close.png') no-repeat center center;
+}
+
+  
