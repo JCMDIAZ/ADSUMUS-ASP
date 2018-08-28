@@ -582,8 +582,10 @@
     </task-constraint>
     <task-start-date>02-04-2018, 08:30:00</task-start-date>
     <task-end-date>30-04-2018, 14:30:00</task-end-date>
-    <task-completion-date>02-04-2018, 08:30:00</task-completion-date>
+    <task-completion-date>30-04-2018, 14:30:00</task-completion-date>
     <task-duration>594000000</task-duration>
+    <task-percent-complete>100.0</task-percent-complete>
+    <task-work-percent-complete>100.0</task-work-percent-complete>
     <task-list>
       <task>
         <task-name>Base de Datos</task-name>
@@ -593,8 +595,10 @@
         <task-calendar-id>3</task-calendar-id>
         <task-start-date>02-04-2018, 10:30:00</task-start-date>
         <task-end-date>04-04-2018, 16:30:00</task-end-date>
-        <task-completion-date>02-04-2018, 10:30:00</task-completion-date>
+        <task-completion-date>04-04-2018, 16:30:00</task-completion-date>
         <task-duration>57600000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>57600000</task-work-duration>
       </task>
       <task>
@@ -605,8 +609,10 @@
         <task-calendar-id>3</task-calendar-id>
         <task-start-date>04-04-2018, 16:30:00</task-start-date>
         <task-end-date>09-04-2018, 11:00:00</task-end-date>
-        <task-completion-date>04-04-2018, 16:30:00</task-completion-date>
+        <task-completion-date>09-04-2018, 11:00:00</task-completion-date>
         <task-duration>43200000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>43200000</task-work-duration>
       </task>
       <task>
@@ -617,8 +623,10 @@
         <task-calendar-id>2</task-calendar-id>
         <task-start-date>02-04-2018, 08:30:00</task-start-date>
         <task-end-date>09-04-2018, 10:30:00</task-end-date>
-        <task-completion-date>02-04-2018, 08:30:00</task-completion-date>
+        <task-completion-date>09-04-2018, 10:30:00</task-completion-date>
         <task-duration>115200000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>115200000</task-work-duration>
       </task>
       <task>
@@ -629,8 +637,10 @@
         <task-calendar-id>2</task-calendar-id>
         <task-start-date>09-04-2018, 11:00:00</task-start-date>
         <task-end-date>13-04-2018, 09:30:00</task-end-date>
-        <task-completion-date>09-04-2018, 11:00:00</task-completion-date>
+        <task-completion-date>13-04-2018, 09:30:00</task-completion-date>
         <task-duration>72000000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>131400000</task-work-duration>
       </task>
       <task>
@@ -644,8 +654,10 @@
         </task-constraint>
         <task-start-date>13-04-2018, 10:30:00</task-start-date>
         <task-end-date>17-04-2018, 11:30:00</task-end-date>
-        <task-completion-date>13-04-2018, 10:30:00</task-completion-date>
+        <task-completion-date>17-04-2018, 11:30:00</task-completion-date>
         <task-duration>57600000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>57600000</task-work-duration>
       </task>
       <task>
@@ -656,8 +668,10 @@
         <task-calendar-id>3</task-calendar-id>
         <task-start-date>17-04-2018, 11:30:00</task-start-date>
         <task-end-date>23-04-2018, 17:00:00</task-end-date>
-        <task-completion-date>17-04-2018, 11:30:00</task-completion-date>
+        <task-completion-date>23-04-2018, 17:00:00</task-completion-date>
         <task-duration>86400000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>86400000</task-work-duration>
       </task>
       <task>
@@ -668,8 +682,10 @@
         <task-calendar-id>3</task-calendar-id>
         <task-start-date>23-04-2018, 17:00:00</task-start-date>
         <task-end-date>30-04-2018, 13:30:00</task-end-date>
-        <task-completion-date>23-04-2018, 17:00:00</task-completion-date>
+        <task-completion-date>30-04-2018, 13:30:00</task-completion-date>
         <task-duration>86400000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>86400000</task-work-duration>
       </task>
       <task>
@@ -680,8 +696,10 @@
         <task-calendar-id>2</task-calendar-id>
         <task-start-date>13-04-2018, 09:30:00</task-start-date>
         <task-end-date>18-04-2018, 12:00:00</task-end-date>
-        <task-completion-date>13-04-2018, 09:30:00</task-completion-date>
+        <task-completion-date>18-04-2018, 12:00:00</task-completion-date>
         <task-duration>86400000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>86400000</task-work-duration>
       </task>
       <task>
@@ -692,8 +710,10 @@
         <task-calendar-id>2</task-calendar-id>
         <task-start-date>18-04-2018, 12:00:00</task-start-date>
         <task-end-date>23-04-2018, 11:00:00</task-end-date>
-        <task-completion-date>18-04-2018, 12:00:00</task-completion-date>
+        <task-completion-date>23-04-2018, 11:00:00</task-completion-date>
         <task-duration>57600000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>57600000</task-work-duration>
       </task>
       <task>
@@ -704,8 +724,10 @@
         <task-calendar-id>2</task-calendar-id>
         <task-start-date>23-04-2018, 11:00:00</task-start-date>
         <task-end-date>25-04-2018, 14:30:00</task-end-date>
-        <task-completion-date>23-04-2018, 11:00:00</task-completion-date>
+        <task-completion-date>25-04-2018, 14:30:00</task-completion-date>
         <task-duration>57600000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
+        <task-work-percent-complete>100.0</task-work-percent-complete>
         <task-work-duration>57600000</task-work-duration>
       </task>
       <task>
@@ -715,8 +737,9 @@
         <task-accrual>accrual-prorated</task-accrual>
         <task-start-date>25-04-2018, 14:30:00</task-start-date>
         <task-end-date>30-04-2018, 14:30:00</task-end-date>
-        <task-completion-date>25-04-2018, 14:30:00</task-completion-date>
+        <task-completion-date>30-04-2018, 14:30:00</task-completion-date>
         <task-duration>86400000</task-duration>
+        <task-percent-complete>100.0</task-percent-complete>
       </task>
     </task-list>
   </task>
